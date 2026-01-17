@@ -4,6 +4,7 @@ Runtime lifecycle and config loading.
 
 ## TOC
 
+- [commands.md](commands.md)
 - [lifecycle.md](lifecycle.md)
 - [loader.md](loader.md)
 

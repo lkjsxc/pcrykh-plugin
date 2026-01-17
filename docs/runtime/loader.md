@@ -7,6 +7,7 @@
 - Validate required top-level fields.
 - Resolve `achievement_sources` to pack files.
 - Expand templates into concrete achievements.
+- Load but do not interpret `runtime.chat` and `tips`.
 
 ## Failure behavior
 
