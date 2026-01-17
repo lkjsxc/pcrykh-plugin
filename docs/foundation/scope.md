@@ -1,4 +1,4 @@
-# Scope and non-goals
+# Scope
 
 ## In scope
 

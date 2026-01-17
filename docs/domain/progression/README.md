@@ -63,9 +63,9 @@ On objective completion for `achievement`:
 
 ## Runtime feedback requirements
 
-- When Achievement Points (AP) are awarded, the plugin MUST display an AP action bar message as specified in [gui/action-bar/README.md](../gui/action-bar/README.md).
+- When Achievement Points (AP) are awarded, the plugin MUST display an AP action bar message as specified in [interaction/gui/action-bar/README.md](../../interaction/gui/action-bar/README.md).
 
 ## Persistence requirements
 
 - All progression state changes MUST be persisted.
-- Persistence MUST be safe under autosave (see [runtime/autosave.md](../runtime/autosave.md)).
+- Persistence MUST be safe under autosave (see [runtime/autosave.md](../../runtime/autosave.md)).

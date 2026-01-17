@@ -18,7 +18,7 @@ An AP action bar message MUST contain:
 - Total AP (after applying the award)
 - Completion indicator (`Completed`)
 
-### Canonical string (legacy section colors)
+### Canonical string
 
 The implementation MUST render this canonical structure (colors MAY vary by theme, but ordering MUST remain stable):
 
@@ -46,6 +46,6 @@ The implementation MUST render this canonical structure (colors MAY vary by them
 - Progress toward current objective
 - Current objective title (short/truncated)
 
-### Canonical string (legacy section colors)
+### Canonical string
 
 `{achievement_name} | Prog {progress}/{target} | Obj {objective_title}`

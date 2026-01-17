@@ -21,5 +21,5 @@ These are explicitly allowed but not required:
 
 ## Conflict note
 
-- The statement "GUIs MUST be inventory-based" applies only to inventory UIs.
+- The statement "GUIs are inventory-based" applies only to inventory UIs.
 - Action bar output is HUD feedback and does not violate the GUI constraint.

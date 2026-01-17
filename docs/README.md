@@ -8,32 +8,24 @@ We assume all existing source code will be deleted and rebuilt from these docs; 
 - Anything not specified here does not exist.
 - This spec defines a single command entrypoint: `/pcrykh`.
 
-## Directory invariants (strict)
+## Structure overview
 
-These rules apply to everything under `docs/`:
+This spec is organized into layered sections:
 
-1. Every directory contains exactly one `README.md`.
-2. That `README.md` is both:
-	- A table of contents (TOC) for that directory.
-	- The authoritative documentation for that scope.
-3. Every directory contains either:
-	- Multiple subdirectories, or
-	- Multiple Markdown files.
-
-## Document style (LLM-targeted)
-
-- Prefer normative language: **MUST**, **MUST NOT**, **SHOULD**, **MAY**.
-- Prefer complete specs over prose.
-- Prefer explicit schemas, state machines, and tables over “examples only”.
+- Foundation: scope, glossary, versioning, and guiding context.
+- Domain: gameplay systems and progression model.
+- Interaction: player-facing commands, GUI, and chat behaviors.
+- Data: persistence model and schemas.
+- Config: runtime configuration surfaces.
+- Runtime: lifecycle, autosave, performance, testing.
+- Governance: conflict tracking and change control.
 
 ## Top-level map
 
-- [principles/README.md](principles/README.md)
-- [conflicts/README.md](conflicts/README.md)
-- [commands/README.md](commands/README.md)
-- [gui/README.md](gui/README.md)
-- [progression/README.md](progression/README.md)
-- [achievements/README.md](achievements/README.md)
+- [foundation/README.md](foundation/README.md)
+- [domain/README.md](domain/README.md)
+- [interaction/README.md](interaction/README.md)
 - [data/README.md](data/README.md)
 - [config/README.md](config/README.md)
 - [runtime/README.md](runtime/README.md)
+- [governance/README.md](governance/README.md)

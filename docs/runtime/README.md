@@ -8,4 +8,3 @@ This directory defines lifecycle, performance, and operational concerns.
 - [autosave.md](autosave.md)
 - [performance.md](performance.md)
 - [testing.md](testing.md)
-- [chat.md](chat.md)

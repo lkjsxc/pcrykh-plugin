@@ -2,7 +2,7 @@
 
 This directory defines the achievement system, its objectives, criteria, and rewards.
 
-## Core rules
+## System framing
 
 - Achievements replace the entire skill system.
 - Each achievement is an independent track with a single objective.

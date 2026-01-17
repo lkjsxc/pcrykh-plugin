@@ -19,8 +19,8 @@ This document records resolved contradictions and the winning rules.
 
 **Conflict**
 
-- [achievements/definitions/format.md](../achievements/definitions/format.md) used `achievement_id`.
-- [config/runtime-config.md](../config/runtime-config.md) and runtime usage require `id`.
+- [domain/achievements/definitions/format.md](../../domain/achievements/definitions/format.md) used `achievement_id`.
+- [config/runtime-config.md](../../config/runtime-config.md) and runtime usage require `id`.
 
 **Resolution**
 
