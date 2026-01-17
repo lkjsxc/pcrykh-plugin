@@ -4,6 +4,7 @@
 
 - The plugin MUST load a JSON file named `config.json`.
 - `config.json` MUST NOT exceed 300 lines.
+- JSON config is the authoritative runtime input.
 
 ## Required top-level keys
 

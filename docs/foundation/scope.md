@@ -1,14 +1,12 @@
 # Scope
 
-# Scope
+Defines:
 
-This specification defines:
-
-- Runtime config loading (JSON).
+- Runtime JSON config loading.
 - Achievement generation from pack templates.
-- Achievement catalog availability to commands.
+- Command surface tied to achievement catalog.
 
-Explicitly excluded:
+Excludes:
 
 - GUI screens.
 - Skill systems.

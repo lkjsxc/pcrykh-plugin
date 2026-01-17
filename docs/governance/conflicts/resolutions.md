@@ -21,3 +21,15 @@
 **Resolution**
 
 - `block_break` is canonical and included in criteria types.
+
+## C-008 — TOC canonicality vs README authority
+
+**Conflict**
+
+- README files were required to be the sole TOC.
+- A rule declared that only items listed in the TOC are canonical, which excluded the README itself.
+
+**Resolution**
+
+- README files are canonical index nodes.
+- Canonical spec content is limited to paths listed in each README's TOC.
