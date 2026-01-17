@@ -16,33 +16,66 @@ Fields:
 - `criteria_template` (object, tokenized)
 - `rewards_template` (object, tokenized)
 - `subjects` (array of strings)
-- `tiers` (TierSpec)
+# Achievement templates
 
-## Tokens
+Templates generate concrete achievements via subject × tier expansion.
 
-- `{subject}`: subject value
-- `{subject_id}`: slugified subject
-- `{tier}`: roman numeral
-- `{tier_index}`: 1-based tier index
-- `{count}`: tier count
-- `{ap}`: tier reward AP
-
-Tokens apply to all string values inside `criteria_template` and `rewards_template`.
-
-## TierSpec
+## Template schema (canonical)
 
 ```json
 {
-  "levels": 10,
-  "count_start": 1,
-  "count_multiplier": 2.0,
-  "ap_start": 5,
-  "ap_multiplier": 1.6
+  "template_id": "string",
+  "id_template": "string",
+  "name_template": "string",
+  "title_template": "string",
+  "description_template": "string",
+  "category_id": "string",
+  "icon_template": "string",
+  "criteria_template": {"...": "tokenized"},
+  "rewards_template": {"...": "tokenized"},
+  "subjects": ["string"],
+  "tiers": {
+    "levels": 10,
+    "count_start": 1,
+    "count_multiplier": 2.0,
+    "ap_start": 5,
+    "ap_multiplier": 1.6
+  }
 }
 ```
+
+Rules:
+
+- `template_id` MUST be unique within a pack.
+- All string fields are tokenized.
+- `criteria_template` and `rewards_template` are tokenized at every string leaf.
+
+## Tokens
+
+- `{subject}`: subject value.
+- `{subject_id}`: slugified subject.
+- `{tier}`: roman numeral for `tier_index`.
+- `{tier_index}`: 1-based tier index.
+- `{count}`: computed tier count.
+- `{ap}`: computed tier reward AP.
+
+Slugify algorithm:
+
+- Lowercase.
+- Replace non-alphanumeric characters with `_`.
+- Collapse repeated `_`.
+- Trim leading and trailing `_`.
+
+## TierSpec
 
 Counts and AP are computed as:
 
 $$count_t = round(count\_start \times count\_multiplier^{t-1})$$
 $$ap_t = round(ap\_start \times ap\_multiplier^{t-1})$$
+
+Tier loop:
+
+- For `t` in `1..levels`:
+  - `tier_index = t`.
+  - `tier` is the roman numeral for `t`.
 

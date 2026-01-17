@@ -2,6 +2,8 @@
 
 ## RewardDefinition (canonical)
 
+Schema:
+
 ```json
 {
   "ap": 0

@@ -1,6 +1,11 @@
-# pcrykh — Specification Index
+# pcrykh specification tree
 
-## TOC
+## Canonicality
+
+- This README is a canonical index node.
+- Only paths listed below are normative.
+
+## Tree
 
 - [foundation/README.md](foundation/README.md)
 - [domain/README.md](domain/README.md)

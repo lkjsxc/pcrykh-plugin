@@ -1,6 +1,11 @@
-# Achievements
+# Achievements index
 
-## TOC
+## Canonicality
+
+- This README is a canonical index node.
+- Only paths listed below are normative.
+
+## Tree
 
 - [model.md](model.md)
 - [templates.md](templates.md)

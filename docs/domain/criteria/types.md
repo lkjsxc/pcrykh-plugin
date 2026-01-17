@@ -1,6 +1,10 @@
 # Criteria types
 
-Canonical types:
+## Common fields
+
+- `type` (string, required)
+- `count` (integer, required, `>= 1`)
+- `constraints` (object, required)
 
 ## `block_break`
 
@@ -13,6 +17,10 @@ Canonical types:
 }
 ```
 
+Rules:
+
+- `materials` MUST be a non-empty array of strings.
+
 ## `item_craft`
 
 ```json
@@ -23,6 +31,10 @@ Canonical types:
   "constraints": {}
 }
 ```
+
+Rules:
+
+- `item` MUST be a non-empty string.
 
 ## `entity_kill`
 
@@ -35,6 +47,10 @@ Canonical types:
 }
 ```
 
+Rules:
+
+- `entities` MUST be a non-empty array of strings.
+
 ## `fish_catch`
 
 ```json
@@ -45,3 +61,7 @@ Canonical types:
   "constraints": {}
 }
 ```
+
+Rules:
+
+- `items` MUST be a non-empty array of strings.

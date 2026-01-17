@@ -1,7 +1,9 @@
 # Constraints
 
-Constraints are opaque objects. The runtime does not interpret or validate constraint keys.
+Constraints are opaque objects passed through without validation.
 
-Canonical rule:
+Rules:
 
 - `constraints` MUST exist in every criteria object, even if empty.
+- `constraints` MUST be a JSON object.
+- The runtime MUST NOT interpret or validate constraint keys.
