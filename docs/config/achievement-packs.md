@@ -1,0 +1,42 @@
+# Achievement packs
+
+Pack files define template-based achievement generation.
+
+## Pack schema (normative)
+
+```json
+{
+  "pack_id": "string",
+  "templates": ["AchievementTemplate", "..."]
+}
+```
+
+## AchievementTemplate schema (normative)
+
+```json
+{
+  "template_id": "string",
+  "id_template": "string",
+  "name_template": "string",
+  "title_template": "string",
+  "description_template": "string",
+  "category_id": "string",
+  "icon_template": "string",
+  "criteria_template": {"...": "..."},
+  "rewards_template": {"...": "..."},
+  "subjects": ["string", "..."],
+  "tiers": {
+    "levels": 10,
+    "count_start": 1,
+    "count_multiplier": 2.0,
+    "ap_start": 5,
+    "ap_multiplier": 1.6
+  }
+}
+```
+
+## Expansion rules
+
+- Each template generates `subjects.length × tiers.levels` achievements.
+- Tokens are applied per [domain/achievements/templates.md](../domain/achievements/templates.md).
+- The generated catalog SHOULD be ~500 achievements (target range 450–550).

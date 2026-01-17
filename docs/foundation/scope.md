@@ -1,14 +1,15 @@
 # Scope
 
-## In scope
+# Scope
 
-- An achievement-based RPG progression system.
-- Achievement objectives implemented as **single, atomic goals**.
-- XP awards for objective completion.
-- A polished RPG-style GUI with dense menus and strong iconography.
-- A single command surface rooted at `/pcrykh`.
+This specification defines:
 
-## Explicit non-goals (for now)
+- Runtime config loading (JSON).
+- Achievement generation from pack templates.
+- Achievement catalog availability to commands.
 
-- Level-up enhancements (stat multipliers, perks, talent trees).
-- Backward compatibility with any pre-existing code or commands.
+Explicitly excluded:
+
+- GUI screens.
+- Skill systems.
+- Player storage/progress persistence.

@@ -4,18 +4,14 @@ This directory defines scope, vocabulary, and versioning context for the spec.
 
 ## TOC
 
-- [glossary.md](glossary.md)
+# Foundation
+
+Canonical definitions, scope, and versioning rules.
+
+## TOC
+
 - [scope.md](scope.md)
 - [versioning.md](versioning.md)
 
-## System anchors
-
-- Single command root: `/pcrykh`.
-- GUI-first navigation for non-admin interactions.
-- The spec is the authoritative blueprint for rebuilds.
-
-## How to use this section
-
-- Start here to understand the vocabulary used across the rest of the docs.
-- Scope narrows what the system covers.
+Only files listed above are canonical; everything else in this directory is obsolete.
 - Versioning outlines how spec changes affect runtime data.

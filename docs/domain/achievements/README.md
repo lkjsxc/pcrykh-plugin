@@ -1,15 +1,11 @@
 # Achievements
 
-This directory defines the achievement system, its objectives, criteria, and rewards.
-
-## System framing
-
-- Achievements replace the entire skill system.
-- Each achievement is an independent track with a single objective.
-- Achievements are grouped by category for UI and organization only.
+Achievement definition model and template expansion rules.
 
 ## TOC
 
-- [definitions/README.md](definitions/README.md)
-- [categories/README.md](categories/README.md)
-- [shared/README.md](shared/README.md)
+- [model.md](model.md)
+- [templates.md](templates.md)
+- [rewards.md](rewards.md)
+
+Only files listed above are canonical; everything else in this directory is obsolete.

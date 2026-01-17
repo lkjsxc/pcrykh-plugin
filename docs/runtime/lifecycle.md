@@ -2,13 +2,15 @@
 
 ## Startup
 
-- Load config.
-- Validate spec_version.
-- Initialize storage.
+- Ensure default config resources exist in the data folder.
+- Load `config.json` and validate required fields.
+- Load achievement pack sources and expand templates.
 - Register `/pcrykh`.
-- Register listeners for objective criteria.
 
 ## Shutdown
 
-- Flush pending writes.
-- Close DB cleanly.
+- No persistence actions are performed.
+
+## Command surface
+
+- `/pcrykh` replies with the current achievement count.

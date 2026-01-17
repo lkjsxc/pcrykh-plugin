@@ -4,10 +4,16 @@ This directory defines how the specification is curated, reconciled, and evolved
 
 ## TOC
 
-- [conflicts/README.md](conflicts/README.md)
-- [change-control.md](change-control.md)
+# Governance
 
+Conflict tracking and change control.
+
+## TOC
+
+- [conflicts/README.md](conflicts/README.md)
+- [changes/README.md](changes/README.md)
+
+Only files listed above are canonical; everything else in this directory is obsolete.
 ## Orientation
 
 - Use conflicts to track contradictions and their resolutions.
-- Use change control to record structural shifts in the spec.
