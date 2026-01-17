@@ -7,9 +7,11 @@ import dev.pcrykh.runtime.RuntimeConfig;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -36,9 +38,11 @@ public class AchievementMenuService {
         AchievementMenuHolder holder = new AchievementMenuHolder(MenuType.MAIN, 0, 1);
         Inventory inventory = Bukkit.createInventory(holder, MAIN_MENU_SIZE, Component.text("Pcrykh"));
 
-        inventory.setItem(11, namedItem(Material.PLAYER_HEAD, "Profile", List.of("View your personal record")));
-        inventory.setItem(13, namedItem(Material.BOOK, "Achievements", List.of("Browse the catalog")));
-        inventory.setItem(15, namedItem(Material.REDSTONE, "Settings", List.of("Configure notifications")));
+        inventory.setItem(20, namedItem(Material.PLAYER_HEAD, "Profile", List.of("View your personal record")));
+        inventory.setItem(22, namedItem(Material.BOOK, "Achievements", List.of("Browse the catalog")));
+        inventory.setItem(24, namedItem(Material.REDSTONE, "Settings", List.of("Configure notifications")));
+
+        fillBottomRow(inventory);
 
         player.openInventory(inventory);
     }
@@ -53,6 +57,7 @@ public class AchievementMenuService {
 
         if (achievements.isEmpty()) {
             inventory.setItem(22, namedItem(Material.BARRIER, "No achievements loaded."));
+            fillBottomRow(inventory);
             player.openInventory(inventory);
             return;
         }
@@ -64,13 +69,18 @@ public class AchievementMenuService {
             inventory.setItem(i - startIndex, renderAchievementItem(player, achievement));
         }
 
+        inventory.setItem(45, namedItem(Material.BARRIER, "Back"));
         if (safePage > 0) {
-            inventory.setItem(45, namedItem(Material.ARROW, "Previous"));
+            inventory.setItem(47, namedItem(Material.ARROW, "Previous"));
         }
         if (safePage < totalPages - 1) {
             inventory.setItem(53, namedItem(Material.ARROW, "Next"));
         }
-        inventory.setItem(49, namedItem(Material.BARRIER, "Back"));
+        inventory.setItem(49, namedItem(Material.PAPER, "Page", List.of(
+                "page: " + (safePage + 1) + "/" + totalPages,
+                "total: " + achievements.size()
+        )));
+        fillBottomRow(inventory);
 
         player.openInventory(inventory);
     }
@@ -79,7 +89,7 @@ public class AchievementMenuService {
         AchievementMenuHolder holder = new AchievementMenuHolder(MenuType.PROFILE, 0, 1);
         Inventory inventory = Bukkit.createInventory(holder, PROFILE_MENU_SIZE, Component.text("Profile"));
 
-        inventory.setItem(11, namedItem(Material.PLAYER_HEAD, "You", List.of(
+        inventory.setItem(20, namedItem(Material.PLAYER_HEAD, "You", List.of(
                 "name: " + player.getName(),
                 "uuid: " + player.getUniqueId()
         )));
@@ -89,13 +99,14 @@ public class AchievementMenuService {
         int apTotal = progressService.getTotalAp(player);
         int percent = total == 0 ? 0 : (int) Math.floor((completed * 100.0) / total);
 
-        inventory.setItem(13, namedItem(Material.PAPER, "Progress", List.of(
+        inventory.setItem(24, namedItem(Material.PAPER, "Progress", List.of(
                 "completed: " + completed + "/" + total,
                 "ap: " + apTotal,
                 "completion: " + percent + "%"
         )));
 
-        inventory.setItem(15, namedItem(Material.BARRIER, "Back"));
+        inventory.setItem(45, namedItem(Material.BARRIER, "Back"));
+        fillBottomRow(inventory);
         player.openInventory(inventory);
     }
 
@@ -103,19 +114,21 @@ public class AchievementMenuService {
         AchievementMenuHolder holder = new AchievementMenuHolder(MenuType.SETTINGS, 0, 1);
         Inventory inventory = Bukkit.createInventory(holder, SETTINGS_MENU_SIZE, Component.text("Settings"));
 
-        inventory.setItem(11, namedItem(Material.NAME_TAG, "Achievement Broadcasts", List.of(
+        inventory.setItem(20, namedItem(Material.NAME_TAG, "Achievement Broadcasts", List.of(
                 "global chat announcements",
                 "state: " + onOff(config.chat().announceAchievements())
         )));
-        inventory.setItem(13, namedItem(Material.BOOK, "Random Facts", List.of(
+        inventory.setItem(22, namedItem(Material.BOOK, "Random Facts", List.of(
                 "periodic global facts",
                 "state: " + onOff(config.chat().factsEnabled())
         )));
-        inventory.setItem(15, namedItem(Material.GLOWSTONE_DUST, "Progress Indicators", List.of(
+        inventory.setItem(24, namedItem(Material.GLOWSTONE_DUST, "Progress Indicators", List.of(
             "action bar progress updates",
                 "state: " + onOff(config.actionBar().progressEnabled())
         )));
-        inventory.setItem(26, namedItem(Material.BARRIER, "Back"));
+        inventory.setItem(45, namedItem(Material.BARRIER, "Back"));
+
+        fillBottomRow(inventory);
 
         player.openInventory(inventory);
     }
@@ -148,6 +161,28 @@ public class AchievementMenuService {
         lore.add(Component.text("ap: " + ap));
         meta.lore(lore);
 
+        if (progressService.isCompleted(player, achievement)) {
+            meta.addEnchant(Enchantment.LUCK, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private void fillBottomRow(Inventory inventory) {
+        ItemStack filler = fillerItem();
+        for (int slot = 45; slot <= 53; slot++) {
+            if (inventory.getItem(slot) == null) {
+                inventory.setItem(slot, filler);
+            }
+        }
+    }
+
+    private ItemStack fillerItem() {
+        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text(" "));
         item.setItemMeta(meta);
         return item;
     }

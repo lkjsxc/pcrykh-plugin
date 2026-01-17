@@ -35,6 +35,7 @@ public class ConfigLoader {
             require(root, "commands");
             require(root, "runtime");
             require(root, "facts_sources");
+            require(root, "category_sources");
             require(root, "achievement_sources");
 
             JsonNode commands = root.get("commands");
@@ -55,9 +56,13 @@ public class ConfigLoader {
             require(runtime, "action_bar");
 
             JsonNode factsSourcesNode = root.get("facts_sources");
+            JsonNode categorySourcesNode = root.get("category_sources");
             JsonNode achievementSources = root.get("achievement_sources");
             if (!factsSourcesNode.isArray() || factsSourcesNode.size() == 0) {
                 throw new ConfigException("facts_sources must be a non-empty array");
+            }
+            if (!categorySourcesNode.isArray() || categorySourcesNode.size() == 0) {
+                throw new ConfigException("category_sources must be a non-empty array");
             }
             if (!achievementSources.isArray() || achievementSources.size() == 0) {
                 throw new ConfigException("achievement_sources must be a non-empty array");
@@ -73,6 +78,12 @@ public class ConfigLoader {
             ArrayNode factsSourceArray = (ArrayNode) factsSourcesNode;
             for (JsonNode entry : factsSourceArray) {
                 factSources.add(entry.asText());
+            }
+
+            List<String> categorySources = new ArrayList<>();
+            ArrayNode categorySourceArray = (ArrayNode) categorySourcesNode;
+            for (JsonNode entry : categorySourceArray) {
+                categorySources.add(entry.asText());
             }
 
             RuntimeConfig.AutosaveConfig autosave = parseAutosave(runtime.get("autosave"));
@@ -95,6 +106,7 @@ public class ConfigLoader {
                     actionBar,
                     facts,
                         factSources,
+                        categorySources,
                     sources
             );
         } catch (IOException ex) {

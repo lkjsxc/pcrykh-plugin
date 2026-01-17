@@ -48,6 +48,12 @@ public class ConfigSaver {
         }
         root.set("facts_sources", factsSources);
 
+        ArrayNode categorySources = mapper.createArrayNode();
+        for (String source : config.categorySources()) {
+            categorySources.add(source);
+        }
+        root.set("category_sources", categorySources);
+
         ArrayNode sources = mapper.createArrayNode();
         for (String source : config.achievementSources()) {
             sources.add(source);

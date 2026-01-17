@@ -65,45 +65,45 @@ public class AchievementMenuListener implements Listener {
     }
 
     private void handleMainMenu(Player player, int slot) {
-        if (slot == 11) {
+        if (slot == 20) {
             menuService.openProfileMenu(player);
-        } else if (slot == 13) {
+        } else if (slot == 22) {
             menuService.openAchievementsMenu(player, 0);
-        } else if (slot == 15) {
+        } else if (slot == 24) {
             menuService.openSettingsMenu(player);
         }
     }
 
     private void handleAchievementsMenu(Player player, AchievementMenuHolder holder, int slot, ItemStack clicked) {
-        if (slot == 45 && clicked.getType() == Material.ARROW && holder.page() > 0) {
+        if (slot == 47 && clicked.getType() == Material.ARROW && holder.page() > 0) {
             menuService.openAchievementsMenu(player, holder.page() - 1);
         } else if (slot == 53 && clicked.getType() == Material.ARROW && holder.page() < holder.totalPages() - 1) {
             menuService.openAchievementsMenu(player, holder.page() + 1);
-        } else if (slot == 49 && clicked.getType() == Material.BARRIER) {
+        } else if (slot == 45 && clicked.getType() == Material.BARRIER) {
             menuService.openMainMenu(player);
         }
     }
 
     private void handleProfileMenu(Player player, int slot) {
-        if (slot == 15) {
+        if (slot == 45) {
             menuService.openMainMenu(player);
         }
     }
 
     private void handleSettingsMenu(Player player, int slot, ItemStack clicked) {
-        if (slot == 11 && clicked.getType() == Material.NAME_TAG) {
+        if (slot == 20 && clicked.getType() == Material.NAME_TAG) {
             config.chat().setAnnounceAchievements(!config.chat().announceAchievements());
             configSaver.save(dataFolder, config);
             menuService.openSettingsMenu(player);
-        } else if (slot == 13 && clicked.getType() == Material.BOOK) {
+        } else if (slot == 22 && clicked.getType() == Material.BOOK) {
             config.chat().setFactsEnabled(!config.chat().factsEnabled());
             configSaver.save(dataFolder, config);
             menuService.openSettingsMenu(player);
-        } else if (slot == 15 && clicked.getType() == Material.GLOWSTONE_DUST) {
+        } else if (slot == 24 && clicked.getType() == Material.GLOWSTONE_DUST) {
             config.actionBar().setProgressEnabled(!config.actionBar().progressEnabled());
             configSaver.save(dataFolder, config);
             menuService.openSettingsMenu(player);
-        } else if (slot == 26 && clicked.getType() == Material.BARRIER) {
+        } else if (slot == 45 && clicked.getType() == Material.BARRIER) {
             menuService.openMainMenu(player);
         }
     }

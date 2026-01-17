@@ -10,6 +10,7 @@ public class RuntimeConfig {
         private final ActionBarConfig actionBar;
         private final List<String> facts;
         private final List<String> factsSources;
+        private final List<String> categorySources;
         private final List<String> achievementSources;
 
         public RuntimeConfig(
@@ -20,6 +21,7 @@ public class RuntimeConfig {
                         ActionBarConfig actionBar,
                         List<String> facts,
                         List<String> factsSources,
+                        List<String> categorySources,
                         List<String> achievementSources
         ) {
                 this.specVersion = specVersion;
@@ -29,6 +31,7 @@ public class RuntimeConfig {
                 this.actionBar = actionBar;
                 this.facts = facts;
                 this.factsSources = factsSources;
+                this.categorySources = categorySources;
                 this.achievementSources = achievementSources;
         }
 
@@ -58,6 +61,10 @@ public class RuntimeConfig {
 
         public List<String> factsSources() {
                 return factsSources;
+        }
+
+        public List<String> categorySources() {
+                return categorySources;
         }
 
         public List<String> achievementSources() {

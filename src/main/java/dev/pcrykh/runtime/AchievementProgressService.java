@@ -2,6 +2,7 @@ package dev.pcrykh.runtime;
 
 import dev.pcrykh.domain.AchievementDefinition;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -24,6 +25,8 @@ public class AchievementProgressService {
     private final Map<String, List<AchievementDefinition>> itemCraftIndex = new HashMap<>();
     private final Map<String, List<AchievementDefinition>> entityKillIndex = new HashMap<>();
     private final Map<String, List<AchievementDefinition>> fishCatchIndex = new HashMap<>();
+    private final Map<String, List<AchievementDefinition>> itemEnchantIndex = new HashMap<>();
+    private final List<AchievementDefinition> movementAchievements = new ArrayList<>();
 
     private final Map<UUID, Map<String, Integer>> progress = new HashMap<>();
     private final Map<UUID, Set<String>> unlocked = new HashMap<>();
@@ -53,6 +56,12 @@ public class AchievementProgressService {
         return unlocked.getOrDefault(player.getUniqueId(), Set.of()).size();
     }
 
+    public boolean isCompleted(Player player, AchievementDefinition achievement) {
+        return unlocked
+                .getOrDefault(player.getUniqueId(), Set.of())
+                .contains(achievement.id());
+    }
+
     public int getTotalAp(Player player) {
         int total = 0;
         Set<String> completed = unlocked.getOrDefault(player.getUniqueId(), Set.of());
@@ -66,26 +75,41 @@ public class AchievementProgressService {
 
     public void onBlockBreak(Player player, Material material) {
         String key = normalizeMaterial(material);
-        handleProgress(player, blockBreakIndex.getOrDefault(key, List.of()));
+        handleProgress(player, blockBreakIndex.getOrDefault(key, List.of()), 1);
     }
 
     public void onItemCraft(Player player, Material material) {
         String key = normalizeMaterial(material);
-        handleProgress(player, itemCraftIndex.getOrDefault(key, List.of()));
+        handleProgress(player, itemCraftIndex.getOrDefault(key, List.of()), 1);
     }
 
     public void onEntityKill(Player player, EntityType type) {
         String key = normalizeEntity(type);
-        handleProgress(player, entityKillIndex.getOrDefault(key, List.of()));
+        handleProgress(player, entityKillIndex.getOrDefault(key, List.of()), 1);
     }
 
     public void onFishCatch(Player player, Material material) {
         String key = normalizeMaterial(material);
-        handleProgress(player, fishCatchIndex.getOrDefault(key, List.of()));
+        handleProgress(player, fishCatchIndex.getOrDefault(key, List.of()), 1);
     }
 
-    private void handleProgress(Player player, List<AchievementDefinition> achievements) {
+    public void onItemEnchant(Player player, Material material) {
+        String key = normalizeMaterial(material);
+        handleProgress(player, itemEnchantIndex.getOrDefault(key, List.of()), 1);
+    }
+
+    public void onMovement(Player player, int distance) {
+        if (distance <= 0) {
+            return;
+        }
+        handleProgress(player, movementAchievements, distance);
+    }
+
+    private void handleProgress(Player player, List<AchievementDefinition> achievements, int increment) {
         if (achievements.isEmpty()) {
+            return;
+        }
+        if (increment <= 0) {
             return;
         }
         UUID playerId = player.getUniqueId();
@@ -98,7 +122,7 @@ public class AchievementProgressService {
                 continue;
             }
             int current = playerProgress.getOrDefault(achievement.id(), 0);
-            int next = Math.min(spec.count(), current + 1);
+            int next = Math.min(spec.count(), current + increment);
             if (next == current) {
                 continue;
             }
@@ -128,24 +152,44 @@ public class AchievementProgressService {
         if (target <= 0) {
             return;
         }
-        String meter = buildProgressMeter(current, target, 10);
-        String message = achievement.title() + " " + meter + " " + current + "/" + target;
-        player.sendActionBar(Component.text(message));
+        Component meter = buildProgressBar(current, target, 16);
+        Component message = Component.text(achievement.title(), NamedTextColor.AQUA)
+                .append(Component.space())
+                .append(meter)
+                .append(Component.space())
+                .append(Component.text(current + "/" + target, NamedTextColor.GRAY));
+        player.sendActionBar(message);
     }
 
-    private String buildProgressMeter(int current, int target, int width) {
+    private Component buildProgressBar(int current, int target, int width) {
         if (width <= 0 || target <= 0) {
-            return "[]";
+            return Component.text("", NamedTextColor.DARK_GRAY);
         }
         double ratio = Math.min(1.0, Math.max(0.0, current / (double) target));
         int filled = (int) Math.floor(ratio * width);
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
+        NamedTextColor filledColor = progressColor(ratio);
+        Component bar = Component.empty();
         for (int i = 0; i < width; i++) {
-            builder.append(i < filled ? "█" : "░");
+            if (i < filled) {
+                bar = bar.append(Component.text("█", filledColor));
+            } else {
+                bar = bar.append(Component.text("░", NamedTextColor.DARK_GRAY));
+            }
         }
-        builder.append("]");
-        return builder.toString();
+        return bar;
+    }
+
+    private NamedTextColor progressColor(double ratio) {
+        if (ratio < 0.25) {
+            return NamedTextColor.RED;
+        }
+        if (ratio < 0.50) {
+            return NamedTextColor.GOLD;
+        }
+        if (ratio < 0.75) {
+            return NamedTextColor.YELLOW;
+        }
+        return NamedTextColor.GREEN;
     }
 
     private void indexAchievements() {
@@ -157,6 +201,8 @@ public class AchievementProgressService {
                 case "item_craft" -> indexSingle(itemCraftIndex, spec.item(), achievement);
                 case "entity_kill" -> indexList(entityKillIndex, spec.entities(), achievement);
                 case "fish_catch" -> indexList(fishCatchIndex, spec.items(), achievement);
+                case "item_enchant" -> indexList(itemEnchantIndex, spec.items(), achievement);
+                case "movement" -> movementAchievements.add(achievement);
                 default -> {
                 }
             }

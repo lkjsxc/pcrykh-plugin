@@ -10,7 +10,9 @@ public class CriteriaValidator {
             "block_break",
             "item_craft",
             "entity_kill",
-            "fish_catch"
+            "fish_catch",
+            "item_enchant",
+            "movement"
     );
 
     public void validate(JsonNode criteria) {
@@ -37,6 +39,9 @@ public class CriteriaValidator {
             case "item_craft" -> requireText(criteria, "item");
             case "entity_kill" -> requireArray(criteria, "entities");
             case "fish_catch" -> requireArray(criteria, "items");
+            case "item_enchant" -> requireArray(criteria, "items");
+            case "movement" -> {
+            }
             default -> {
             }
         }

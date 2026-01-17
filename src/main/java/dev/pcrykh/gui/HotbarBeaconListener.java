@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -51,6 +52,15 @@ public class HotbarBeaconListener implements Listener {
         if (service.isBeaconItem(item)) {
             event.setCancelled(true);
             service.openMenu(player);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        ItemStack item = event.getItemDrop().getItemStack();
+        if (service.isBeaconItem(item)) {
+            event.setCancelled(true);
+            service.openMenu(event.getPlayer());
         }
     }
 }

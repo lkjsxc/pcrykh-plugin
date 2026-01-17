@@ -10,18 +10,16 @@ public class CategoryCatalog {
     private final Map<String, CategoryDefinition> byId = new HashMap<>();
     private final List<CategoryDefinition> ordered;
 
-    public CategoryCatalog(List<PackDefinition> packs) {
-        for (PackDefinition pack : packs) {
-            for (CategoryDefinition category : pack.categories()) {
-                CategoryDefinition existing = byId.get(category.id());
-                if (existing != null && !existing.equals(category)) {
-                    throw new ConfigException("Duplicate category id with differing fields: " + category.id());
-                }
-                byId.put(category.id(), category);
+    public CategoryCatalog(List<CategoryDefinition> categories) {
+        for (CategoryDefinition category : categories) {
+            CategoryDefinition existing = byId.get(category.id());
+            if (existing != null && !existing.equals(category)) {
+                throw new ConfigException("Duplicate category id with differing fields: " + category.id());
             }
+            byId.put(category.id(), category);
         }
         if (byId.isEmpty()) {
-            throw new ConfigException("No categories defined in achievement packs");
+            throw new ConfigException("No categories defined in category files");
         }
         ordered = new ArrayList<>(byId.values());
         ordered.sort(Comparator.comparingInt(CategoryDefinition::order)

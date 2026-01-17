@@ -8,7 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -63,5 +65,31 @@ public class AchievementProgressListener implements Listener {
             return;
         }
         progressService.onFishCatch(player, item.getType());
+    }
+
+    @EventHandler
+    public void onItemEnchant(EnchantItemEvent event) {
+        Player player = event.getEnchanter();
+        ItemStack item = event.getItem();
+        if (item == null || item.getType() == Material.AIR) {
+            return;
+        }
+        progressService.onItemEnchant(player, item.getType());
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if (event.getTo() == null) {
+            return;
+        }
+        if (!event.getFrom().getWorld().equals(event.getTo().getWorld())) {
+            return;
+        }
+        double distance = event.getFrom().toVector().distance(event.getTo().toVector());
+        int delta = (int) Math.floor(distance);
+        if (delta <= 0) {
+            return;
+        }
+        progressService.onMovement(event.getPlayer(), delta);
     }
 }
