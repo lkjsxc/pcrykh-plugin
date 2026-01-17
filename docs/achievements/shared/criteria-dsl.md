@@ -29,6 +29,11 @@ Common constraints:
   - `required`: boolean
   - `type`: one of `{axe, pickaxe, shovel, hoe}`
 
+#### Woodcutting exception (normative)
+
+- For tree materials (logs, wood blocks, stems, hyphae), tool constraints MUST NOT block progress.
+- In other words, breaking tree blocks MUST count even if the player is holding a non-axe item or empty hand.
+
 ### `item_craft`
 
 Triggered by crafting result events.

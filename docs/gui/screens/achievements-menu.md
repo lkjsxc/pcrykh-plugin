@@ -10,7 +10,16 @@ Browse achievements and open a specific achievement.
 - Each item MUST display:
   - Current tier
   - Current objective (next incomplete tier)
-  - Progress summary
+  - Progress summary (numeric progress + percentage)
+
+## Pagination
+
+- The achievements grid MUST paginate when the list exceeds one page.
+- Page size MUST be 28 items (4 rows × 7 columns).
+- The menu MUST expose:
+  - Previous Page control
+  - Next Page control
+  - Page indicator (e.g., `Page 2/5`)
 
 ## Sorting
 

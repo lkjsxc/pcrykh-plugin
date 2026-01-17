@@ -11,7 +11,9 @@
 - Bottom row reserved for navigation:
   - Slot 45: Back
   - Slot 49: Close
-  - Slot 53: Next / Page
+  - Slot 47: Previous Page
+  - Slot 51: Page Indicator
+  - Slot 53: Next Page
 
 ## Iconography
 

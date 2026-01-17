@@ -8,4 +8,4 @@
 ## Compatibility
 
 - There is no promise of compatibility between spec versions.
-- Migration rules MUST be specified in [config/migration.md](../config/migration.md) and [data/model/migrations.md](../data/model/migrations.md) when/if a version bump is introduced.
+- A version bump MAY require a full reset; migrations are OPTIONAL and only required if explicitly mandated by a newer spec.

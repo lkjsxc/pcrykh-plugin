@@ -10,9 +10,11 @@ View and complete progression within one achievement.
   - Achievement name
   - Current tier
   - Current objective
+  - Current progress amount and percentage toward the next objective
 - “Objective” item:
   - Description
   - Completion criteria
+  - Current progress (numeric)
   - Rewards (AP)
 - History item:
   - Last completed levels (at least 5)

@@ -6,7 +6,7 @@ An **achievement** is a named progression track with ordered tiers.
 
 Each achievement definition MUST include:
 
-- `achievement_id`: string
+- `id`: string
 - `name`: string
 - `category_id`: string
 - `icon`: string

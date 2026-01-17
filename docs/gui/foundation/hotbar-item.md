@@ -23,6 +23,7 @@ This document specifies the **pcrykh hotbar item** behavior.
 ## Interaction
 
 - Right-clicking the hotbar item MUST open the main menu (same as `/pcrykh`).
+- Clicking the hotbar item inside any open inventory MUST also open the main menu.
 - The item MUST NOT be droppable or moveable by the player.
 
 ## Non-goals

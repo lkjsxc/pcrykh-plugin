@@ -9,6 +9,7 @@ This document collects contradictory requirements discovered across the spec.
 ## Resolved conflicts
 
 - C-005 — Skills vs achievements (see [conflicts/resolutions.md](resolutions.md))
+- C-006 — Achievement id field name (see [conflicts/resolutions.md](resolutions.md))
 
 ## Resolution protocol (normative)
 

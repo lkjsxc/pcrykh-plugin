@@ -11,3 +11,4 @@
 
 - `Main → Achievements → Achievement Detail` MUST be a 2-click path.
 - Any menu MUST be reachable from `/pcrykh` in ≤ 3 clicks.
+- The Back action from Achievement Detail MUST return to Achievements Menu (not Main Menu).
