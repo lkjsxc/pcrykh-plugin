@@ -1,0 +1,25 @@
+# Achievements page
+
+- node: docs/gui/achievements.md
+  - purpose:
+    - provide a paged catalog view of all achievements
+  - inventory:
+    - size: 54 slots
+    - title: `Achievements`
+    - all clicks are cancelled; no item movement is permitted
+  - content_layout:
+    - slots `0..44` render achievements in category order, then ascending `id`
+    - if the catalog is empty, slot `22` contains a `BARRIER` named `No achievements loaded.` and all other slots are empty
+  - item_rendering:
+    - material is derived from `icon` using the platform match function
+    - if the icon is invalid or unrecognized, use `PAPER`
+    - display name is `title`
+    - lore lines (in order):
+      - `description`
+      - `category: <category_id>`
+      - `progress: <current>/<target>`
+      - `ap: <ap>`
+  - navigation:
+    - pagination uses [navigation.md](navigation.md)
+    - page size is 45 achievements
+    - slot `49` returns to [menu.md](menu.md)

@@ -10,7 +10,8 @@
     - `commands.root` (MUST be `pcrykh`)
     - `runtime.autosave`
     - `runtime.chat`
-    - `tips`
+    - `facts`
+    - `runtime.action_bar`
     - `achievement_sources` (non-empty list)
   - top_level_schema:
     - json:
@@ -27,18 +28,24 @@
           },
           "chat": {
             "announce_achievements": true,
-            "tips_enabled": true,
-            "tips_interval_seconds": 180,
-            "tips_prefix": "[Pcrykh] "
+            "facts_enabled": true,
+            "facts_interval_seconds": 180,
+            "prefix": "[Pcrykh] "
+          },
+          "action_bar": {
+            "progress_enabled": true,
+            "milestone_thresholds": [0.80, 0.90, 0.95],
+            "cooldown_seconds": 6
           }
         },
-        "tips": ["string"],
+        "facts": ["string"],
         "achievement_sources": ["achievements/packs/core.json"]
       }
       ```
   - rules:
     - `spec_version` MUST start with `4.`
     - `achievement_sources` MUST be a non-empty array
+    - `facts` MUST be a non-empty array of strings
   - achievement_source_resolution:
     - each entry in `achievement_sources` is a path relative to the plugin data folder
     - if the entry is a directory, all `.json` files under it (recursive) are loaded in lexical order

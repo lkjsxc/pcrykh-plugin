@@ -8,8 +8,8 @@
 	- navigation_slots:
 		- slot `45`: `ARROW` named `Previous` when `page > 0`; otherwise empty
 		- slot `53`: `ARROW` named `Next` when `page < total_pages - 1`; otherwise empty
-		- slot `49`: `BARRIER` named `Close`
+		- slot `49`: `BARRIER` named `Back`
 	- click_behavior:
 		- clicking `Previous` opens `page - 1`
 		- clicking `Next` opens `page + 1`
-		- clicking `Close` closes the inventory
+		- clicking `Back` opens [menu.md](menu.md)

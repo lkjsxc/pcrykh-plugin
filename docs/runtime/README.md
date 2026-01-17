@@ -8,3 +8,6 @@
 		- [commands.md](commands.md)
 		- [lifecycle.md](lifecycle.md)
 		- [loader.md](loader.md)
+		- [achievements.md](achievements.md)
+		- [action-bar.md](action-bar.md)
+		- [facts.md](facts.md)

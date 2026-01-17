@@ -1,24 +1,37 @@
-# GUI menu
+# Main menu
 
 - node: docs/gui/menu.md
   - purpose:
-    - provide a read-only view of the loaded achievement catalog
+    - provide the primary navigation hub for the plugin UI
   - atmosphere:
     - menus MUST reflect a large-scale MMORPG ambiance
     - visual tone MUST feel ceremonial, luminous, and world-aligned
     - avoid casual or comedic styling
   - inventory:
-    - size: 54 slots
-    - title: `Pcrykh Achievements`
+    - size: 27 slots
+    - title: `Pcrykh`
     - all clicks are cancelled; no item movement is permitted
-  - content_layout:
-    - slots `0..44` render achievements in ascending lexicographic order by `id`
-    - if the catalog is empty, slot `22` contains a `BARRIER` named `No achievements loaded.` and all other slots are empty
-  - item_rendering:
-    - material is derived from `icon` using the platform match function
-    - if the icon is invalid or unrecognized, use `PAPER`
-    - display name is `title`
-    - lore lines (in order):
-      - `description`
-      - `id: <id>`
-      - `category: <category_id>`
+  - layout:
+    - slot `11`: profile button
+    - slot `13`: achievements button
+    - slot `15`: settings button
+  - button_rendering:
+    - profile:
+      - material: `PLAYER_HEAD`
+      - name: `Profile`
+      - lore:
+        - `View your personal record`
+    - achievements:
+      - material: `BOOK`
+      - name: `Achievements`
+      - lore:
+        - `Browse the catalog`
+    - settings:
+      - material: `REDSTONE`
+      - name: `Settings`
+      - lore:
+        - `Configure notifications`
+  - behavior:
+    - clicking `Profile` opens [profile.md](profile.md)
+    - clicking `Achievements` opens [achievements.md](achievements.md) at page index `0`
+    - clicking `Settings` opens [settings.md](settings.md)

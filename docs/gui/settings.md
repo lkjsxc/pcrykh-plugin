@@ -1,0 +1,44 @@
+# Settings page
+
+- node: docs/gui/settings.md
+  - purpose:
+    - configure notification and broadcast options
+  - inventory:
+    - size: 27 slots
+    - title: `Settings`
+    - all clicks are cancelled; no item movement is permitted
+  - layout:
+    - slot `11`: achievement announcements toggle
+    - slot `13`: random facts toggle
+    - slot `15`: action-bar progress toggle
+    - slot `26`: back button
+  - item_rendering:
+    - announce_achievements:
+      - material: `NAME_TAG`
+      - name: `Achievement Broadcasts`
+      - lore:
+        - `global chat announcements`
+        - `state: <on|off>`
+    - facts_enabled:
+      - material: `BOOK`
+      - name: `Random Facts`
+      - lore:
+        - `periodic global facts`
+        - `state: <on|off>`
+    - action_bar_progress:
+      - material: `GLOWSTONE_DUST`
+      - name: `Progress Indicators`
+      - lore:
+        - `action bar milestone alerts`
+        - `state: <on|off>`
+    - back:
+      - material: `BARRIER`
+      - name: `Back`
+  - behavior:
+    - toggles update in-memory runtime config
+    - changes are persisted to `config.json` immediately
+    - clicking `Back` opens [menu.md](menu.md)
+  - settings_binding:
+    - `Achievement Broadcasts` -> `runtime.chat.announce_achievements`
+    - `Random Facts` -> `runtime.chat.facts_enabled`
+    - `Progress Indicators` -> `runtime.action_bar.progress_enabled`

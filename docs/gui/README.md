@@ -6,5 +6,8 @@
 		- only paths listed below are normative
 	- children:
 		- [menu.md](menu.md)
+		- [achievements.md](achievements.md)
+		- [profile.md](profile.md)
+		- [settings.md](settings.md)
 		- [navigation.md](navigation.md)
 		- [hotbar.md](hotbar.md)

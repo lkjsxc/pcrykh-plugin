@@ -7,3 +7,4 @@
 	- children:
 		- [achievements/README.md](achievements/README.md)
 		- [criteria/README.md](criteria/README.md)
+		- [facts/README.md](facts/README.md)

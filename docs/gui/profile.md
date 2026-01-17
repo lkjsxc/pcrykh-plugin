@@ -1,0 +1,32 @@
+# Profile page
+
+- node: docs/gui/profile.md
+  - purpose:
+    - provide the player's achievement summary and identity badge
+  - inventory:
+    - size: 27 slots
+    - title: `Profile`
+    - all clicks are cancelled; no item movement is permitted
+  - layout:
+    - slot `11`: player identity
+    - slot `13`: achievement summary
+    - slot `15`: back button
+  - item_rendering:
+    - identity:
+      - material: `PLAYER_HEAD`
+      - name: `You`
+      - lore:
+        - `name: <player_name>`
+        - `uuid: <player_uuid>`
+    - summary:
+      - material: `PAPER`
+      - name: `Progress`
+      - lore:
+        - `completed: <completed>/<total>`
+        - `ap: <ap_total>`
+        - `completion: <percent>%`
+    - back:
+      - material: `BARRIER`
+      - name: `Back`
+  - behavior:
+    - clicking `Back` opens [menu.md](menu.md)

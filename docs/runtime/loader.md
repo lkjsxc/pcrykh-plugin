@@ -7,7 +7,7 @@
 		- validate required top-level fields
 		- resolve `achievement_sources` to pack files
 		- expand templates into concrete achievements
-		- load but do not interpret `runtime.chat` and `tips`
+		- load but do not interpret `runtime.chat`, `runtime.action_bar`, and `facts`
 	- validation_order:
 		- file existence and line-count limit
 		- JSON parse
