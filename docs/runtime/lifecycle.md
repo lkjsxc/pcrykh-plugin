@@ -6,7 +6,8 @@
 2. Load `config.json` and validate required fields.
 3. Resolve `achievement_sources` to pack files.
 4. Expand templates into concrete achievements.
-5. Register `/pcrykh`.
+5. Register GUI menu listeners.
+6. Register `/pcrykh`.
 
 ## Shutdown
 

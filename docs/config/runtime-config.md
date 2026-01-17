@@ -19,7 +19,7 @@
 
 ```json
 {
-  "spec_version": "4.0",
+  "spec_version": "4.1",
   "commands": {
     "root": "pcrykh"
   },
@@ -51,7 +51,7 @@
 
       ```json
       {
-        "spec_version": "4.0",
+        "spec_version": "4.1",
         "commands": {
           "root": "pcrykh"
         },

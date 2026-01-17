@@ -33,3 +33,15 @@ Resolution:
 
 - README files are canonical index nodes.
 - Canonical spec content is limited to paths listed in each README's TOC.
+
+## C-009 — GUI scope exclusion vs GUI menu specification
+
+Conflict:
+
+- Scope declared GUI screens out-of-scope.
+- New GUI menu specification adds GUI behavior to the runtime.
+
+Resolution:
+
+- GUI menus are in-scope.
+- Scope explicitly includes GUI menus for the achievement catalog.

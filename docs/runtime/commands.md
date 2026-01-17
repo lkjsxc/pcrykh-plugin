@@ -3,7 +3,9 @@
 ## `/pcrykh`
 
 - Permission: `pcrykh.use`.
-- Response: `pcrykh active. Achievements loaded: <count>.`.
+- Behavior: Opens the GUI menu defined in [gui/menu.md](../gui/menu.md).
+- Player-only. If executed by a non-player sender, respond with `pcrykh menu is player-only.`.
+- No chat output is required on successful GUI open.
 
 ## Permissions
 
