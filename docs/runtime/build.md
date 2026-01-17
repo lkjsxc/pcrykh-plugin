@@ -10,6 +10,7 @@
     - alias_task: `cleanExport` (runs `clean` then `exportJar`)
   - docker_export:
     - Dockerfile provides a single-purpose export image
+    - dockerfile_path: `Dockerfile`
     - build output is a single file at `/data/pcrykh.jar`
     - build system MUST be Gradle 8.7 with JDK 21 toolchain
   - docker_usage:
