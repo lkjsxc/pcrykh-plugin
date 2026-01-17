@@ -1,0 +1,257 @@
+{
+  "spec_version": "1.0",
+  "commands": {
+    "root": "pcrykh"
+  },
+  "gui": {
+    "theme": "skyblock_classic"
+  },
+  "runtime": {
+    "autosave": {
+      "enabled": true,
+      "interval_seconds": 30
+    }
+  },
+  "achievements": [
+    {
+      "id": "stone_breaker",
+      "name": "Stone Breaker",
+      "category_id": "gathering",
+      "icon": "STONE",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "First Stone",
+          "description": "Break your first stone.",
+          "criteria": {
+            "type": "block_break",
+            "materials": ["STONE"],
+            "count": 1,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "log_chopper",
+      "name": "Log Chopper",
+      "category_id": "gathering",
+      "icon": "OAK_LOG",
+      "max_tier": 2,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "Oak Cutter",
+          "description": "Break 16 oak logs.",
+          "criteria": {
+            "type": "block_break",
+            "materials": ["OAK_LOG"],
+            "count": 16,
+            "constraints": {
+              "tool": {
+                "required": true,
+                "type": "axe"
+              }
+            }
+          },
+          "rewards": {
+            "ap": 15
+          }
+        },
+        {
+          "tier": 2,
+          "title": "Birch Cutter",
+          "description": "Break 24 birch logs.",
+          "criteria": {
+            "type": "block_break",
+            "materials": ["BIRCH_LOG"],
+            "count": 24,
+            "constraints": {
+              "tool": {
+                "required": true,
+                "type": "axe"
+              }
+            }
+          },
+          "rewards": {
+            "ap": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "ore_miner",
+      "name": "Ore Miner",
+      "category_id": "gathering",
+      "icon": "IRON_ORE",
+      "max_tier": 2,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "Coal Miner",
+          "description": "Mine 12 coal ore.",
+          "criteria": {
+            "type": "block_break",
+            "materials": ["COAL_ORE"],
+            "count": 12,
+            "constraints": {
+              "tool": {
+                "required": true,
+                "type": "pickaxe"
+              }
+            }
+          },
+          "rewards": {
+            "ap": 15
+          }
+        },
+        {
+          "tier": 2,
+          "title": "Iron Miner",
+          "description": "Mine 10 iron ore.",
+          "criteria": {
+            "type": "block_break",
+            "materials": ["IRON_ORE"],
+            "count": 10,
+            "constraints": {
+              "tool": {
+                "required": true,
+                "type": "pickaxe"
+              }
+            }
+          },
+          "rewards": {
+            "ap": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "fish_finder",
+      "name": "Fish Finder",
+      "category_id": "gathering",
+      "icon": "FISHING_ROD",
+      "max_tier": 2,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "Cod Catch",
+          "description": "Catch 5 cod.",
+          "criteria": {
+            "type": "fish_catch",
+            "items": ["COD"],
+            "count": 5,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 10
+          }
+        },
+        {
+          "tier": 2,
+          "title": "Salmon Catch",
+          "description": "Catch 5 salmon.",
+          "criteria": {
+            "type": "fish_catch",
+            "items": ["SALMON"],
+            "count": 5,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "zombie_hunter",
+      "name": "Zombie Hunter",
+      "category_id": "combat",
+      "icon": "IRON_SWORD",
+      "max_tier": 2,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "Shambler",
+          "description": "Defeat 5 zombies.",
+          "criteria": {
+            "type": "entity_kill",
+            "entities": ["ZOMBIE"],
+            "count": 5,
+            "constraints": {
+              "by_player_only": true
+            }
+          },
+          "rewards": {
+            "ap": 15
+          }
+        },
+        {
+          "tier": 2,
+          "title": "Gravewalker",
+          "description": "Defeat 10 zombies.",
+          "criteria": {
+            "type": "entity_kill",
+            "entities": ["ZOMBIE"],
+            "count": 10,
+            "constraints": {
+              "by_player_only": true
+            }
+          },
+          "rewards": {
+            "ap": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "workbench",
+      "name": "Workbench",
+      "category_id": "crafting",
+      "icon": "CRAFTING_TABLE",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "First Table",
+          "description": "Craft a crafting table.",
+          "criteria": {
+            "type": "item_craft",
+            "item": "CRAFTING_TABLE",
+            "count": 1,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "world_walker",
+      "name": "World Walker",
+      "category_id": "gathering",
+      "icon": "COMPASS",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "First Steps",
+          "description": "Travel 100 blocks.",
+          "criteria": {
+            "type": "travel",
+            "distance_blocks": 100,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 10
+          }
+        }
+      ]
+    }
+  ]
+}

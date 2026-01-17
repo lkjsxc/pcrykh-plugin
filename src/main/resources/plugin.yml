@@ -1,0 +1,16 @@
+name: ${name}
+version: ${version}
+main: dev.pcrykh.pcrykh.PcrykhPlugin
+api-version: "1.21"
+commands:
+  pcrykh:
+    description: Root command for pcrykh
+    usage: /pcrykh
+    permission: pcrykh.use
+permissions:
+  pcrykh.use:
+    default: true
+  pcrykh.use.others:
+    default: op
+  pcrykh.admin:
+    default: op

@@ -1,0 +1,25 @@
+services:
+  builder:
+    image: gradle:8.7-jdk21
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    command: ["gradle", "--no-daemon", "cleanExport"]
+
+  paper:
+    image: itzg/minecraft-server:java21
+    depends_on:
+      builder:
+        condition: service_completed_successfully
+    environment:
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      VERSION: "1.21.1"
+      MEMORY: "2G"
+      UID: "${UID:-1000}"
+      GID: "${GID:-1000}"
+    volumes:
+      - ./data:/data
+    ports:
+      - "25565:25565"
