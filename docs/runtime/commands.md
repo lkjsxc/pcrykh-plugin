@@ -2,11 +2,10 @@
 
 ## `/pcrykh`
 
-- Permission: `pcrykh.use`
-- Response: `pcrykh active. Achievements loaded: <count>.`
+- Permission: `pcrykh.use`.
+- Response: `pcrykh active. Achievements loaded: <count>.`.
 
 ## Permissions
 
-- `pcrykh.use`: required to execute `/pcrykh`.
-- `pcrykh.use.others`: reserved (unused).
-- `pcrykh.admin`: reserved (unused).
+- `pcrykh.use` is required to execute `/pcrykh`.
+- No other permissions are defined.

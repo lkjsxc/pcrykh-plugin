@@ -1,16 +1,17 @@
 # Lifecycle
 
-## Startup
+## Startup sequence
 
-- Ensure default config resources exist in the data folder.
-- Load `config.json` and validate required fields.
-- Load achievement pack sources and expand templates.
-- Register `/pcrykh`.
+1. Ensure default config resources exist in the data folder.
+2. Load `config.json` and validate required fields.
+3. Resolve `achievement_sources` to pack files.
+4. Expand templates into concrete achievements.
+5. Register `/pcrykh`.
 
 ## Shutdown
 
 - No persistence actions are performed.
 
-## Command surface
+## Runtime invariants
 
-- `/pcrykh` replies with the current achievement count.
+- The achievement catalog is immutable after load.
