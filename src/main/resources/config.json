@@ -1,0 +1,24 @@
+{
+  "spec_version": "4.1",
+  "commands": {
+    "root": "pcrykh"
+  },
+  "runtime": {
+    "autosave": {
+      "enabled": true,
+      "interval_seconds": 60
+    },
+    "chat": {
+      "announce_achievements": true,
+      "tips_enabled": true,
+      "tips_interval_seconds": 180,
+      "tips_prefix": "[Pcrykh] "
+    }
+  },
+  "tips": [
+    "Achievements are cataloged automatically."
+  ],
+  "achievement_sources": [
+    "achievements/packs/core.json"
+  ]
+}

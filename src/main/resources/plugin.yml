@@ -1,0 +1,12 @@
+name: ${name}
+version: ${version}
+main: dev.pcrykh.PcrykhPlugin
+api-version: "1.21"
+commands:
+  pcrykh:
+    description: Opens the achievement catalog.
+    permission: pcrykh.use
+permissions:
+  pcrykh.use:
+    description: Allows access to the catalog menu.
+    default: true
