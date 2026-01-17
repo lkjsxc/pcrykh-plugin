@@ -19,6 +19,7 @@
 
 - Achievements MUST have a unique icon material.
 - Locked items MUST show a consistent “locked” lore block.
+- Completed achievements MUST appear enchanted/glowing.
 
 ## Feedback
 

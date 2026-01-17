@@ -13,7 +13,7 @@ This document records resolved contradictions and the winning rules.
 
 **Resolution**
 
-- The achievement format wins. All skill-based specs are removed and replaced with achievement definitions and tiers.
+- The achievement format wins. All skill-based specs are removed and replaced with achievement definitions.
 
 ### C-006 — Achievement id field name
 

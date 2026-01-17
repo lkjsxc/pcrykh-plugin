@@ -27,7 +27,7 @@ Notation:
 - `/pcrykh admin reload` → reload config + runtime definitions
 - `/pcrykh admin export <player>` → export player data (debug)
 - `/pcrykh admin setap <player> <amount>`
-- `/pcrykh admin complete <player> <achievement_id> <tier>` → mark objective tier complete and grant rewards
+- `/pcrykh admin complete <player> <achievement_id>` → mark achievement complete and grant rewards
 - `/pcrykh admin reset <player> [scope]` → reset progression
 
 ## Tab completion

@@ -11,7 +11,6 @@
 - `MISSING_PERMISSION`
 - `PLAYER_NOT_FOUND`
 - `ACHIEVEMENT_NOT_FOUND`
-- `TIER_OUT_OF_RANGE`
 - `STATE_VIOLATION` (e.g., completing level 7 before level 6)
 - `INTERNAL_ERROR`
 

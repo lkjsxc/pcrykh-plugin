@@ -4,7 +4,7 @@
 
 - **Main Menu** → profile summary + shortcuts
 - **Achievements Menu** → list of achievements
-- **Achievement Detail** → current tier objective, progress, history
+- **Achievement Detail** → objective status, progress, and rewards
 - **Admin Menu** → only if `pcrykh.admin`
 
 ## Navigation rules

@@ -1,12 +1,12 @@
 # Leveling rules
 
-## Achievement tier computation
+## Achievement completion computation
 
-- A player’s **Achievement Tier** for an achievement is the highest tier whose objective is completed.
+- A player’s **Achievement Completion** for an achievement is a boolean: completed or not.
 
 ## Player level computation
 
-- Player level is computed as the sum of all completed achievement tiers.
+- Player level is computed as the count of completed achievements.
 - The computation MUST be deterministic and monotonic.
 
 ## Anti-abuse

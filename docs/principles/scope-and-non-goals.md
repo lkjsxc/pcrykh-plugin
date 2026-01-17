@@ -3,7 +3,7 @@
 ## In scope
 
 - An achievement-based RPG progression system.
-- Achievement tiers implemented as **sequential objectives**.
+- Achievement objectives implemented as **single, atomic goals**.
 - XP awards for objective completion.
 - A polished RPG-style GUI with dense menus and strong iconography.
 - A single command surface rooted at `/pcrykh`.

@@ -4,15 +4,11 @@ This document defines default reward curves for achievements.
 
 ## Rule
 
-- Even if a curve exists, every tier MUST list explicit reward values.
+- Even if a curve exists, every achievement MUST list explicit reward values.
 
 ## Default curve (guidance)
 
-For a 5-tier achievement:
-
-- Tier 1: `ap=10`
-- Tier 5: `ap=100`
-- Intermediate tiers increase approximately linearly.
+For single-objective achievements, rewards SHOULD scale with expected time-to-complete.
 
 ## Tuning
 

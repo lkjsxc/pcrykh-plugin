@@ -5,7 +5,7 @@ This document specifies which game events MUST produce action bar output.
 ## Achievement Points (AP) awards
 
 - On any objective completion that grants AP, the plugin MUST emit an **AP** action bar message.
-- The progress displayed MUST be the current progress toward the **next** objective after the award is applied.
+- The message MUST indicate completion and total AP after the award is applied.
 
 ## Achievement progress updates
 

@@ -14,24 +14,15 @@ This spec targets a dense, informative, consistent feel.
 An AP action bar message MUST contain:
 
 - Achievement display name
-- Current tier (after applying the award)
 - AP gained in this award event
 - Total AP (after applying the award)
-- Progress toward the next objective (after applying the award)
-- Next tier indicator:
-  - Either `MAX`, or the next tier number (and MAY include a short next-objective title)
+- Completion indicator (`Completed`)
 
 ### Canonical string (legacy section colors)
 
 The implementation MUST render this canonical structure (colors MAY vary by theme, but ordering MUST remain stable):
 
-`+{ap_award} AP | {achievement_name} {tier} | AP {ap_total} | Prog {progress}/{target} | Next {next}`
-
-Where:
-
-- `next = MAX` if `next_tier > max_tier`
-- else `next = {next_tier}: {short_title}` (short_title MAY be truncated)
-- `progress` and `target` refer to the *next* objective after the award is applied
+`+{ap_award} AP | {achievement_name} | AP {ap_total} | Completed`
 
 ### Constraints
 
@@ -52,10 +43,9 @@ Where:
 ### Required fields
 
 - Achievement display name
-- Current tier
 - Progress toward current objective
 - Current objective title (short/truncated)
 
 ### Canonical string (legacy section colors)
 
-`{achievement_name} {tier} | Prog {progress}/{target} | Obj {objective_title}`
+`{achievement_name} | Prog {progress}/{target} | Obj {objective_title}`

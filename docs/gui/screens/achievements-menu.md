@@ -8,8 +8,8 @@ Browse achievements and open a specific achievement.
 
 - A grid of achievement items.
 - Each item MUST display:
-  - Current tier
-  - Current objective (next incomplete tier)
+  - Objective title
+  - Status (`Completed` or `In Progress`)
   - Progress summary (numeric progress + percentage)
 
 ## Pagination
@@ -24,3 +24,7 @@ Browse achievements and open a specific achievement.
 ## Sorting
 
 - Achievements MUST be displayed in a stable order defined by config.
+
+## Completed styling
+
+- Completed achievements MUST render with an enchanted/glowing appearance.

@@ -10,24 +10,23 @@ This directory defines progression state, objective completion, and XP awarding.
 
 ## Model overview
 
-Achievements are independent tracks with ordered tiers.
+Achievements are independent tracks with a single objective.
 
-- Each tier defines exactly one **objective**.
+- Each achievement defines exactly one **objective**.
 - Objectives accumulate a single integer progress counter (`progress_amount`).
-- When the objective is satisfied, that tier is completed and **rewards are granted**.
+- When the objective is satisfied, that achievement is completed and **rewards are granted**.
 
 ## State model (normative)
 
 The runtime MUST represent per-player progression state for each achievement with the following fields:
 
-- `current_tier` (int): last completed tier for this achievement.
-- `next_tier` (int): the next tier to attempt; MUST equal `current_tier + 1` unless at max.
-- `progress_amount` (int/long): progress counter for the objective of `next_tier`.
+- `completed` (bool): whether the achievement objective is complete.
+- `progress_amount` (int/long): progress counter for the objective.
 
 The runtime MUST also represent player-global progression:
 
-- `player_level` (int): derived from total completed achievement tiers (see below).
-- `achievement_tier_sum` (int): sum of all completed tiers across achievements.
+- `player_level` (int): derived from total completed achievements (see below).
+- `achievement_completed_sum` (int): count of completed achievements.
 - `ap_total` (int/long): total Achievement Points accumulated.
 
 ## Completion semantics
@@ -46,22 +45,21 @@ If `progress_amount >= required(c)`, the implementation MUST complete the object
 
 ### Objective completion
 
-On objective completion for `(achievement, tier)`:
+On objective completion for `achievement`:
 
-- The system MUST be idempotent: completion MUST only apply if `next_tier == tier`.
+- The system MUST be idempotent: completion MUST only apply if not already completed.
 - Rewards MUST be granted:
-  - `ap_total += tier.rewards.ap`
-- Tiers MUST advance:
-  - `current_tier = tier`
-  - `next_tier = tier + 1` (capped so that `next_tier > max_tier` indicates MAX)
-- `progress_amount` MUST reset to 0.
-- `achievement_tier_sum` MUST be recomputed as the sum of all completed tiers.
+  - `ap_total += achievement.rewards.ap`
+- Completion MUST be recorded:
+  - `completed = true`
+- `progress_amount` SHOULD be set to the required amount for display.
+- `achievement_completed_sum` MUST be recomputed as the count of completed achievements.
 - The completion MUST be persisted to objective history.
 
 ### Player level derivation
 
-- `achievement_tier_sum` = sum of all completed tiers across achievements.
-- `player_level` MUST be derived directly from `achievement_tier_sum`.
+- `achievement_completed_sum` = count of completed achievements.
+- `player_level` MUST be derived directly from `achievement_completed_sum`.
 
 ## Runtime feedback requirements
 

@@ -16,6 +16,8 @@
 - `commands.root` (MUST be `pcrykh`)
 - `gui.theme`
 - `runtime.autosave`
+- `runtime.chat`
+- `tips`
 - `achievements` (list of achievement definitions)
 
 ## Top-level schema (normative)
@@ -33,8 +35,15 @@
 		"autosave": {
 			"enabled": true,
 			"interval_seconds": 30
+		},
+		"chat": {
+			"announce_achievements": true,
+			"tips_enabled": true,
+			"tips_interval_seconds": 120,
+			"tips_prefix": "[Pcrykh Tip] "
 		}
 	},
+	"tips": ["string", "..."],
 	"achievements": ["AchievementDefinition", "..."]
 }
 ```
@@ -47,8 +56,10 @@ Each achievement MUST define:
 - `name`
 - `category_id`
 - `icon`
-- `max_tier` (MUST be >= 1)
-- `tiers` (objectives table; MUST include every integer tier from 1..max_tier)
+- `title`
+- `description`
+- `criteria`
+- `rewards`
 
 ### AchievementDefinition schema (normative)
 
@@ -58,58 +69,12 @@ Each achievement MUST define:
 	"name": "string",
 	"category_id": "string",
 	"icon": "string",
-	"max_tier": 5,
-	"tiers": ["TierDefinition", "..."]
-}
-```
-
-## Tier definition shape
-
-Each tier MUST define:
-
-- `tier` (int, starting at 1)
-- `title` (string)
-- `description` (string)
-- `criteria` (object)
-- `rewards` (object)
-
-### TierDefinition schema (normative)
-
-```json
-{
-	"tier": 1,
 	"title": "string",
 	"description": "string",
 	"criteria": "CriteriaDefinition",
 	"rewards": {
 		"ap": 0
 	}
-}
-```
-
-## CriteriaDefinition
-
-Criteria objects MUST include `type` and additional fields depending on type.
-
-### Common fields
-
-```json
-{
-	"type": "string",
-	"constraints": {"...": "..."}
-}
-```
-
-### Supported criteria types (required shapes)
-
-#### `block_break`
-
-```json
-{
-	"type": "block_break",
-	"materials": ["string"],
-	"count": 1,
-	"constraints": {"...": "..."}
 }
 ```
 
@@ -190,6 +155,26 @@ Criteria objects MUST include `type` and additional fields depending on type.
 }
 ```
 
+#### `travel_crouch`
+
+```json
+{
+	"type": "travel_crouch",
+	"distance_blocks": 1,
+	"constraints": {"...": "..."}
+}
+```
+
+#### `travel_fly`
+
+```json
+{
+	"type": "travel_fly",
+	"distance_blocks": 1,
+	"constraints": {"...": "..."}
+}
+```
+
 #### `travel_mount`
 
 ```json
@@ -220,6 +205,16 @@ Criteria objects MUST include `type` and additional fields depending on type.
 	"distance_blocks": 1,
 	"vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT"],
 	"passengers": ["COW", "SHEEP"],
+	"constraints": {"...": "..."}
+}
+```
+
+#### `jump`
+
+```json
+{
+	"type": "jump",
+	"count": 1,
 	"constraints": {"...": "..."}
 }
 ```

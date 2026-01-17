@@ -1,12 +1,11 @@
 # Achievements
 
-This directory defines the achievement system, its tiers, criteria, and rewards.
+This directory defines the achievement system, its objectives, criteria, and rewards.
 
 ## Core rules
 
 - Achievements replace the entire skill system.
-- Each achievement is an independent track with ordered tiers.
-- Each tier defines exactly one objective.
+- Each achievement is an independent track with a single objective.
 - Achievements are grouped by category for UI and organization only.
 
 ## TOC

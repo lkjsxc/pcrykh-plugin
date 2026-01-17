@@ -131,6 +131,32 @@ Optional constraints:
 - `biomes`: list of biome identifiers
 - `dimensions`: list of `{overworld, nether, end}`
 
+### `travel_crouch`
+
+Triggered by movement tracking while **crouch-walking** (sneaking, not swimming, not flying, not mounted).
+
+Required fields:
+
+- `distance_blocks`: integer
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
+### `travel_fly`
+
+Triggered by movement tracking while **flying or gliding** (not mounted).
+
+Required fields:
+
+- `distance_blocks`: integer
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
 ### `travel_mount`
 
 Triggered by movement tracking while **mounted** on a non-boat vehicle.
@@ -173,6 +199,18 @@ Optional constraints:
 
 - `biomes`: list of biome identifiers
 - `dimensions`: list of `{overworld, nether, end}`
+
+### `jump`
+
+Triggered by server-side jump increments.
+
+Required fields:
+
+- `count`: integer
+
+Optional constraints:
+
+- `rate_limit`
 
 ## Normalization
 

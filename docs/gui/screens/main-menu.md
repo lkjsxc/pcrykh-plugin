@@ -9,7 +9,7 @@ Primary entry point for players.
 - Profile summary item (player head) showing:
   - Player level
   - Total AP
-  - Top 3 achievements by tier
+  - Top 3 completed achievements
 - “Achievements” button → Achievements Menu
 - “Settings” placeholder (non-functional is OK in v1)
 

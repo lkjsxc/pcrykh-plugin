@@ -8,12 +8,12 @@ View and complete progression within one achievement.
 
 - Header summary:
   - Achievement name
-  - Current tier
-  - Current objective
-  - Current progress amount and percentage toward the next objective
+  - Objective title
+  - Status (`Completed` or `In Progress`)
+  - Current progress amount and percentage toward the objective
 - “Objective” item:
   - Description
-  - Completion criteria
+  - Completion criteria summary
   - Current progress (numeric)
   - Rewards (AP)
 - History item:
@@ -23,3 +23,4 @@ View and complete progression within one achievement.
 
 - Objectives are completed by gameplay events (not by clicking).
 - The GUI MUST reflect completion in real time or via refresh.
+- Completed achievements MUST render with an enchanted/glowing appearance.

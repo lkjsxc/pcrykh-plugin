@@ -11,7 +11,7 @@ The goal is to prevent trivial farms from auto-completing achievements without m
 ## Rate limiting (primary control)
 
 - Implementations SHOULD apply `constraints.rate_limit.max_progress_per_minute` when provided.
-- If an achievement tier does not specify a rate limit, the implementation MAY apply a conservative default cap.
+- If an achievement does not specify a rate limit, the implementation MAY apply a conservative default cap.
 
 ## Event integrity
 
