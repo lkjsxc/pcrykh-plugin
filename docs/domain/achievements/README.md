@@ -1,12 +1,10 @@
 # Achievements index
 
-## Canonicality
-
-- This README is a canonical index node.
-- Only paths listed below are normative.
-
-## Tree
-
-- [model.md](model.md)
-- [templates.md](templates.md)
-- [rewards.md](rewards.md)
+- node: docs/domain/achievements/
+	- canonical_index: true
+	- rules:
+		- only paths listed below are normative
+	- children:
+		- [model.md](model.md)
+		- [templates.md](templates.md)
+		- [rewards.md](rewards.md)

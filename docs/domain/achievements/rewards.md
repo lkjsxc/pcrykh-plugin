@@ -1,16 +1,13 @@
 # Rewards
 
-## RewardDefinition (canonical)
-
-Schema:
-
-```json
-{
-  "ap": 0
-}
-```
-
-Rules:
-
-- `ap` is an integer achievement-point value.
-- No other reward fields exist.
+- node: docs/domain/achievements/rewards.md
+  - reward_definition:
+    - schema:
+      ```json
+      {
+        "ap": 0
+      }
+      ```
+    - rules:
+      - `ap` is an integer achievement-point value
+      - no other reward fields exist

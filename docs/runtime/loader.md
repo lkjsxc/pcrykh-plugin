@@ -1,24 +1,20 @@
 # Config loader
 
-## Responsibilities
-
-- Enforce the 300-line limit on `config.json`.
-- Reject unsupported `spec_version`.
-- Validate required top-level fields.
-- Resolve `achievement_sources` to pack files.
-- Expand templates into concrete achievements.
-- Load but do not interpret `runtime.chat` and `tips`.
-
-## Validation order (canonical)
-
-1. File existence and line-count limit.
-2. JSON parse.
-3. Required keys and `commands.root`.
-4. `spec_version` validation.
-5. `achievement_sources` resolution.
-6. Template expansion and achievement validation.
-
-## Failure behavior
-
-- Any validation failure disables the plugin.
-- Duplicate achievement `id` values are fatal.
+- node: docs/runtime/loader.md
+	- responsibilities:
+		- enforce the 300-line limit on `config.json`
+		- reject unsupported `spec_version`
+		- validate required top-level fields
+		- resolve `achievement_sources` to pack files
+		- expand templates into concrete achievements
+		- load but do not interpret `runtime.chat` and `tips`
+	- validation_order:
+		- file existence and line-count limit
+		- JSON parse
+		- required keys and `commands.root`
+		- `spec_version` validation
+		- `achievement_sources` resolution
+		- template expansion and achievement validation
+	- failure_behavior:
+		- any validation failure disables the plugin
+		- duplicate achievement `id` values are fatal

@@ -1,12 +1,11 @@
 # Contradictions
 
-## Status
-
-- No open contradictions remain.
-
-## Resolved contradictions
-
-- `achievement_id` vs `id` for achievement identifiers.
-- `block_break` used in config examples but missing from criteria type list.
-- TOC canonicality rule vs README authority.
-- GUI declared out-of-scope vs GUI menu specification.
+- node: docs/governance/conflicts/contradictions.md
+	- status:
+		- no open contradictions remain
+	- resolved_contradictions:
+		- `achievement_id` vs `id` for achievement identifiers
+		- `block_break` used in config examples but missing from criteria type list
+		- TOC canonicality rule vs README authority
+		- GUI declared out-of-scope vs GUI menu specification
+		- corrupted config schema blocks containing duplicated spec text

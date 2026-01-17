@@ -1,11 +1,9 @@
 # Criteria index
 
-## Canonicality
-
-- This README is a canonical index node.
-- Only paths listed below are normative.
-
-## Tree
-
-- [types.md](types.md)
-- [constraints.md](constraints.md)
+- node: docs/domain/criteria/
+	- canonical_index: true
+	- rules:
+		- only paths listed below are normative
+	- children:
+		- [types.md](types.md)
+		- [constraints.md](constraints.md)

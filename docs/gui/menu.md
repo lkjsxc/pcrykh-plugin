@@ -1,26 +1,24 @@
 # GUI menu
 
-## Purpose
-
-- Provide a read-only view of the loaded achievement catalog.
-
-## Inventory
-
-- Size: 54 slots.
-- Title: `Pcrykh Achievements`.
-- All clicks are cancelled; no item movement is permitted.
-
-## Content layout
-
-- Slots `0..44` render achievements in ascending lexicographic order by `id`.
-- If the catalog is empty, slot `22` contains a `BARRIER` named `No achievements loaded.` and all other slots are empty.
-
-## Item rendering
-
-- Material is derived from `icon` using the platform match function.
-- If the icon is invalid or unrecognized, use `PAPER`.
-- Display name is `title`.
-- Lore lines (in order):
-  - `description`
-  - `id: <id>`
-  - `category: <category_id>`
+- node: docs/gui/menu.md
+  - purpose:
+    - provide a read-only view of the loaded achievement catalog
+  - atmosphere:
+    - menus MUST reflect a large-scale MMORPG ambiance
+    - visual tone MUST feel ceremonial, luminous, and world-aligned
+    - avoid casual or comedic styling
+  - inventory:
+    - size: 54 slots
+    - title: `Pcrykh Achievements`
+    - all clicks are cancelled; no item movement is permitted
+  - content_layout:
+    - slots `0..44` render achievements in ascending lexicographic order by `id`
+    - if the catalog is empty, slot `22` contains a `BARRIER` named `No achievements loaded.` and all other slots are empty
+  - item_rendering:
+    - material is derived from `icon` using the platform match function
+    - if the icon is invalid or unrecognized, use `PAPER`
+    - display name is `title`
+    - lore lines (in order):
+      - `description`
+      - `id: <id>`
+      - `category: <category_id>`
