@@ -4,7 +4,7 @@
   - purpose:
     - provide the player's achievement summary and identity badge
   - inventory:
-    - size: 27 slots
+    - size: 54 slots
     - title: `Profile`
     - all clicks are cancelled; no item movement is permitted
   - layout:

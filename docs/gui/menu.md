@@ -8,7 +8,7 @@
     - visual tone MUST feel ceremonial, luminous, and world-aligned
     - avoid casual or comedic styling
   - inventory:
-    - size: 27 slots
+    - size: 54 slots
     - title: `Pcrykh`
     - all clicks are cancelled; no item movement is permitted
   - layout:

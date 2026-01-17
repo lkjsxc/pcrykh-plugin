@@ -4,7 +4,7 @@
   - purpose:
     - configure notification and broadcast options
   - inventory:
-    - size: 27 slots
+    - size: 54 slots
     - title: `Settings`
     - all clicks are cancelled; no item movement is permitted
   - layout:
@@ -29,7 +29,7 @@
       - material: `GLOWSTONE_DUST`
       - name: `Progress Indicators`
       - lore:
-        - `action bar milestone alerts`
+        - `action bar progress updates`
         - `state: <on|off>`
     - back:
       - material: `BARRIER`

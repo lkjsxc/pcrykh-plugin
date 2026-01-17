@@ -26,3 +26,5 @@
     - each template generates `subjects.length × tiers.levels` achievements
     - tokens are applied per [domain/achievements/templates.md](../domain/achievements/templates.md)
     - the generated catalog SHOULD be ~500 achievements (target range 450–550)
+    - large catalogs SHOULD be split across multiple pack files and directories
+    - each pack file MUST remain under 300 lines
