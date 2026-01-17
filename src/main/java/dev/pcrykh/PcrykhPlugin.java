@@ -22,8 +22,18 @@ import dev.pcrykh.runtime.command.PcrykhCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.FileSystemNotFoundException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.CodeSource;
 import java.util.List;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class PcrykhPlugin extends JavaPlugin {
     private AchievementCatalog catalog;
@@ -79,12 +89,68 @@ public class PcrykhPlugin extends JavaPlugin {
             throw new ConfigException("Failed to create data folder");
         }
         saveResource("config.json", false);
-        saveResource("achievements/packs/mining.json", false);
-        saveResource("achievements/packs/harvest.json", false);
-        saveResource("achievements/packs/crafting.json", false);
-        saveResource("achievements/packs/hunting.json", false);
-        saveResource("achievements/packs/fishing.json", false);
-        saveResource("facts/packs/trivia-001.json", false);
-        saveResource("facts/packs/trivia-002.json", false);
+        saveResourceDirectory("achievements");
+        saveResourceDirectory("facts");
+    }
+
+    private void saveResourceDirectory(String resourceDir) {
+        String normalized = resourceDir.endsWith("/") ? resourceDir : resourceDir + "/";
+
+        URL dirUrl = getClass().getClassLoader().getResource(normalized);
+        if (dirUrl != null && "file".equals(dirUrl.getProtocol())) {
+            try {
+                Path dirPath = Paths.get(dirUrl.toURI());
+                if (Files.exists(dirPath)) {
+                    copyDirectoryResources(dirPath, normalized);
+                    return;
+                }
+            } catch (URISyntaxException | FileSystemNotFoundException ex) {
+                throw new ConfigException("Failed to resolve resource directory: " + resourceDir, ex);
+            }
+        }
+
+        CodeSource codeSource = getClass().getProtectionDomain().getCodeSource();
+        if (codeSource == null) {
+            return;
+        }
+
+        try {
+            URI location = codeSource.getLocation().toURI();
+            Path sourcePath = Paths.get(location);
+            if (Files.isRegularFile(sourcePath)) {
+                try (JarFile jar = new JarFile(sourcePath.toFile())) {
+                    Enumeration<JarEntry> entries = jar.entries();
+                    while (entries.hasMoreElements()) {
+                        JarEntry entry = entries.nextElement();
+                        String name = entry.getName();
+                        if (name.startsWith(normalized) && !entry.isDirectory()) {
+                            saveResource(name, false);
+                        }
+                    }
+                }
+                return;
+            }
+
+            if (Files.isDirectory(sourcePath)) {
+                Path dirPath = sourcePath.resolve(resourceDir);
+                if (Files.exists(dirPath)) {
+                    copyDirectoryResources(dirPath, normalized);
+                }
+            }
+        } catch (Exception ex) {
+            throw new ConfigException("Failed to copy default resources for: " + resourceDir, ex);
+        }
+    }
+
+    private void copyDirectoryResources(Path dirPath, String normalized) {
+        try (var stream = Files.walk(dirPath)) {
+            stream.filter(Files::isRegularFile).forEach(path -> {
+                Path relative = dirPath.relativize(path);
+                String resourcePath = normalized + relative.toString().replace('\\', '/');
+                saveResource(resourcePath, false);
+            });
+        } catch (Exception ex) {
+            throw new ConfigException("Failed to copy resources from: " + dirPath, ex);
+        }
     }
 }

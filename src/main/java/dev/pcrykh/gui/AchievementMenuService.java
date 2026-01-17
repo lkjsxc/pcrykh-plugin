@@ -162,7 +162,7 @@ public class AchievementMenuService {
         meta.lore(lore);
 
         if (progressService.isCompleted(player, achievement)) {
-            meta.addEnchant(Enchantment.LUCK, 1, true);
+            meta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
