@@ -160,6 +160,70 @@ Criteria objects MUST include `type` and additional fields depending on type.
 }
 ```
 
+#### `travel_walk`
+
+```json
+{
+	"type": "travel_walk",
+	"distance_blocks": 1,
+	"constraints": {"...": "..."}
+}
+```
+
+#### `travel_sprint`
+
+```json
+{
+	"type": "travel_sprint",
+	"distance_blocks": 1,
+	"constraints": {"...": "..."}
+}
+```
+
+#### `travel_swim`
+
+```json
+{
+	"type": "travel_swim",
+	"distance_blocks": 1,
+	"constraints": {"...": "..."}
+}
+```
+
+#### `travel_mount`
+
+```json
+{
+	"type": "travel_mount",
+	"distance_blocks": 1,
+	"vehicles": ["HORSE", "STRIDER"],
+	"constraints": {"...": "..."}
+}
+```
+
+#### `travel_boat`
+
+```json
+{
+	"type": "travel_boat",
+	"distance_blocks": 1,
+	"vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT"],
+	"constraints": {"...": "..."}
+}
+```
+
+#### `travel_boat_with_animal`
+
+```json
+{
+	"type": "travel_boat_with_animal",
+	"distance_blocks": 1,
+	"vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT"],
+	"passengers": ["COW", "SHEEP"],
+	"constraints": {"...": "..."}
+}
+```
+
 ## Conflict handling
 
 If a doc page conflicts with this schema, the schema in this file wins unless explicitly superseded by a higher-precedence principle in [principles/README.md](../principles/README.md). All conflicts MUST be recorded in [conflicts/README.md](../conflicts/README.md).

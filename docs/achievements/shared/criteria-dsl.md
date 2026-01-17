@@ -92,6 +92,88 @@ Optional constraints:
 - `biomes`: list of biome identifiers
 - `dimensions`: list of `{overworld, nether, end}`
 
+### `travel_walk`
+
+Triggered by movement tracking while **walking** (not sprinting, not swimming, not mounted).
+
+Required fields:
+
+- `distance_blocks`: integer
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
+### `travel_sprint`
+
+Triggered by movement tracking while **sprinting** (not swimming, not mounted).
+
+Required fields:
+
+- `distance_blocks`: integer
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
+### `travel_swim`
+
+Triggered by movement tracking while **swimming** (not mounted).
+
+Required fields:
+
+- `distance_blocks`: integer
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
+### `travel_mount`
+
+Triggered by movement tracking while **mounted** on a non-boat vehicle.
+
+Required fields:
+
+- `distance_blocks`: integer
+- `vehicles`: list of entity identifiers (e.g., `HORSE`, `PIG`, `STRIDER`, `CAMEL`)
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
+### `travel_boat`
+
+Triggered by movement tracking while **rowing a boat**.
+
+Required fields:
+
+- `distance_blocks`: integer
+- `vehicles`: list of boat identifiers (e.g., `OAK_BOAT`, `OAK_CHEST_BOAT`, `BAMBOO_RAFT`)
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
+### `travel_boat_with_animal`
+
+Triggered by movement tracking while **rowing a boat** that carries an animal passenger.
+
+Required fields:
+
+- `distance_blocks`: integer
+- `vehicles`: list of boat identifiers (e.g., `OAK_BOAT`, `OAK_CHEST_BOAT`, `BAMBOO_RAFT`)
+- `passengers`: list of entity identifiers (e.g., `COW`, `SHEEP`, `PIG`, `CHICKEN`)
+
+Optional constraints:
+
+- `biomes`: list of biome identifiers
+- `dimensions`: list of `{overworld, nether, end}`
+
 ## Normalization
 
 - Implementations MUST normalize identifiers to canonical Bukkit/Paper names.
