@@ -3,7 +3,7 @@
 - node: docs/runtime/achievements.md
   - unlock_events:
     - when an achievement transitions to completed, it becomes unlocked
-    - unlocks are persisted immediately
+    - unlocks are tracked in-memory for the current session
   - global_chat_notification:
     - if `runtime.chat.announce_achievements` is true, broadcast to global chat
     - message format: `<prefix><player_name> unlocked <title>`

@@ -137,4 +137,10 @@
     - "docs/runtime/action-bar.md"
     - "docs/runtime/facts.md"
   notes: "Deprecated tips removed; facts and settings are canonical."
+- id: "CR-20260118-004"
+  date: "2026-01-18"
+  summary: "Clarified that achievement unlocks are session-only and not persisted."
+  files:
+    - "docs/runtime/achievements.md"
+    - "docs/governance/changes/change-records.md"
   ```
