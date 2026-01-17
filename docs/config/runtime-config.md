@@ -18,7 +18,7 @@
     - json:
       ```json
       {
-        "spec_version": "4.2",
+        "spec_version": "4.3",
         "commands": {
           "root": "pcrykh"
         },

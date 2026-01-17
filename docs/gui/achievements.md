@@ -23,6 +23,7 @@
   - navigation:
     - pagination uses [navigation.md](navigation.md)
     - page size is 45 achievements
+    - slot `49` contains a page indicator
   - large_chest_layout:
     - bottom row (`45..53`) is reserved for navigation and status items only
     - content MUST NOT be placed in slots `45..53`
