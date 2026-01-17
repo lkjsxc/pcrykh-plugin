@@ -6,10 +6,16 @@ import dev.pcrykh.gui.AchievementMenuService;
 import dev.pcrykh.gui.HotbarBeaconListener;
 import dev.pcrykh.gui.HotbarBeaconService;
 import dev.pcrykh.runtime.AchievementCatalog;
+import dev.pcrykh.runtime.AchievementProgressListener;
+import dev.pcrykh.runtime.AchievementProgressService;
 import dev.pcrykh.runtime.AchievementSourceResolver;
+import dev.pcrykh.runtime.CategoryCatalog;
 import dev.pcrykh.runtime.ConfigException;
 import dev.pcrykh.runtime.ConfigLoader;
+import dev.pcrykh.runtime.ConfigSaver;
+import dev.pcrykh.runtime.FactsBroadcaster;
 import dev.pcrykh.runtime.PackLoader;
+import dev.pcrykh.runtime.PackDefinition;
 import dev.pcrykh.runtime.RuntimeConfig;
 import dev.pcrykh.runtime.TemplateExpander;
 import dev.pcrykh.runtime.command.PcrykhCommand;
@@ -32,24 +38,31 @@ public class PcrykhPlugin extends JavaPlugin {
             ObjectMapper mapper = new ObjectMapper();
             ConfigLoader configLoader = new ConfigLoader(mapper);
             RuntimeConfig config = configLoader.load(getDataFolder().toPath());
+            ConfigSaver configSaver = new ConfigSaver(mapper);
 
             AchievementSourceResolver resolver = new AchievementSourceResolver();
             List<Path> packFiles = resolver.resolve(getDataFolder().toPath(), config.achievementSources());
 
             PackLoader packLoader = new PackLoader(mapper);
             TemplateExpander expander = new TemplateExpander(mapper);
-            catalog = new AchievementCatalog(expander.expandAll(packLoader.loadAll(packFiles)));
+            List<PackDefinition> packs = packLoader.loadAll(packFiles);
+            CategoryCatalog categoryCatalog = new CategoryCatalog(packs);
+            catalog = new AchievementCatalog(expander.expandAll(packs), categoryCatalog);
 
-            menuService = new AchievementMenuService(catalog);
+            AchievementProgressService progressService = new AchievementProgressService(catalog, config);
+
+            menuService = new AchievementMenuService(catalog, progressService, config);
             hotbarService = new HotbarBeaconService(this, menuService);
 
-            Bukkit.getPluginManager().registerEvents(new AchievementMenuListener(menuService), this);
+            Bukkit.getPluginManager().registerEvents(new AchievementMenuListener(menuService, config, configSaver, getDataFolder().toPath()), this);
             Bukkit.getPluginManager().registerEvents(new HotbarBeaconListener(hotbarService), this);
+            Bukkit.getPluginManager().registerEvents(new AchievementProgressListener(progressService), this);
 
             if (getCommand("pcrykh") != null) {
                 getCommand("pcrykh").setExecutor(new PcrykhCommand(menuService));
             }
 
+            new FactsBroadcaster(this, config).start();
             hotbarService.startEnforcementTask();
         } catch (ConfigException ex) {
             getLogger().severe("Config error: " + ex.getMessage());

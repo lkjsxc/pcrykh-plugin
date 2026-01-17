@@ -27,6 +27,7 @@ public class PackLoader {
         try {
             JsonNode root = mapper.readTree(path.toFile());
             require(root, "pack_id");
+            require(root, "categories");
             require(root, "templates");
 
             String packId = root.get("pack_id").asText();
@@ -37,6 +38,22 @@ public class PackLoader {
             JsonNode templatesNode = root.get("templates");
             if (!templatesNode.isArray() || templatesNode.size() == 0) {
                 throw new ConfigException("templates must be a non-empty array: " + path);
+            }
+
+            JsonNode categoriesNode = root.get("categories");
+            if (!categoriesNode.isArray() || categoriesNode.size() == 0) {
+                throw new ConfigException("categories must be a non-empty array: " + path);
+            }
+
+            List<CategoryDefinition> categories = new ArrayList<>();
+            List<String> categoryIds = new ArrayList<>();
+            for (JsonNode categoryNode : categoriesNode) {
+                CategoryDefinition category = parseCategory(categoryNode, path.toString());
+                if (categoryIds.contains(category.id())) {
+                    throw new ConfigException("Duplicate category id: " + category.id());
+                }
+                categoryIds.add(category.id());
+                categories.add(category);
             }
 
             List<TemplateDefinition> templates = new ArrayList<>();
@@ -50,10 +67,31 @@ public class PackLoader {
                 templates.add(template);
             }
 
-            return new PackDefinition(packId, templates);
+            return new PackDefinition(packId, categories, templates);
         } catch (IOException ex) {
             throw new ConfigException("Failed to read pack: " + path, ex);
         }
+    }
+
+    private CategoryDefinition parseCategory(JsonNode node, String source) {
+        require(node, "id");
+        require(node, "name");
+        require(node, "order");
+        require(node, "icon");
+
+        String id = node.get("id").asText();
+        String name = node.get("name").asText();
+        String icon = node.get("icon").asText();
+        if (id.isBlank()) {
+            throw new ConfigException("category id must be non-empty: " + source);
+        }
+        if (name.isBlank()) {
+            throw new ConfigException("category name must be non-empty: " + source);
+        }
+        if (icon.isBlank()) {
+            throw new ConfigException("category icon must be non-empty: " + source);
+        }
+        return new CategoryDefinition(id, name, node.get("order").asInt(), icon);
     }
 
     private TemplateDefinition parseTemplate(JsonNode node, String source) {

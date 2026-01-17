@@ -34,7 +34,7 @@ public class ConfigLoader {
             require(root, "spec_version");
             require(root, "commands");
             require(root, "runtime");
-            require(root, "tips");
+            require(root, "facts");
             require(root, "achievement_sources");
 
             JsonNode commands = root.get("commands");
@@ -52,9 +52,13 @@ public class ConfigLoader {
             JsonNode runtime = root.get("runtime");
             require(runtime, "autosave");
             require(runtime, "chat");
+            require(runtime, "action_bar");
 
-            JsonNode tips = root.get("tips");
+            JsonNode factsNode = root.get("facts");
             JsonNode achievementSources = root.get("achievement_sources");
+            if (!factsNode.isArray() || factsNode.size() == 0) {
+                throw new ConfigException("facts must be a non-empty array");
+            }
             if (!achievementSources.isArray() || achievementSources.size() == 0) {
                 throw new ConfigException("achievement_sources must be a non-empty array");
             }
@@ -65,12 +69,22 @@ public class ConfigLoader {
                 sources.add(entry.asText());
             }
 
+            RuntimeConfig.AutosaveConfig autosave = parseAutosave(runtime.get("autosave"));
+            RuntimeConfig.ChatConfig chat = parseChat(runtime.get("chat"));
+            RuntimeConfig.ActionBarConfig actionBar = parseActionBar(runtime.get("action_bar"));
+
+            List<String> facts = new ArrayList<>();
+            for (JsonNode entry : factsNode) {
+                facts.add(entry.asText());
+            }
+
             return new RuntimeConfig(
                     specVersion,
                     commandRoot,
-                    runtime.get("autosave"),
-                    runtime.get("chat"),
-                    tips,
+                    autosave,
+                    chat,
+                    actionBar,
+                    facts,
                     sources
             );
         } catch (IOException ex) {
@@ -82,5 +96,46 @@ public class ConfigLoader {
         if (node == null || node.get(field) == null || node.get(field).isNull()) {
             throw new ConfigException("Missing required field: " + field);
         }
+    }
+
+    private RuntimeConfig.AutosaveConfig parseAutosave(JsonNode autosave) {
+        require(autosave, "enabled");
+        require(autosave, "interval_seconds");
+        return new RuntimeConfig.AutosaveConfig(
+                autosave.get("enabled").asBoolean(),
+                autosave.get("interval_seconds").asInt()
+        );
+    }
+
+    private RuntimeConfig.ChatConfig parseChat(JsonNode chat) {
+        require(chat, "announce_achievements");
+        require(chat, "facts_enabled");
+        require(chat, "facts_interval_seconds");
+        require(chat, "prefix");
+        return new RuntimeConfig.ChatConfig(
+                chat.get("announce_achievements").asBoolean(),
+                chat.get("facts_enabled").asBoolean(),
+                chat.get("facts_interval_seconds").asInt(),
+                chat.get("prefix").asText()
+        );
+    }
+
+    private RuntimeConfig.ActionBarConfig parseActionBar(JsonNode actionBar) {
+        require(actionBar, "progress_enabled");
+        require(actionBar, "milestone_thresholds");
+        require(actionBar, "cooldown_seconds");
+        JsonNode thresholds = actionBar.get("milestone_thresholds");
+        if (!thresholds.isArray() || thresholds.size() == 0) {
+            throw new ConfigException("milestone_thresholds must be a non-empty array");
+        }
+        List<Double> values = new ArrayList<>();
+        for (JsonNode entry : thresholds) {
+            values.add(entry.asDouble());
+        }
+        return new RuntimeConfig.ActionBarConfig(
+                actionBar.get("progress_enabled").asBoolean(),
+                values,
+                actionBar.get("cooldown_seconds").asInt()
+        );
     }
 }
