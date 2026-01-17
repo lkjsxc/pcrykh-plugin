@@ -25,7 +25,7 @@ public class DataStore implements AutoCloseable {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS players (" +
                     "player_uuid TEXT PRIMARY KEY," +
                     "spec_version TEXT NOT NULL," +
-                    "achievement_tier_sum INTEGER NOT NULL," +
+                    "achievement_completed_sum INTEGER NOT NULL," +
                     "player_level INTEGER NOT NULL," +
                     "ap_total INTEGER NOT NULL," +
                     "created_at INTEGER NOT NULL," +
@@ -34,8 +34,7 @@ public class DataStore implements AutoCloseable {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS achievement_progress (" +
                     "player_uuid TEXT NOT NULL," +
                     "achievement_id TEXT NOT NULL," +
-                    "current_tier INTEGER NOT NULL," +
-                    "next_tier INTEGER NOT NULL," +
+                    "completed INTEGER NOT NULL," +
                     "progress_amount INTEGER NOT NULL," +
                     "updated_at INTEGER NOT NULL," +
                     "PRIMARY KEY (player_uuid, achievement_id)" +
@@ -43,7 +42,6 @@ public class DataStore implements AutoCloseable {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS objective_history (" +
                     "player_uuid TEXT NOT NULL," +
                     "achievement_id TEXT NOT NULL," +
-                    "tier INTEGER NOT NULL," +
                     "completed_at INTEGER NOT NULL," +
                     "ap_awarded INTEGER NOT NULL" +
                     ")");
@@ -89,7 +87,7 @@ public class DataStore implements AutoCloseable {
     }
 
     private void insertPlayer(UUID playerId, String specVersion, long now) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO players (player_uuid, spec_version, achievement_tier_sum, player_level, ap_total, created_at, updated_at) VALUES (?, ?, 0, 0, 0, ?, ?)")) {
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO players (player_uuid, spec_version, achievement_completed_sum, player_level, ap_total, created_at, updated_at) VALUES (?, ?, 0, 0, 0, ?, ?)")) {
             ps.setString(1, playerId.toString());
             ps.setString(2, specVersion);
             ps.setLong(3, now);
@@ -99,11 +97,11 @@ public class DataStore implements AutoCloseable {
     }
 
     private void loadPlayerRow(UUID playerId, PlayerState state) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement("SELECT achievement_tier_sum, player_level, ap_total FROM players WHERE player_uuid = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT achievement_completed_sum, player_level, ap_total FROM players WHERE player_uuid = ?")) {
             ps.setString(1, playerId.toString());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    state.achievementTierSum = rs.getInt("achievement_tier_sum");
+                    state.achievementTierSum = rs.getInt("achievement_completed_sum");
                     state.playerLevel = rs.getInt("player_level");
                     state.apTotal = rs.getInt("ap_total");
                 }
@@ -113,13 +111,12 @@ public class DataStore implements AutoCloseable {
 
     private void loadAchievementProgress(UUID playerId, List<AchievementDefinition> achievements, PlayerState state) throws SQLException {
         Map<String, AchievementProgress> existing = new HashMap<>();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT achievement_id, current_tier, next_tier, progress_amount FROM achievement_progress WHERE player_uuid = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT achievement_id, completed, progress_amount FROM achievement_progress WHERE player_uuid = ?")) {
             ps.setString(1, playerId.toString());
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     AchievementProgress progress = new AchievementProgress();
-                    progress.currentTier = rs.getInt("current_tier");
-                    progress.nextTier = rs.getInt("next_tier");
+                    progress.completed = rs.getInt("completed") == 1;
                     progress.progressAmount = rs.getLong("progress_amount");
                     existing.put(rs.getString("achievement_id"), progress);
                 }
@@ -130,8 +127,7 @@ public class DataStore implements AutoCloseable {
             AchievementProgress progress = existing.get(def.id);
             if (progress == null) {
                 progress = new AchievementProgress();
-                progress.currentTier = 0;
-                progress.nextTier = 1;
+                progress.completed = false;
                 progress.progressAmount = 0;
                 upsertAchievementProgress(playerId, def.id, progress, Instant.now().toEpochMilli());
             }
@@ -143,8 +139,8 @@ public class DataStore implements AutoCloseable {
         long now = Instant.now().toEpochMilli();
         try {
             connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(
-                    "UPDATE players SET spec_version = ?, achievement_tier_sum = ?, player_level = ?, ap_total = ?, updated_at = ? WHERE player_uuid = ?")) {
+                try (PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE players SET spec_version = ?, achievement_completed_sum = ?, player_level = ?, ap_total = ?, updated_at = ? WHERE player_uuid = ?")) {
                 ps.setString(1, specVersion);
                 ps.setInt(2, state.achievementTierSum);
                 ps.setInt(3, state.playerLevel);
@@ -178,7 +174,7 @@ public class DataStore implements AutoCloseable {
                 ps.setString(1, playerId.toString());
                 ps.executeUpdate();
             }
-            try (PreparedStatement ps = connection.prepareStatement("UPDATE players SET achievement_tier_sum = 0, player_level = 0, ap_total = 0, updated_at = ? WHERE player_uuid = ?")) {
+            try (PreparedStatement ps = connection.prepareStatement("UPDATE players SET achievement_completed_sum = 0, player_level = 0, ap_total = 0, updated_at = ? WHERE player_uuid = ?")) {
                 ps.setLong(1, Instant.now().toEpochMilli());
                 ps.setString(2, playerId.toString());
                 ps.executeUpdate();
@@ -200,48 +196,28 @@ public class DataStore implements AutoCloseable {
 
     private void upsertAchievementProgress(UUID playerId, String achievementId, AchievementProgress progress, long now) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO achievement_progress (player_uuid, achievement_id, current_tier, next_tier, progress_amount, updated_at) VALUES (?, ?, ?, ?, ?, ?) " +
-                        "ON CONFLICT(player_uuid, achievement_id) DO UPDATE SET current_tier = excluded.current_tier, next_tier = excluded.next_tier, progress_amount = excluded.progress_amount, updated_at = excluded.updated_at")) {
+                "INSERT INTO achievement_progress (player_uuid, achievement_id, completed, progress_amount, updated_at) VALUES (?, ?, ?, ?, ?) " +
+                        "ON CONFLICT(player_uuid, achievement_id) DO UPDATE SET completed = excluded.completed, progress_amount = excluded.progress_amount, updated_at = excluded.updated_at")) {
             ps.setString(1, playerId.toString());
             ps.setString(2, achievementId);
-            ps.setInt(3, progress.currentTier);
-            ps.setInt(4, progress.nextTier);
-            ps.setLong(5, progress.progressAmount);
-            ps.setLong(6, now);
+            ps.setInt(3, progress.completed ? 1 : 0);
+            ps.setLong(4, progress.progressAmount);
+            ps.setLong(5, now);
             ps.executeUpdate();
         }
     }
 
-    public void insertObjectiveHistory(UUID playerId, String achievementId, int tier, int apAwarded) {
+    public void insertObjectiveHistory(UUID playerId, String achievementId, int apAwarded) {
         try (PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO objective_history (player_uuid, achievement_id, tier, completed_at, ap_awarded) VALUES (?, ?, ?, ?, ?)")) {
+                "INSERT INTO objective_history (player_uuid, achievement_id, completed_at, ap_awarded) VALUES (?, ?, ?, ?)")) {
             ps.setString(1, playerId.toString());
             ps.setString(2, achievementId);
-            ps.setInt(3, tier);
-            ps.setLong(4, Instant.now().toEpochMilli());
-            ps.setInt(5, apAwarded);
+            ps.setLong(3, Instant.now().toEpochMilli());
+            ps.setInt(4, apAwarded);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException("Failed to insert objective history", e);
         }
-    }
-
-    public List<Integer> getRecentTiers(UUID playerId, String achievementId, int limit) {
-        List<Integer> tiers = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(
-                "SELECT tier FROM objective_history WHERE player_uuid = ? AND achievement_id = ? ORDER BY completed_at DESC LIMIT ?")) {
-            ps.setString(1, playerId.toString());
-            ps.setString(2, achievementId);
-            ps.setInt(3, limit);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    tiers.add(rs.getInt("tier"));
-                }
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("Failed to load objective history", e);
-        }
-        return tiers;
     }
 
     @Override
@@ -265,8 +241,7 @@ public class DataStore implements AutoCloseable {
     }
 
     public static class AchievementProgress {
-        public int currentTier;
-        public int nextTier;
+        public boolean completed;
         public long progressAmount;
     }
 }

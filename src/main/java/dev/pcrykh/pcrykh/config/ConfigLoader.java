@@ -41,11 +41,23 @@ public class ConfigLoader {
         if (config.runtime == null || config.runtime.autosave == null) {
             throw new IllegalArgumentException("runtime.autosave is required");
         }
+        if (config.runtime.chat == null) {
+            throw new IllegalArgumentException("runtime.chat is required");
+        }
         if (config.runtime.autosave.intervalSeconds <= 0) {
             throw new IllegalArgumentException("runtime.autosave.interval_seconds must be > 0");
         }
+        if (config.runtime.chat.tipsIntervalSeconds <= 0) {
+            throw new IllegalArgumentException("runtime.chat.tips_interval_seconds must be > 0");
+        }
+        if (config.runtime.chat.tipsPrefix == null || config.runtime.chat.tipsPrefix.isBlank()) {
+            throw new IllegalArgumentException("runtime.chat.tips_prefix is required");
+        }
         if (config.achievements == null) {
             throw new IllegalArgumentException("achievements is required");
+        }
+        if (config.tips == null) {
+            throw new IllegalArgumentException("tips is required");
         }
 
         Set<String> ids = new HashSet<>();
@@ -76,45 +88,22 @@ public class ConfigLoader {
         if (Material.matchMaterial(def.icon) == null) {
             throw new IllegalArgumentException("achievement.icon is invalid material: " + def.icon);
         }
-        if (def.maxTier < 1) {
-            throw new IllegalArgumentException("achievement.max_tier must be >= 1: " + def.id);
+        if (def.title == null || def.title.isBlank()) {
+            throw new IllegalArgumentException("achievement.title is required: " + def.id);
         }
-        if (def.tiers == null || def.tiers.isEmpty()) {
-            throw new IllegalArgumentException("achievement.tiers is required: " + def.id);
+        if (def.description == null || def.description.isBlank()) {
+            throw new IllegalArgumentException("achievement.description is required: " + def.id);
         }
-        if (def.tiers.size() != def.maxTier) {
-            throw new IllegalArgumentException("tiers must cover 1..max_tier: " + def.id);
+        if (def.criteria == null) {
+            throw new IllegalArgumentException("achievement.criteria required for achievement: " + def.id);
         }
-
-        for (int i = 1; i <= def.maxTier; i++) {
-            AchievementDefinition.AchievementTier tier = def.tiers.get(i - 1);
-            validateTier(def, tier, i);
-        }
-    }
-
-    private void validateTier(AchievementDefinition def, AchievementDefinition.AchievementTier tier, int expectedTier) {
-        if (tier == null) {
-            throw new IllegalArgumentException("null tier in achievement: " + def.id);
-        }
-        if (tier.tier != expectedTier) {
-            throw new IllegalArgumentException("tier must be sequential for achievement: " + def.id);
-        }
-        if (tier.title == null || tier.title.isBlank()) {
-            throw new IllegalArgumentException("tier.title required for achievement: " + def.id);
-        }
-        if (tier.description == null || tier.description.isBlank()) {
-            throw new IllegalArgumentException("tier.description required for achievement: " + def.id);
-        }
-        if (tier.criteria == null) {
-            throw new IllegalArgumentException("tier.criteria required for achievement: " + def.id);
-        }
-        validateCriteria(def, tier.criteria);
-        Reward rewards = tier.rewards;
+        validateCriteria(def, def.criteria);
+        Reward rewards = def.rewards;
         if (rewards == null) {
-            throw new IllegalArgumentException("tier.rewards required for achievement: " + def.id);
+            throw new IllegalArgumentException("achievement.rewards required for achievement: " + def.id);
         }
         if (rewards.ap < 0) {
-            throw new IllegalArgumentException("tier.rewards.ap must be >= 0 for achievement: " + def.id);
+            throw new IllegalArgumentException("achievement.rewards.ap must be >= 0 for achievement: " + def.id);
         }
     }
 
@@ -144,7 +133,7 @@ public class ConfigLoader {
                     throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
                 }
             }
-            case "travel_walk", "travel_sprint", "travel_swim" -> {
+            case "travel_walk", "travel_sprint", "travel_swim", "travel_crouch", "travel_fly" -> {
                 if (criteria.distanceBlocks <= 0) {
                     throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
                 }
@@ -167,6 +156,9 @@ public class ConfigLoader {
                 }
                 requireList(criteria.vehicles, "criteria.vehicles", def);
                 requireList(criteria.passengers, "criteria.passengers", def);
+            }
+            case "jump" -> {
+                requireCount(criteria.count, def);
             }
             default -> throw new IllegalArgumentException("unsupported criteria.type: " + criteria.type + " for " + def.id);
         }

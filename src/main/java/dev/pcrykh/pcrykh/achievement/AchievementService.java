@@ -8,6 +8,7 @@ import dev.pcrykh.pcrykh.storage.DataStore.AchievementProgress;
 import dev.pcrykh.pcrykh.storage.DataStore.PlayerState;
 import dev.pcrykh.pcrykh.gui.GuiService;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -39,7 +40,7 @@ public class AchievementService {
     private GuiService guiService;
 
     private final Map<String, AchievementDefinition> achievementById = new HashMap<>();
-    private final Map<String, List<TierRef>> tiersByType = new HashMap<>();
+    private final Map<String, List<AchievementDefinition>> achievementsByType = new HashMap<>();
     private final Map<UUID, PlayerState> cache = new ConcurrentHashMap<>();
     private final Map<String, RateWindow> rateWindow = new ConcurrentHashMap<>();
     private final Map<String, Long> progressThrottle = new ConcurrentHashMap<>();
@@ -59,7 +60,7 @@ public class AchievementService {
 
     public void reload() {
         achievementById.clear();
-        tiersByType.clear();
+        achievementsByType.clear();
         indexAchievements();
     }
 
@@ -71,11 +72,9 @@ public class AchievementService {
     private void indexAchievements() {
         for (AchievementDefinition def : config.achievements) {
             achievementById.put(def.id, def);
-            for (AchievementDefinition.AchievementTier tier : def.tiers) {
-                String type = tier.criteria.type;
-                tiersByType.computeIfAbsent(type, k -> new ArrayList<>())
-                        .add(new TierRef(def, tier));
-            }
+            String type = def.criteria.type;
+            achievementsByType.computeIfAbsent(type, k -> new ArrayList<>())
+                    .add(def);
         }
     }
 
@@ -106,10 +105,6 @@ public class AchievementService {
         for (UUID playerId : cache.keySet()) {
             flush(playerId);
         }
-    }
-
-    public List<Integer> getRecentHistory(UUID playerId, String achievementId, int limit) {
-        return dataStore.getRecentTiers(playerId, achievementId, limit);
     }
 
     public void clearCache() {
@@ -181,84 +176,84 @@ public class AchievementService {
         handleTravelType("travel_walk", player, delta);
         handleTravelType("travel_sprint", player, delta);
         handleTravelType("travel_swim", player, delta);
+        handleTravelType("travel_crouch", player, delta);
+        handleTravelType("travel_fly", player, delta);
         handleTravelType("travel_mount", player, delta);
         handleTravelType("travel_boat", player, delta);
         handleTravelType("travel_boat_with_animal", player, delta);
     }
+    
+    public void onJump(Player player) {
+        handleEvent(player, "jump", "jump", 1, player.getLocation());
+    }
 
     private void handleEvent(Player player, String type, String subject, long delta, Location location) {
-        List<TierRef> refs = tiersByType.getOrDefault(type, Collections.emptyList());
-        if (refs.isEmpty()) {
+        List<AchievementDefinition> defs = achievementsByType.getOrDefault(type, Collections.emptyList());
+        if (defs.isEmpty()) {
             return;
         }
         PlayerState state = getOrLoad(player);
 
-        for (TierRef ref : refs) {
-            AchievementProgress progress = state.achievementProgress.get(ref.definition.id);
+        for (AchievementDefinition def : defs) {
+            AchievementProgress progress = state.achievementProgress.get(def.id);
             if (progress == null) {
                 continue;
             }
-            if (progress.nextTier > ref.definition.maxTier) {
+            if (progress.completed) {
                 continue;
             }
-            if (ref.tier.tier != progress.nextTier) {
-                continue;
-            }
-            if (!criteriaMatches(ref.tier.criteria, subject, player, location)) {
+            if (!criteriaMatches(def.criteria, subject, player, location)) {
                 continue;
             }
 
-            long applied = applyRateLimit(player.getUniqueId(), ref.definition.id, ref.tier.tier, delta, ref.tier.criteria);
+            long applied = applyRateLimit(player.getUniqueId(), def.id, delta, def.criteria);
             if (applied <= 0) {
                 continue;
             }
             progress.progressAmount += applied;
-            long required = requiredAmount(ref.tier.criteria);
+            long required = requiredAmount(def.criteria);
             if (progress.progressAmount >= required) {
-                completeTier(player, state, ref, progress);
+                completeAchievement(player, state, def, progress, required);
             } else {
-                if (shouldSendProgress(player.getUniqueId(), ref.definition.id)) {
-                    sendProgressActionBar(player, ref, progress, required);
+                if (shouldSendProgress(player.getUniqueId(), def.id)) {
+                    sendProgressActionBar(player, def, progress, required);
                 }
             }
         }
     }
 
     private void handleTravelType(String type, Player player, long delta) {
-        List<TierRef> refs = tiersByType.getOrDefault(type, Collections.emptyList());
-        if (refs.isEmpty()) {
+        List<AchievementDefinition> defs = achievementsByType.getOrDefault(type, Collections.emptyList());
+        if (defs.isEmpty()) {
             return;
         }
         PlayerState state = getOrLoad(player);
 
-        for (TierRef ref : refs) {
-            AchievementProgress progress = state.achievementProgress.get(ref.definition.id);
+        for (AchievementDefinition def : defs) {
+            AchievementProgress progress = state.achievementProgress.get(def.id);
             if (progress == null) {
                 continue;
             }
-            if (progress.nextTier > ref.definition.maxTier) {
+            if (progress.completed) {
                 continue;
             }
-            if (ref.tier.tier != progress.nextTier) {
+            if (!matchesTravelState(type, def.criteria, player)) {
                 continue;
             }
-            if (!matchesTravelState(type, ref.tier.criteria, player)) {
+            if (!matchesBiome(def.criteria, player.getLocation()) || !matchesDimension(def.criteria, player.getLocation())) {
                 continue;
             }
-            if (!matchesBiome(ref.tier.criteria, player.getLocation()) || !matchesDimension(ref.tier.criteria, player.getLocation())) {
-                continue;
-            }
-            long applied = applyRateLimit(player.getUniqueId(), ref.definition.id, ref.tier.tier, delta, ref.tier.criteria);
+            long applied = applyRateLimit(player.getUniqueId(), def.id, delta, def.criteria);
             if (applied <= 0) {
                 continue;
             }
             progress.progressAmount += applied;
-            long required = ref.tier.criteria.distanceBlocks;
+            long required = def.criteria.distanceBlocks;
             if (progress.progressAmount >= required) {
-                completeTier(player, state, ref, progress);
+                completeAchievement(player, state, def, progress, required);
             } else {
-                if (shouldSendProgress(player.getUniqueId(), ref.definition.id)) {
-                    sendProgressActionBar(player, ref, progress, required);
+                if (shouldSendProgress(player.getUniqueId(), def.id)) {
+                    sendProgressActionBar(player, def, progress, required);
                 }
             }
         }
@@ -270,6 +265,8 @@ public class AchievementService {
             case "travel_walk" -> isWalking(player);
             case "travel_sprint" -> isSprinting(player);
             case "travel_swim" -> isSwimming(player);
+            case "travel_crouch" -> isCrouching(player);
+            case "travel_fly" -> isFlying(player);
             case "travel_mount" -> isMounted(player) && vehicleMatches(criteria, player.getVehicle());
             case "travel_boat" -> isBoating(player) && vehicleMatches(criteria, player.getVehicle());
             case "travel_boat_with_animal" -> isBoating(player) && vehicleMatches(criteria, player.getVehicle()) && passengerMatches(criteria, player.getVehicle());
@@ -278,15 +275,23 @@ public class AchievementService {
     }
 
     private boolean isWalking(Player player) {
-        return !player.isSprinting() && !player.isSwimming() && !player.isInsideVehicle();
+        return !player.isSprinting() && !player.isSneaking() && !player.isSwimming() && !player.isFlying() && !player.isGliding() && !player.isInsideVehicle();
     }
 
     private boolean isSprinting(Player player) {
-        return player.isSprinting() && !player.isSwimming() && !player.isInsideVehicle();
+        return player.isSprinting() && !player.isSwimming() && !player.isFlying() && !player.isGliding() && !player.isInsideVehicle();
     }
 
     private boolean isSwimming(Player player) {
         return player.isSwimming() && !player.isInsideVehicle();
+    }
+
+    private boolean isCrouching(Player player) {
+        return player.isSneaking() && !player.isSwimming() && !player.isFlying() && !player.isGliding() && !player.isInsideVehicle();
+    }
+
+    private boolean isFlying(Player player) {
+        return (player.isFlying() || player.isGliding()) && !player.isInsideVehicle();
     }
 
     private boolean isBoating(Player player) {
@@ -325,45 +330,50 @@ public class AchievementService {
         return false;
     }
 
-    private void completeTier(Player player, PlayerState state, TierRef ref, AchievementProgress progress) {
-        int apAward = ref.tier.rewards.ap;
-        progress.currentTier = ref.tier.tier;
-        progress.nextTier = ref.tier.tier + 1;
-        progress.progressAmount = 0;
+    private void completeAchievement(Player player, PlayerState state, AchievementDefinition def, AchievementProgress progress, long required) {
+        int apAward = def.rewards.ap;
+        progress.completed = true;
+        progress.progressAmount = required;
 
         state.apTotal += apAward;
-        state.achievementTierSum = computeTierSum(state);
+        state.achievementTierSum = computeCompletionSum(state);
         state.playerLevel = state.achievementTierSum;
 
-        dataStore.insertObjectiveHistory(player.getUniqueId(), ref.definition.id, ref.tier.tier, apAward);
+        dataStore.insertObjectiveHistory(player.getUniqueId(), def.id, apAward);
 
-        sendAwardActionBar(player, ref, state, apAward);
+        sendAwardActionBar(player, def, state, apAward);
+        if (config.runtime != null && config.runtime.chat != null && config.runtime.chat.announceAchievements) {
+            String msg = "Achievement completed: " + def.name + " (+" + apAward + " AP, Total AP " + state.apTotal + ")";
+            Bukkit.getServer().broadcast(Component.text(msg));
+        }
         if (guiService != null) {
             guiService.refreshOpenMenus(player);
         }
     }
 
-    public boolean adminComplete(Player player, AchievementDefinition def, int tier) {
+    public boolean adminComplete(Player player, AchievementDefinition def) {
         PlayerState state = getOrLoad(player);
         AchievementProgress progress = state.achievementProgress.get(def.id);
-        if (progress == null || progress.nextTier != tier) {
+        if (progress == null || progress.completed) {
             return false;
         }
-        AchievementDefinition.AchievementTier tierDef = def.tiers.get(tier - 1);
-        completeTier(player, state, new TierRef(def, tierDef), progress);
+        long required = requiredAmount(def.criteria);
+        completeAchievement(player, state, def, progress, required);
         return true;
     }
 
-    private int computeTierSum(PlayerState state) {
+    private int computeCompletionSum(PlayerState state) {
         int sum = 0;
         for (AchievementProgress progress : state.achievementProgress.values()) {
-            sum += Math.max(0, progress.currentTier);
+            if (progress.completed) {
+                sum += 1;
+            }
         }
         return sum;
     }
 
-    public int recomputeTierSum(PlayerState state) {
-        return computeTierSum(state);
+    public int recomputeCompletionSum(PlayerState state) {
+        return computeCompletionSum(state);
     }
 
     public long requiredAmount(Criteria criteria) {
@@ -390,6 +400,9 @@ public class AchievementService {
             }
             case "fish_catch" -> {
                 return criteria.items.contains(subject) && matchesFishConstraints(criteria, player, location);
+            }
+            case "jump" -> {
+                return true;
             }
             default -> {
                 return false;
@@ -474,7 +487,7 @@ public class AchievementService {
                 || subject.endsWith("_LOGS");
     }
 
-    private long applyRateLimit(UUID playerId, String achievementId, int tier, long delta, Criteria criteria) {
+    private long applyRateLimit(UUID playerId, String achievementId, long delta, Criteria criteria) {
         if (criteria.constraints == null || criteria.constraints.rateLimit == null) {
             return delta;
         }
@@ -482,7 +495,7 @@ public class AchievementService {
         if (maxPerMinute <= 0) {
             return delta;
         }
-        String key = playerId + ":" + achievementId + ":" + tier;
+        String key = playerId + ":" + achievementId;
         long now = Instant.now().toEpochMilli();
         RateWindow window = rateWindow.computeIfAbsent(key, k -> new RateWindow());
         synchronized (window) {
@@ -497,16 +510,13 @@ public class AchievementService {
         }
     }
 
-    private void sendAwardActionBar(Player player, TierRef ref, PlayerState state, int apAward) {
-        int nextTier = ref.tier.tier + 1;
-        String next = nextTier > ref.definition.maxTier ? "MAX" : nextTier + ": " + truncate(ref.definition.tiers.get(nextTier - 1).title, 16);
-        long target = nextTier > ref.definition.maxTier ? 0 : requiredAmount(ref.definition.tiers.get(nextTier - 1).criteria);
-        String msg = "+" + apAward + " AP | " + ref.definition.name + " " + ref.tier.tier + " | AP " + state.apTotal + " | Prog 0/" + target + " | Next " + next;
+    private void sendAwardActionBar(Player player, AchievementDefinition def, PlayerState state, int apAward) {
+        String msg = "+" + apAward + " AP | " + def.name + " | AP " + state.apTotal + " | Completed";
         player.sendActionBar(Component.text(msg));
     }
 
-    private void sendProgressActionBar(Player player, TierRef ref, AchievementProgress progress, long required) {
-        String msg = ref.definition.name + " " + progress.currentTier + " | Prog " + progress.progressAmount + "/" + required + " | Obj " + truncate(ref.tier.title, 16);
+    private void sendProgressActionBar(Player player, AchievementDefinition def, AchievementProgress progress, long required) {
+        String msg = def.name + " | Prog " + progress.progressAmount + "/" + required + " | Obj " + truncate(def.title, 16);
         player.sendActionBar(Component.text(msg));
     }
 
@@ -572,16 +582,6 @@ public class AchievementService {
             crafts = Math.min(crafts, have / entry.getValue());
         }
         return crafts == Integer.MAX_VALUE ? 1 : Math.max(1, crafts);
-    }
-
-    public static class TierRef {
-        public final AchievementDefinition definition;
-        public final AchievementDefinition.AchievementTier tier;
-
-        public TierRef(AchievementDefinition definition, AchievementDefinition.AchievementTier tier) {
-            this.definition = definition;
-            this.tier = tier;
-        }
     }
 
     private static class RateWindow {

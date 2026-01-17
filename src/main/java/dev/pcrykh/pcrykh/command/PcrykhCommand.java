@@ -145,15 +145,15 @@ public class PcrykhCommand implements CommandExecutor, TabCompleter {
                 }
                 var state = achievementService.getOrLoad(target);
                 state.apTotal = amount;
-                state.achievementTierSum = achievementService.recomputeTierSum(state);
+                state.achievementTierSum = achievementService.recomputeCompletionSum(state);
                 state.playerLevel = state.achievementTierSum;
                 dataStore.savePlayer(state, plugin.getConfigModel().specVersion);
                 player.sendMessage("AP set.");
                 return true;
             }
             case "complete" -> {
-                if (args.length < 5) {
-                    player.sendMessage("Usage: /pcrykh admin complete <player> <achievement_id> <tier>");
+                if (args.length < 4) {
+                    player.sendMessage("Usage: /pcrykh admin complete <player> <achievement_id>");
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[2]);
@@ -166,29 +166,18 @@ public class PcrykhCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage("Achievement not found.");
                     return true;
                 }
-                int tier;
-                try {
-                    tier = Integer.parseInt(args[4]);
-                } catch (NumberFormatException e) {
-                    player.sendMessage("Invalid tier.");
-                    return true;
-                }
-                if (tier < 1) {
-                    player.sendMessage("Tier must be >= 1.");
-                    return true;
-                }
                 var state = achievementService.getOrLoad(target);
                 var progress = state.achievementProgress.get(def.id);
                 if (progress == null) {
                     player.sendMessage("Achievement progress missing.");
                     return true;
                 }
-                if (!achievementService.adminComplete(target, def, tier)) {
-                    player.sendMessage("Tier out of order or invalid.");
+                if (!achievementService.adminComplete(target, def)) {
+                    player.sendMessage("Already completed.");
                     return true;
                 }
                 dataStore.savePlayer(state, plugin.getConfigModel().specVersion);
-                player.sendMessage("Tier completed.");
+                player.sendMessage("Achievement completed.");
                 return true;
             }
             case "reset" -> {
@@ -222,13 +211,12 @@ public class PcrykhCommand implements CommandExecutor, TabCompleter {
             payload.put("player", name);
             payload.put("uuid", playerId.toString());
             payload.put("ap_total", state.apTotal);
-            payload.put("achievement_tier_sum", state.achievementTierSum);
+            payload.put("achievement_completed_sum", state.achievementTierSum);
             payload.put("player_level", state.playerLevel);
             var progress = new LinkedHashMap<String, Object>();
             state.achievementProgress.forEach((id, prog) -> {
                 var entry = new LinkedHashMap<String, Object>();
-                entry.put("current_tier", prog.currentTier);
-                entry.put("next_tier", prog.nextTier);
+                entry.put("completed", prog.completed);
                 entry.put("progress_amount", prog.progressAmount);
                 progress.put(id, entry);
             });

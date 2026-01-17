@@ -13,7 +13,10 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerStatisticIncrementEvent;
+import org.bukkit.Statistic;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -23,6 +26,7 @@ public class PcrykhPlugin extends JavaPlugin implements Listener {
     private PluginConfig config;
     private AchievementService achievementService;
     private GuiService guiService;
+    private BukkitTask tipsTask;
 
     @Override
     public void onEnable() {
@@ -47,6 +51,7 @@ public class PcrykhPlugin extends JavaPlugin implements Listener {
         getCommand("pcrykh").setTabCompleter(command);
 
         scheduleAutosave();
+        scheduleTips();
         getLogger().info("pcrykh enabled.");
     }
 
@@ -89,6 +94,7 @@ public class PcrykhPlugin extends JavaPlugin implements Listener {
         achievementService.flushAll();
         achievementService.clearCache();
         achievementService.updateConfig(config);
+        scheduleTips();
     }
 
     private void scheduleAutosave() {
@@ -100,6 +106,29 @@ public class PcrykhPlugin extends JavaPlugin implements Listener {
             if (achievementService != null) {
                 achievementService.flushAll();
             }
+        }, intervalTicks, intervalTicks);
+    }
+
+    private void scheduleTips() {
+        if (tipsTask != null) {
+            tipsTask.cancel();
+            tipsTask = null;
+        }
+        if (config.runtime == null || config.runtime.chat == null || !config.runtime.chat.tipsEnabled) {
+            return;
+        }
+        if (config.tips == null || config.tips.isEmpty()) {
+            return;
+        }
+        long intervalTicks = config.runtime.chat.tipsIntervalSeconds * 20L;
+        tipsTask = Bukkit.getScheduler().runTaskTimer(this, () -> {
+            if (config.tips.isEmpty()) {
+                return;
+            }
+            int idx = (int) (Math.random() * config.tips.size());
+            String tip = config.tips.get(idx);
+            String msg = config.runtime.chat.tipsPrefix + tip;
+            Bukkit.getServer().broadcast(net.kyori.adventure.text.Component.text(msg));
         }, intervalTicks, intervalTicks);
     }
 
@@ -126,5 +155,12 @@ public class PcrykhPlugin extends JavaPlugin implements Listener {
     @org.bukkit.event.EventHandler
     public void onMove(PlayerMoveEvent event) {
         achievementService.onTravel(event);
+    }
+
+    @org.bukkit.event.EventHandler
+    public void onStatistic(PlayerStatisticIncrementEvent event) {
+        if (event.getStatistic() == Statistic.JUMP) {
+            achievementService.onJump(event.getPlayer());
+        }
     }
 }

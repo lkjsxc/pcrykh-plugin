@@ -19,7 +19,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -110,21 +112,20 @@ public class GuiService implements Listener {
             meta.displayName(Component.text(def.name));
             meta.getPersistentDataContainer().set(achievementKey, PersistentDataType.STRING, def.id);
             var progress = state.achievementProgress.get(def.id);
-            int currentTier = progress.currentTier;
-            int nextTier = progress.nextTier;
-            String nextTitle = nextTier <= def.maxTier ? def.tiers.get(nextTier - 1).title : "MAX";
-            String progressLine = "Progress: MAX";
-            if (nextTier <= def.maxTier) {
-                long required = achievementService.requiredAmount(def.tiers.get(nextTier - 1).criteria);
+                long required = achievementService.requiredAmount(def.criteria);
                 long amount = progress.progressAmount;
-                progressLine = "Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")";
-            }
-            meta.lore(List.of(
-                    Component.text("Tier: " + currentTier + "/" + def.maxTier),
-                    Component.text(progressLine),
-                    Component.text("Next: " + nextTitle)
-            ));
+                String statusLine = progress.completed ? "Status: Completed" : "Status: In Progress";
+                String progressLine = progress.completed ? "Progress: " + required + "/" + required + " (100%)"
+                    : "Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")";
+                meta.lore(List.of(
+                    Component.text(def.title),
+                    Component.text(statusLine),
+                    Component.text(progressLine)
+                ));
             item.setItemMeta(meta);
+                if (progress.completed) {
+                applyCompletedGlow(item);
+                }
             inv.setItem(slot, item);
             slot = nextGridSlot(slot);
             if (slot < 0) {
@@ -140,57 +141,46 @@ public class GuiService implements Listener {
     public void openAchievementDetail(Player player, AchievementDefinition def) {
         Inventory inv = Bukkit.createInventory(null, 54, TITLE_ACHIEVEMENT_PREFIX + def.name);
         PlayerState state = achievementService.getOrLoad(player);
-        int currentTier = state.achievementProgress.get(def.id).currentTier;
-        int nextTier = state.achievementProgress.get(def.id).nextTier;
+        var progress = state.achievementProgress.get(def.id);
 
         Material iconMaterial = Material.matchMaterial(def.icon);
         ItemStack header = new ItemStack(iconMaterial == null ? Material.BOOK : iconMaterial);
         ItemMeta headerMeta = header.getItemMeta();
         headerMeta.displayName(Component.text(def.name));
         List<Component> headerLore = new ArrayList<>();
-        headerLore.add(Component.text("Tier: " + currentTier + "/" + def.maxTier));
-        if (nextTier <= def.maxTier) {
-            long required = achievementService.requiredAmount(def.tiers.get(nextTier - 1).criteria);
-            long amount = state.achievementProgress.get(def.id).progressAmount;
-            headerLore.add(Component.text("Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")"));
-            headerLore.add(Component.text("Next: " + def.tiers.get(nextTier - 1).title));
+        long required = achievementService.requiredAmount(def.criteria);
+        long amount = progress.progressAmount;
+        headerLore.add(Component.text(def.title));
+        if (progress.completed) {
+            headerLore.add(Component.text("Status: Completed"));
+            headerLore.add(Component.text("Progress: " + required + "/" + required + " (100%)"));
         } else {
-            headerLore.add(Component.text("Progress: MAX"));
-            headerLore.add(Component.text("Next: MAX"));
+            headerLore.add(Component.text("Status: In Progress"));
+            headerLore.add(Component.text("Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")"));
         }
         headerMeta.lore(headerLore);
         header.setItemMeta(headerMeta);
+        if (progress.completed) {
+            applyCompletedGlow(header);
+        }
         inv.setItem(4, header);
 
-        if (nextTier <= def.maxTier) {
-            AchievementDefinition.AchievementTier tier = def.tiers.get(nextTier - 1);
-            ItemStack objective = new ItemStack(Material.PAPER);
-            ItemMeta objectiveMeta = objective.getItemMeta();
-            objectiveMeta.displayName(Component.text(tier.title));
-            objectiveMeta.lore(List.of(
-                    Component.text(tier.description),
-                    Component.text("Progress: " + state.achievementProgress.get(def.id).progressAmount + "/" + achievementService.requiredAmount(tier.criteria)),
-                    Component.text("Reward: " + tier.rewards.ap + " AP")
-            ));
-            objective.setItemMeta(objectiveMeta);
-            inv.setItem(22, objective);
+        ItemStack objective = new ItemStack(Material.PAPER);
+        ItemMeta objectiveMeta = objective.getItemMeta();
+        objectiveMeta.displayName(Component.text(def.title));
+        List<Component> objectiveLore = new ArrayList<>();
+        objectiveLore.add(Component.text(def.description));
+        objectiveLore.add(Component.text("Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")"));
+        objectiveLore.add(Component.text("Reward: " + def.rewards.ap + " AP"));
+        if (progress.completed) {
+            objectiveLore.add(Component.text("Status: Completed"));
         }
-
-        List<Integer> history = achievementService.getRecentHistory(player.getUniqueId(), def.id, 5);
-        ItemStack historyItem = new ItemStack(Material.BOOK);
-        ItemMeta historyMeta = historyItem.getItemMeta();
-        historyMeta.displayName(Component.text("Recent Tiers"));
-        List<Component> historyLore = new ArrayList<>();
-        if (history.isEmpty()) {
-            historyLore.add(Component.text("None"));
-        } else {
-            for (Integer tier : history) {
-                historyLore.add(Component.text("Tier " + tier));
-            }
+        objectiveMeta.lore(objectiveLore);
+        objective.setItemMeta(objectiveMeta);
+        if (progress.completed) {
+            applyCompletedGlow(objective);
         }
-        historyMeta.lore(historyLore);
-        historyItem.setItemMeta(historyMeta);
-        inv.setItem(31, historyItem);
+        inv.setItem(22, objective);
 
         addFooter(inv, "back_achievements");
         player.openInventory(inv);
@@ -268,6 +258,13 @@ public class GuiService implements Listener {
         return item;
     }
 
+    private void applyCompletedGlow(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        meta.addEnchant(Enchantment.LUCK, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+    }
+
     private int nextGridSlot(int slot) {
         int row = slot / 9;
         int col = slot % 9;
@@ -291,19 +288,17 @@ public class GuiService implements Listener {
     }
 
     private List<String> topAchievements(PlayerState state, int limit) {
-        List<Map.Entry<String, Integer>> entries = new ArrayList<>();
+        List<String> completed = new ArrayList<>();
         for (Map.Entry<String, dev.pcrykh.pcrykh.storage.DataStore.AchievementProgress> entry : state.achievementProgress.entrySet()) {
-            entries.add(Map.entry(entry.getKey(), entry.getValue().currentTier));
-        }
-        entries.sort((a, b) -> Integer.compare(b.getValue(), a.getValue()));
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < Math.min(limit, entries.size()); i++) {
-            AchievementDefinition def = achievementService.getAchievement(entries.get(i).getKey());
-            if (def != null) {
-                result.add(def.name + " " + entries.get(i).getValue());
+            if (entry.getValue().completed) {
+                AchievementDefinition def = achievementService.getAchievement(entry.getKey());
+                if (def != null) {
+                    completed.add(def.name);
+                }
             }
         }
-        return result;
+        completed.sort(String::compareToIgnoreCase);
+        return completed.subList(0, Math.min(limit, completed.size()));
     }
 
     private ItemStack createHotbarItem() {
