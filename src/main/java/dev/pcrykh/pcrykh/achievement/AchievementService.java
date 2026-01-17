@@ -287,7 +287,7 @@ public class AchievementService {
         return computeTierSum(state);
     }
 
-    private long requiredAmount(Criteria criteria) {
+    public long requiredAmount(Criteria criteria) {
         if ("travel".equals(criteria.type)) {
             return criteria.distanceBlocks;
         }
@@ -300,7 +300,8 @@ public class AchievementService {
                 if (!criteria.materials.contains(subject)) {
                     return false;
                 }
-                return toolMatches(criteria, player) && matchesBiome(criteria, location) && matchesDimension(criteria, location);
+                boolean toolOk = isWoodcuttingMaterial(subject) || toolMatches(criteria, player);
+                return toolOk && matchesBiome(criteria, location) && matchesDimension(criteria, location);
             }
             case "item_craft" -> {
                 return criteria.item.equals(subject);
@@ -381,6 +382,17 @@ public class AchievementService {
             case "hoe" -> held.name().endsWith("_HOE");
             default -> true;
         };
+    }
+
+    private boolean isWoodcuttingMaterial(String subject) {
+        if (subject == null) {
+            return false;
+        }
+        return subject.endsWith("_LOG")
+                || subject.endsWith("_WOOD")
+                || subject.endsWith("_STEM")
+                || subject.endsWith("_HYPHAE")
+                || subject.endsWith("_LOGS");
     }
 
     private long applyRateLimit(UUID playerId, String achievementId, int tier, long delta, Criteria criteria) {

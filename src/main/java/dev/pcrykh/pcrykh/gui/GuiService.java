@@ -36,6 +36,8 @@ public class GuiService implements Listener {
     private final NamespacedKey menuKey;
     private final NamespacedKey achievementKey;
     private final NamespacedKey hotbarKey;
+    private final Map<UUID, Integer> achievementsPage = new HashMap<>();
+    private static final int ACHIEVEMENTS_PAGE_SIZE = 28;
 
     public GuiService(JavaPlugin plugin, AchievementService achievementService) {
         this.plugin = plugin;
@@ -79,28 +81,49 @@ public class GuiService implements Listener {
         settings.setItemMeta(settingsMeta);
         inv.setItem(24, settings);
 
-        addFooter(inv, player, TITLE_MAIN);
+        addFooter(inv, "back_main");
         player.openInventory(inv);
     }
 
     public void openAchievementsMenu(Player player) {
+        openAchievementsMenu(player, achievementsPage.getOrDefault(player.getUniqueId(), 0));
+    }
+
+    public void openAchievementsMenu(Player player, int requestedPage) {
         Inventory inv = Bukkit.createInventory(null, 54, TITLE_ACHIEVEMENTS);
         List<AchievementDefinition> defs = new ArrayList<>(achievementService.getAchievements());
 
+        int pageCount = Math.max(1, (int) Math.ceil(defs.size() / (double) ACHIEVEMENTS_PAGE_SIZE));
+        int page = Math.max(0, Math.min(requestedPage, pageCount - 1));
+        achievementsPage.put(player.getUniqueId(), page);
+
+        PlayerState state = achievementService.getOrLoad(player);
+        int start = page * ACHIEVEMENTS_PAGE_SIZE;
+        int end = Math.min(defs.size(), start + ACHIEVEMENTS_PAGE_SIZE);
+
         int slot = 10;
-        for (AchievementDefinition def : defs) {
+        for (int i = start; i < end; i++) {
+            AchievementDefinition def = defs.get(i);
             Material iconMaterial = Material.matchMaterial(def.icon);
             ItemStack item = new ItemStack(iconMaterial == null ? Material.BOOK : iconMaterial);
             ItemMeta meta = item.getItemMeta();
             meta.displayName(Component.text(def.name));
             meta.getPersistentDataContainer().set(achievementKey, PersistentDataType.STRING, def.id);
-            PlayerState state = achievementService.getOrLoad(player);
-            int currentTier = state.achievementProgress.get(def.id).currentTier;
-                String nextTitle = currentTier + 1 <= def.maxTier ? def.tiers.get(currentTier).title : "MAX";
-                meta.lore(List.of(
+            var progress = state.achievementProgress.get(def.id);
+            int currentTier = progress.currentTier;
+            int nextTier = progress.nextTier;
+            String nextTitle = nextTier <= def.maxTier ? def.tiers.get(nextTier - 1).title : "MAX";
+            String progressLine = "Progress: MAX";
+            if (nextTier <= def.maxTier) {
+                long required = achievementService.requiredAmount(def.tiers.get(nextTier - 1).criteria);
+                long amount = progress.progressAmount;
+                progressLine = "Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")";
+            }
+            meta.lore(List.of(
                     Component.text("Tier: " + currentTier + "/" + def.maxTier),
+                    Component.text(progressLine),
                     Component.text("Next: " + nextTitle)
-                ));
+            ));
             item.setItemMeta(meta);
             inv.setItem(slot, item);
             slot = nextGridSlot(slot);
@@ -109,7 +132,8 @@ public class GuiService implements Listener {
             }
         }
 
-        addFooter(inv, player, TITLE_ACHIEVEMENTS);
+        addFooter(inv, "back_main");
+        addPagination(inv, page, pageCount);
         player.openInventory(inv);
     }
 
@@ -123,10 +147,18 @@ public class GuiService implements Listener {
         ItemStack header = new ItemStack(iconMaterial == null ? Material.BOOK : iconMaterial);
         ItemMeta headerMeta = header.getItemMeta();
         headerMeta.displayName(Component.text(def.name));
-        headerMeta.lore(List.of(
-                Component.text("Tier: " + currentTier + "/" + def.maxTier),
-                Component.text("Next: " + (nextTier <= def.maxTier ? def.tiers.get(nextTier - 1).title : "MAX"))
-        ));
+        List<Component> headerLore = new ArrayList<>();
+        headerLore.add(Component.text("Tier: " + currentTier + "/" + def.maxTier));
+        if (nextTier <= def.maxTier) {
+            long required = achievementService.requiredAmount(def.tiers.get(nextTier - 1).criteria);
+            long amount = state.achievementProgress.get(def.id).progressAmount;
+            headerLore.add(Component.text("Progress: " + amount + "/" + required + " (" + percent(amount, required) + ")"));
+            headerLore.add(Component.text("Next: " + def.tiers.get(nextTier - 1).title));
+        } else {
+            headerLore.add(Component.text("Progress: MAX"));
+            headerLore.add(Component.text("Next: MAX"));
+        }
+        headerMeta.lore(headerLore);
         header.setItemMeta(headerMeta);
         inv.setItem(4, header);
 
@@ -137,6 +169,7 @@ public class GuiService implements Listener {
             objectiveMeta.displayName(Component.text(tier.title));
             objectiveMeta.lore(List.of(
                     Component.text(tier.description),
+                    Component.text("Progress: " + state.achievementProgress.get(def.id).progressAmount + "/" + achievementService.requiredAmount(tier.criteria)),
                     Component.text("Reward: " + tier.rewards.ap + " AP")
             ));
             objective.setItemMeta(objectiveMeta);
@@ -159,7 +192,7 @@ public class GuiService implements Listener {
         historyItem.setItemMeta(historyMeta);
         inv.setItem(31, historyItem);
 
-        addFooter(inv, player, TITLE_ACHIEVEMENT_PREFIX + def.name);
+        addFooter(inv, "back_achievements");
         player.openInventory(inv);
     }
 
@@ -168,7 +201,7 @@ public class GuiService implements Listener {
         inv.setItem(20, labeled(Material.REDSTONE, "Reload config"));
         inv.setItem(22, labeled(Material.PLAYER_HEAD, "Player debug"));
         inv.setItem(24, labeled(Material.EMERALD, "Grant AP"));
-        addFooter(inv, player, TITLE_ADMIN);
+        addFooter(inv, "back_main");
         player.openInventory(inv);
     }
 
@@ -192,10 +225,10 @@ public class GuiService implements Listener {
         }
     }
 
-    private void addFooter(Inventory inv, Player player, String current) {
+    private void addFooter(Inventory inv, String backAction) {
         ItemStack back = labeled(Material.ARROW, "Back");
         ItemMeta meta = back.getItemMeta();
-        meta.getPersistentDataContainer().set(menuKey, PersistentDataType.STRING, "back");
+        meta.getPersistentDataContainer().set(menuKey, PersistentDataType.STRING, backAction);
         back.setItemMeta(meta);
 
         ItemStack close = labeled(Material.BARRIER, "Close");
@@ -205,6 +238,26 @@ public class GuiService implements Listener {
 
         inv.setItem(45, back);
         inv.setItem(49, close);
+    }
+
+    private void addPagination(Inventory inv, int page, int pageCount) {
+        if (pageCount <= 1) {
+            return;
+        }
+        ItemStack prev = labeled(Material.ARROW, "Previous Page");
+        ItemMeta prevMeta = prev.getItemMeta();
+        prevMeta.getPersistentDataContainer().set(menuKey, PersistentDataType.STRING, "page_prev");
+        prev.setItemMeta(prevMeta);
+        inv.setItem(47, prev);
+
+        ItemStack next = labeled(Material.ARROW, "Next Page");
+        ItemMeta nextMeta = next.getItemMeta();
+        nextMeta.getPersistentDataContainer().set(menuKey, PersistentDataType.STRING, "page_next");
+        next.setItemMeta(nextMeta);
+        inv.setItem(53, next);
+
+        ItemStack pageItem = labeled(Material.PAPER, "Page " + (page + 1) + "/" + pageCount);
+        inv.setItem(51, pageItem);
     }
 
     private ItemStack labeled(Material material, String name) {
@@ -227,6 +280,14 @@ public class GuiService implements Listener {
             return -1;
         }
         return row * 9 + col;
+    }
+
+    private String percent(long amount, long required) {
+        if (required <= 0) {
+            return "0%";
+        }
+        int pct = (int) Math.min(100, Math.round((amount * 100.0) / required));
+        return pct + "%";
     }
 
     private List<String> topAchievements(PlayerState state, int limit) {
@@ -311,6 +372,7 @@ public class GuiService implements Listener {
         String title = event.getView().getTitle();
         if (!title.startsWith("Pcrykh: ")) {
             if (event.getCurrentItem() != null && isHotbarItem(event.getCurrentItem())) {
+                openMainMenu(player);
                 event.setCancelled(true);
             }
             return;
@@ -326,10 +388,18 @@ public class GuiService implements Listener {
             String action = meta.getPersistentDataContainer().get(menuKey, PersistentDataType.STRING);
             if ("achievements".equals(action)) {
                 openAchievementsMenu(player);
-            } else if ("back".equals(action)) {
+            } else if ("back_main".equals(action)) {
                 openMainMenu(player);
+            } else if ("back_achievements".equals(action)) {
+                openAchievementsMenu(player);
             } else if ("close".equals(action)) {
                 player.closeInventory();
+            } else if ("page_next".equals(action)) {
+                int page = achievementsPage.getOrDefault(player.getUniqueId(), 0);
+                openAchievementsMenu(player, page + 1);
+            } else if ("page_prev".equals(action)) {
+                int page = achievementsPage.getOrDefault(player.getUniqueId(), 0);
+                openAchievementsMenu(player, page - 1);
             }
             return;
         }
