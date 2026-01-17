@@ -8,10 +8,10 @@
     - title: `Settings`
     - all clicks are cancelled; no item movement is permitted
   - layout:
-    - slot `11`: achievement announcements toggle
-    - slot `13`: random facts toggle
-    - slot `15`: action-bar progress toggle
-    - slot `26`: back button
+    - slot `20`: achievement announcements toggle
+    - slot `22`: random facts toggle
+    - slot `24`: action-bar progress toggle
+    - slot `45`: back button
   - item_rendering:
     - announce_achievements:
       - material: `NAME_TAG`

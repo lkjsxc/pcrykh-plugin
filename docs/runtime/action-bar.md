@@ -6,7 +6,16 @@
   - config_binding:
     - `runtime.action_bar.progress_enabled`
   - message_format:
-    - `<title> <meter> <current>/<target>`
+    - `<title> <progress_bar> <current>/<target>`
   - meter:
-    - render a fixed-width bar with filled and empty segments
-    - filled segments scale with `current/target`
+    - render a fixed-width progress bar using unicode blocks
+    - width: 16
+    - filled segment: `█`
+    - empty segment: `░`
+    - filled segment color is based on progress ratio
+    - empty segments use a dark gray color
+  - color_levels:
+    - `ratio < 0.25`: red
+    - `0.25 <= ratio < 0.50`: gold
+    - `0.50 <= ratio < 0.75`: yellow
+    - `ratio >= 0.75`: green

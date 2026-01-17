@@ -14,6 +14,7 @@
     - material is derived from `icon` using the platform match function
     - if the icon is invalid or unrecognized, use `PAPER`
     - display name is `title`
+    - completed achievements MUST apply an enchantment glow
     - lore lines (in order):
       - `description`
       - `category: <category_id>`
@@ -22,4 +23,10 @@
   - navigation:
     - pagination uses [navigation.md](navigation.md)
     - page size is 45 achievements
+  - large_chest_layout:
+    - bottom row (`45..53`) is reserved for navigation and status items only
+    - content MUST NOT be placed in slots `45..53`
+  - icon_constraints:
+    - hunting achievements MUST NOT share a single icon across all hunt items
+    - each hunt item MUST use a distinct icon suited to its subject
     - slot `49` returns to [menu.md](menu.md)

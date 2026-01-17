@@ -6,4 +6,5 @@
 		- only paths listed below are normative
 	- children:
 		- [runtime-config.md](runtime-config.md)
-		- [achievement-packs.md](achievement-packs.md)
+		- [achievement-files.md](achievement-files.md)
+		- [category-files.md](category-files.md)

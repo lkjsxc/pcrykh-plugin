@@ -5,9 +5,11 @@
 		- enforce the 300-line limit on `config.json`
 		- reject unsupported `spec_version`
 		- validate required top-level fields
-		- resolve `achievement_sources` to pack files
+		- resolve `category_sources` to category files
+		- resolve `achievement_sources` to achievement files
 		- resolve `facts_sources` to fact pack files
-		- expand templates into concrete achievements
+		- validate category definitions
+		- validate achievement definitions
 		- load but do not interpret `runtime.chat` and `runtime.action_bar`
 		- aggregate facts from all fact packs
 	- validation_order:
@@ -15,9 +17,10 @@
 		- JSON parse
 		- required keys and `commands.root`
 		- `spec_version` validation
+		- `category_sources` resolution
 		- `achievement_sources` resolution
 		- `facts_sources` resolution
-		- template expansion and achievement validation
+		- category validation and achievement validation
 	- failure_behavior:
 		- any validation failure disables the plugin
 		- duplicate achievement `id` values are fatal

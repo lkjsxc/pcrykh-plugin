@@ -7,3 +7,4 @@
 		- C-008 — TOC canonicality vs README authority
 		- C-009 — GUI scope exclusion vs GUI menu specification
 		- C-010 — Corrupted config schema blocks
+		- C-011 — Pack templates vs per-achievement files

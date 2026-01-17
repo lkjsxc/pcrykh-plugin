@@ -4,8 +4,9 @@
 	- startup_sequence:
 		- ensure default config resources exist in the data folder
 		- load `config.json` and validate required fields
-		- resolve `achievement_sources` to pack files
-		- expand templates into concrete achievements
+		- resolve `category_sources` to category files
+		- resolve `achievement_sources` to achievement files
+		- load categories and achievements into the catalog
 		- register GUI menu listeners
 		- register hotbar beacon entry and click handler
 		- register `/pcrykh`

@@ -8,9 +8,9 @@
     - title: `Profile`
     - all clicks are cancelled; no item movement is permitted
   - layout:
-    - slot `11`: player identity
-    - slot `13`: achievement summary
-    - slot `15`: back button
+    - slot `20`: player identity
+    - slot `24`: achievement summary
+    - slot `45`: back button
   - item_rendering:
     - identity:
       - material: `PLAYER_HEAD`

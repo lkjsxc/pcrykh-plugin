@@ -11,6 +11,7 @@
     - `runtime.autosave`
     - `runtime.chat`
     - `runtime.action_bar`
+    - `category_sources` (non-empty list)
     - `achievement_sources` (non-empty list)
     - `facts_sources` (non-empty list)
   - top_level_schema:
@@ -37,19 +38,19 @@
           }
         },
         "facts_sources": ["facts/packs"],
-        "achievement_sources": [
-          "achievements/packs/mining.json",
-          "achievements/packs/harvest.json",
-          "achievements/packs/crafting.json",
-          "achievements/packs/hunting.json",
-          "achievements/packs/fishing.json"
-        ]
+        "category_sources": ["achievements/categories"],
+        "achievement_sources": ["achievements/entries"]
       }
       ```
   - rules:
     - `spec_version` MUST start with `4.`
+    - `category_sources` MUST be a non-empty array
     - `achievement_sources` MUST be a non-empty array
     - `facts_sources` MUST be a non-empty array
+  - category_source_resolution:
+    - each entry in `category_sources` is a path relative to the plugin data folder
+    - if the entry is a directory, all `.json` files under it (recursive) are loaded in lexical order
+    - if the entry is a file, it is loaded directly
   - achievement_source_resolution:
     - each entry in `achievement_sources` is a path relative to the plugin data folder
     - if the entry is a directory, all `.json` files under it (recursive) are loaded in lexical order
@@ -59,5 +60,5 @@
     - if the entry is a directory, all `.json` files under it (recursive) are loaded in lexical order
     - if the entry is a file, it is loaded directly
   - generated_achievements:
-    - achievements are generated from packs; see [achievement-packs.md](achievement-packs.md)
-    - generated achievements MUST conform to [domain/achievements/model.md](../domain/achievements/model.md)
+    - achievements are loaded from single-achievement files
+    - each file MUST conform to [domain/achievements/model.md](../domain/achievements/model.md)

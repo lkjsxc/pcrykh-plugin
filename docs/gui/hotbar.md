@@ -10,6 +10,7 @@
   - behavior:
     - clicking the beacon opens the GUI menu defined in [menu.md](menu.md)
     - clicks are consumed; no normal item action occurs
+    - attempting to drop/throw the beacon opens the GUI menu instead
   - permissions:
     - requires `pcrykh.use`
   - lifecycle:

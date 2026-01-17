@@ -12,9 +12,9 @@
     - title: `Pcrykh`
     - all clicks are cancelled; no item movement is permitted
   - layout:
-    - slot `11`: profile button
-    - slot `13`: achievements button
-    - slot `15`: settings button
+    - slot `20`: profile button
+    - slot `22`: achievements button
+    - slot `24`: settings button
   - button_rendering:
     - profile:
       - material: `PLAYER_HEAD`

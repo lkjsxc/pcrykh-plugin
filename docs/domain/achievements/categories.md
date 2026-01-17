@@ -16,5 +16,5 @@
       - `id` MUST be unique within the merged catalog
       - `order` is an integer; lower numbers sort first
   - merging:
-    - categories from all packs are merged by `id`
+    - categories from all category files are merged by `id`
     - duplicate `id` values with differing fields are fatal

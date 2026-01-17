@@ -6,18 +6,22 @@
 			```json
 			{
 				"id": "string",
-				"name": "string",
 				"category_id": "string",
 				"icon": "string",
 				"title": "string",
 				"description": "string",
+				"amount": 1,
 				"criteria": { "...": "CriteriaDefinition" },
-				"rewards": { "...": "RewardDefinition" }
+				"reward": { "...": "RewardDefinition" },
+				"name": "string"
 			}
 			```
 		- rules:
-			- all fields are required
+			- required fields: `id`, `category_id`, `icon`, `title`, `description`, `amount`, `criteria`, `reward`
+			- `name` is optional; when omitted, it defaults to `title`
 			- `id` MUST be globally unique across the generated catalog
 			- `category_id` MUST exist in the merged category catalog
+			- `amount` MUST be an integer `>= 1`
 			- `criteria` MUST conform to the canonical criteria types and include `constraints`
-			- `rewards` MUST conform to the canonical reward definition
+			- `criteria.count` is derived from `amount`; if present it MUST match `amount`
+			- `reward` MUST conform to the canonical reward definition

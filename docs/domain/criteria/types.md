@@ -53,3 +53,26 @@
       ```
     - rules:
       - `items` MUST be a non-empty array of strings
+  - item_enchant:
+    - schema:
+      ```json
+      {
+        "type": "item_enchant",
+        "items": ["string"],
+        "count": 1,
+        "constraints": {}
+      }
+      ```
+    - rules:
+      - `items` MUST be a non-empty array of strings
+  - movement:
+    - schema:
+      ```json
+      {
+        "type": "movement",
+        "count": 1,
+        "constraints": {}
+      }
+      ```
+    - rules:
+      - `count` is the distance in blocks

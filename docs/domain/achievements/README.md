@@ -8,5 +8,4 @@
 		- [model.md](model.md)
 		- [categories.md](categories.md)
 		- [structure.md](structure.md)
-		- [templates.md](templates.md)
 		- [rewards.md](rewards.md)
