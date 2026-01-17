@@ -221,4 +221,4 @@ Each achievement MUST define:
 
 ## Conflict handling
 
-If a doc page conflicts with this schema, the schema in this file wins unless explicitly superseded by a higher-precedence foundation note in [foundation/README.md](../foundation/README.md). All conflicts MUST be recorded in [governance/conflicts/README.md](../governance/conflicts/README.md).
+If a doc page conflicts with this schema, the schema in this file wins unless explicitly superseded by a higher-precedence foundation note in [foundation/README.md](../foundation/README.md). Log conflicts in [governance/conflicts/index.md](../governance/conflicts/index.md).

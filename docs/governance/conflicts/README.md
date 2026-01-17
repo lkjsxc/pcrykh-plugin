@@ -4,10 +4,12 @@ This directory consolidates conflicting specifications and their resolutions.
 
 ## TOC
 
+- [index.md](index.md)
 - [registry.md](registry.md)
 - [resolutions.md](resolutions.md)
 
-## Rule
+## How to use this section
 
-- Any identified contradiction MUST be recorded in [conflicts/registry.md](registry.md) immediately.
-- A conflict is not considered resolved until [conflicts/resolutions.md](resolutions.md) is updated and the losing statements are removed or superseded.
+- Log contradictions in [registry.md](registry.md).
+- Record final resolutions in [resolutions.md](resolutions.md).
+- The consolidated view lives in [index.md](index.md).
