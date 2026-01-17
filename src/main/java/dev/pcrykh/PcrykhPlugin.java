@@ -78,6 +78,12 @@ public class PcrykhPlugin extends JavaPlugin {
             throw new ConfigException("Failed to create data folder");
         }
         saveResource("config.json", false);
-        saveResource("achievements/packs/core.json", false);
+        saveResource("achievements/packs/mining.json", false);
+        saveResource("achievements/packs/harvest.json", false);
+        saveResource("achievements/packs/crafting.json", false);
+        saveResource("achievements/packs/hunting.json", false);
+        saveResource("achievements/packs/fishing.json", false);
+        saveResource("facts/packs/trivia-001.json", false);
+        saveResource("facts/packs/trivia-002.json", false);
     }
 }

@@ -1,0 +1,60 @@
+{
+  "pack_id": "hunting",
+  "categories": [
+    {
+      "id": "hunting",
+      "name": "Hunting",
+      "order": 3,
+      "icon": "IRON_SWORD"
+    }
+  ],
+  "templates": [
+    {
+      "template_id": "hunting_mobs",
+      "id_template": "hunt_{subject_id}_{tier_index}",
+      "name_template": "Hunt {subject} {tier}",
+      "title_template": "Hunt {subject} {tier}",
+      "description_template": "Defeat {count} {subject}.",
+      "category_id": "hunting",
+      "icon_template": "IRON_SWORD",
+      "criteria_template": {
+        "type": "entity_kill",
+        "entities": ["{subject_id}"],
+        "count": "{count}",
+        "constraints": {}
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "zombie",
+        "skeleton",
+        "creeper",
+        "spider",
+        "enderman",
+        "witch",
+        "slime",
+        "husk",
+        "stray",
+        "drowned",
+        "blaze",
+        "ghast",
+        "magma_cube",
+        "piglin",
+        "zombified_piglin",
+        "hoglin",
+        "guardian",
+        "phantom",
+        "ravager",
+        "pillager"
+      ],
+      "tiers": {
+        "levels": 5,
+        "count_start": 15,
+        "count_multiplier": 2.1,
+        "ap_start": 6,
+        "ap_multiplier": 1.6
+      }
+    }
+  ]
+}

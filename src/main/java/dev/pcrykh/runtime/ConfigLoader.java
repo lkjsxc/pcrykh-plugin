@@ -34,7 +34,7 @@ public class ConfigLoader {
             require(root, "spec_version");
             require(root, "commands");
             require(root, "runtime");
-            require(root, "facts");
+            require(root, "facts_sources");
             require(root, "achievement_sources");
 
             JsonNode commands = root.get("commands");
@@ -54,10 +54,10 @@ public class ConfigLoader {
             require(runtime, "chat");
             require(runtime, "action_bar");
 
-            JsonNode factsNode = root.get("facts");
+            JsonNode factsSourcesNode = root.get("facts_sources");
             JsonNode achievementSources = root.get("achievement_sources");
-            if (!factsNode.isArray() || factsNode.size() == 0) {
-                throw new ConfigException("facts must be a non-empty array");
+            if (!factsSourcesNode.isArray() || factsSourcesNode.size() == 0) {
+                throw new ConfigException("facts_sources must be a non-empty array");
             }
             if (!achievementSources.isArray() || achievementSources.size() == 0) {
                 throw new ConfigException("achievement_sources must be a non-empty array");
@@ -69,13 +69,22 @@ public class ConfigLoader {
                 sources.add(entry.asText());
             }
 
+            List<String> factSources = new ArrayList<>();
+            ArrayNode factsSourceArray = (ArrayNode) factsSourcesNode;
+            for (JsonNode entry : factsSourceArray) {
+                factSources.add(entry.asText());
+            }
+
             RuntimeConfig.AutosaveConfig autosave = parseAutosave(runtime.get("autosave"));
             RuntimeConfig.ChatConfig chat = parseChat(runtime.get("chat"));
             RuntimeConfig.ActionBarConfig actionBar = parseActionBar(runtime.get("action_bar"));
 
-            List<String> facts = new ArrayList<>();
-            for (JsonNode entry : factsNode) {
-                facts.add(entry.asText());
+            FactsSourceResolver factsResolver = new FactsSourceResolver();
+            List<Path> factFiles = factsResolver.resolve(dataFolder, factSources);
+            FactsLoader factsLoader = new FactsLoader(mapper);
+            List<String> facts = factsLoader.loadAll(factFiles);
+            if (facts.isEmpty()) {
+                throw new ConfigException("facts_sources produced an empty fact list");
             }
 
             return new RuntimeConfig(
@@ -85,6 +94,7 @@ public class ConfigLoader {
                     chat,
                     actionBar,
                     facts,
+                        factSources,
                     sources
             );
         } catch (IOException ex) {
@@ -122,20 +132,6 @@ public class ConfigLoader {
 
     private RuntimeConfig.ActionBarConfig parseActionBar(JsonNode actionBar) {
         require(actionBar, "progress_enabled");
-        require(actionBar, "milestone_thresholds");
-        require(actionBar, "cooldown_seconds");
-        JsonNode thresholds = actionBar.get("milestone_thresholds");
-        if (!thresholds.isArray() || thresholds.size() == 0) {
-            throw new ConfigException("milestone_thresholds must be a non-empty array");
-        }
-        List<Double> values = new ArrayList<>();
-        for (JsonNode entry : thresholds) {
-            values.add(entry.asDouble());
-        }
-        return new RuntimeConfig.ActionBarConfig(
-                actionBar.get("progress_enabled").asBoolean(),
-                values,
-                actionBar.get("cooldown_seconds").asInt()
-        );
+        return new RuntimeConfig.ActionBarConfig(actionBar.get("progress_enabled").asBoolean());
     }
 }

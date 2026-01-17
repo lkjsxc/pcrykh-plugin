@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AchievementMenuService {
-    private static final int MAIN_MENU_SIZE = 27;
+    private static final int MAIN_MENU_SIZE = 54;
     private static final int ACHIEVEMENTS_MENU_SIZE = 54;
-    private static final int PROFILE_MENU_SIZE = 27;
-    private static final int SETTINGS_MENU_SIZE = 27;
+    private static final int PROFILE_MENU_SIZE = 54;
+    private static final int SETTINGS_MENU_SIZE = 54;
     private static final int PAGE_SIZE = 45;
 
     private final AchievementCatalog catalog;
@@ -112,7 +112,7 @@ public class AchievementMenuService {
                 "state: " + onOff(config.chat().factsEnabled())
         )));
         inventory.setItem(15, namedItem(Material.GLOWSTONE_DUST, "Progress Indicators", List.of(
-                "action bar milestone alerts",
+            "action bar progress updates",
                 "state: " + onOff(config.actionBar().progressEnabled())
         )));
         inventory.setItem(26, namedItem(Material.BARRIER, "Back"));

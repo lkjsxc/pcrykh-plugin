@@ -1,0 +1,60 @@
+{
+  "pack_id": "crafting",
+  "categories": [
+    {
+      "id": "crafting",
+      "name": "Crafting",
+      "order": 2,
+      "icon": "CRAFTING_TABLE"
+    }
+  ],
+  "templates": [
+    {
+      "template_id": "crafting_items",
+      "id_template": "craft_{subject_id}_{tier_index}",
+      "name_template": "Craft {subject} {tier}",
+      "title_template": "Craft {subject} {tier}",
+      "description_template": "Craft {count} {subject}.",
+      "category_id": "crafting",
+      "icon_template": "{subject_id}",
+      "criteria_template": {
+        "type": "item_craft",
+        "item": "{subject_id}",
+        "count": "{count}",
+        "constraints": {}
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "crafting_table",
+        "furnace",
+        "torch",
+        "ladder",
+        "barrel",
+        "chest",
+        "shield",
+        "bow",
+        "arrow",
+        "stone_pickaxe",
+        "iron_pickaxe",
+        "diamond_pickaxe",
+        "bread",
+        "cake",
+        "bucket",
+        "glass",
+        "glass_pane",
+        "book",
+        "compass",
+        "anvil"
+      ],
+      "tiers": {
+        "levels": 5,
+        "count_start": 10,
+        "count_multiplier": 2.2,
+        "ap_start": 5,
+        "ap_multiplier": 1.7
+      }
+    }
+  ]
+}

@@ -38,21 +38,15 @@ public class ConfigSaver {
 
         ObjectNode actionBar = mapper.createObjectNode();
         actionBar.put("progress_enabled", config.actionBar().progressEnabled());
-        ArrayNode thresholds = mapper.createArrayNode();
-        for (Double value : config.actionBar().milestoneThresholds()) {
-            thresholds.add(value);
-        }
-        actionBar.set("milestone_thresholds", thresholds);
-        actionBar.put("cooldown_seconds", config.actionBar().cooldownSeconds());
         runtime.set("action_bar", actionBar);
 
         root.set("runtime", runtime);
 
-        ArrayNode facts = mapper.createArrayNode();
-        for (String fact : config.facts()) {
-            facts.add(fact);
+        ArrayNode factsSources = mapper.createArrayNode();
+        for (String source : config.factsSources()) {
+            factsSources.add(source);
         }
-        root.set("facts", facts);
+        root.set("facts_sources", factsSources);
 
         ArrayNode sources = mapper.createArrayNode();
         for (String source : config.achievementSources()) {

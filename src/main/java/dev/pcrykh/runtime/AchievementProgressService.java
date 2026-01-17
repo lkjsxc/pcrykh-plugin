@@ -27,8 +27,6 @@ public class AchievementProgressService {
 
     private final Map<UUID, Map<String, Integer>> progress = new HashMap<>();
     private final Map<UUID, Set<String>> unlocked = new HashMap<>();
-    private final Map<UUID, Map<String, Integer>> milestoneIndex = new HashMap<>();
-    private final Map<UUID, Map<String, Long>> lastNotifyAt = new HashMap<>();
 
     public AchievementProgressService(AchievementCatalog catalog, RuntimeConfig config) {
         this.catalog = catalog;
@@ -111,7 +109,7 @@ public class AchievementProgressService {
                 broadcastUnlock(player, achievement);
             }
 
-            notifyMilestone(player, achievement, next, spec.count());
+            notifyProgress(player, achievement, next, spec.count());
         }
     }
 
@@ -123,49 +121,31 @@ public class AchievementProgressService {
         Bukkit.getServer().broadcast(Component.text(message));
     }
 
-    private void notifyMilestone(Player player, AchievementDefinition achievement, int current, int target) {
+    private void notifyProgress(Player player, AchievementDefinition achievement, int current, int target) {
         if (!config.actionBar().progressEnabled()) {
             return;
         }
         if (target <= 0) {
             return;
         }
-        List<Double> thresholds = config.actionBar().milestoneThresholds();
-        if (thresholds == null || thresholds.isEmpty()) {
-            return;
-        }
-        double ratio = current / (double) target;
-        int thresholdIndex = -1;
-        for (int i = 0; i < thresholds.size(); i++) {
-            if (ratio >= thresholds.get(i)) {
-                thresholdIndex = i;
-            }
-        }
-        if (thresholdIndex < 0) {
-            return;
-        }
-
-        UUID playerId = player.getUniqueId();
-        Map<String, Integer> perAchievement = milestoneIndex.computeIfAbsent(playerId, id -> new HashMap<>());
-        int lastIndex = perAchievement.getOrDefault(achievement.id(), -1);
-        if (thresholdIndex <= lastIndex) {
-            return;
-        }
-
-        long now = System.currentTimeMillis();
-        Map<String, Long> lastNotify = lastNotifyAt.computeIfAbsent(playerId, id -> new HashMap<>());
-        long last = lastNotify.getOrDefault(achievement.id(), 0L);
-        long cooldownMs = config.actionBar().cooldownSeconds() * 1000L;
-        if (now - last < cooldownMs) {
-            return;
-        }
-
-        int percent = (int) Math.floor(ratio * 100);
-        String message = config.chat().prefix() + achievement.title() + " " + percent + "%";
+        String meter = buildProgressMeter(current, target, 10);
+        String message = achievement.title() + " " + meter + " " + current + "/" + target;
         player.sendActionBar(Component.text(message));
+    }
 
-        perAchievement.put(achievement.id(), thresholdIndex);
-        lastNotify.put(achievement.id(), now);
+    private String buildProgressMeter(int current, int target, int width) {
+        if (width <= 0 || target <= 0) {
+            return "[]";
+        }
+        double ratio = Math.min(1.0, Math.max(0.0, current / (double) target));
+        int filled = (int) Math.floor(ratio * width);
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        for (int i = 0; i < width; i++) {
+            builder.append(i < filled ? "█" : "░");
+        }
+        builder.append("]");
+        return builder.toString();
     }
 
     private void indexAchievements() {

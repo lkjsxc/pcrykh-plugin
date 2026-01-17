@@ -9,6 +9,7 @@ public class RuntimeConfig {
         private final ChatConfig chat;
         private final ActionBarConfig actionBar;
         private final List<String> facts;
+        private final List<String> factsSources;
         private final List<String> achievementSources;
 
         public RuntimeConfig(
@@ -18,6 +19,7 @@ public class RuntimeConfig {
                         ChatConfig chat,
                         ActionBarConfig actionBar,
                         List<String> facts,
+                        List<String> factsSources,
                         List<String> achievementSources
         ) {
                 this.specVersion = specVersion;
@@ -26,6 +28,7 @@ public class RuntimeConfig {
                 this.chat = chat;
                 this.actionBar = actionBar;
                 this.facts = facts;
+                this.factsSources = factsSources;
                 this.achievementSources = achievementSources;
         }
 
@@ -51,6 +54,10 @@ public class RuntimeConfig {
 
         public List<String> facts() {
                 return facts;
+        }
+
+        public List<String> factsSources() {
+                return factsSources;
         }
 
         public List<String> achievementSources() {
@@ -115,13 +122,9 @@ public class RuntimeConfig {
 
         public static class ActionBarConfig {
                 private boolean progressEnabled;
-                private final List<Double> milestoneThresholds;
-                private final int cooldownSeconds;
 
-                public ActionBarConfig(boolean progressEnabled, List<Double> milestoneThresholds, int cooldownSeconds) {
+                public ActionBarConfig(boolean progressEnabled) {
                         this.progressEnabled = progressEnabled;
-                        this.milestoneThresholds = milestoneThresholds;
-                        this.cooldownSeconds = cooldownSeconds;
                 }
 
                 public boolean progressEnabled() {
@@ -130,14 +133,6 @@ public class RuntimeConfig {
 
                 public void setProgressEnabled(boolean progressEnabled) {
                         this.progressEnabled = progressEnabled;
-                }
-
-                public List<Double> milestoneThresholds() {
-                        return milestoneThresholds;
-                }
-
-                public int cooldownSeconds() {
-                        return cooldownSeconds;
                 }
         }
 }
