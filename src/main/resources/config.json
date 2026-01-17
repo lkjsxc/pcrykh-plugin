@@ -2547,6 +2547,627 @@
           }
         }
       ]
+    },
+    {
+      "id": "walk_1000",
+      "name": "Steady Walk",
+      "category_id": "gathering",
+      "icon": "LEATHER_BOOTS",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Steps",
+          "description": "Walk 1,000 blocks.",
+          "criteria": {
+            "type": "travel_walk",
+            "distance_blocks": 1000,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "walk_5000",
+      "name": "Long Walk",
+      "category_id": "gathering",
+      "icon": "IRON_BOOTS",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "5,000 Steps",
+          "description": "Walk 5,000 blocks.",
+          "criteria": {
+            "type": "travel_walk",
+            "distance_blocks": 5000,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "sprint_500",
+      "name": "Quick Stride",
+      "category_id": "gathering",
+      "icon": "CHAINMAIL_BOOTS",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Sprint",
+          "description": "Sprint 500 blocks.",
+          "criteria": {
+            "type": "travel_sprint",
+            "distance_blocks": 500,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "sprint_2500",
+      "name": "Fast Runner",
+      "category_id": "gathering",
+      "icon": "DIAMOND_BOOTS",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "2,500 Sprint",
+          "description": "Sprint 2,500 blocks.",
+          "criteria": {
+            "type": "travel_sprint",
+            "distance_blocks": 2500,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "swim_500",
+      "name": "Shallow Swim",
+      "category_id": "gathering",
+      "icon": "TURTLE_HELMET",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Swim",
+          "description": "Swim 500 blocks.",
+          "criteria": {
+            "type": "travel_swim",
+            "distance_blocks": 500,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "swim_2500",
+      "name": "Deep Swim",
+      "category_id": "gathering",
+      "icon": "PRISMARINE_SHARD",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "2,500 Swim",
+          "description": "Swim 2,500 blocks.",
+          "criteria": {
+            "type": "travel_swim",
+            "distance_blocks": 2500,
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "mount_horse_1000",
+      "name": "Horse Rider",
+      "category_id": "gathering",
+      "icon": "SADDLE",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Mounted",
+          "description": "Travel 1,000 blocks on a horse.",
+          "criteria": {
+            "type": "travel_mount",
+            "distance_blocks": 1000,
+            "vehicles": ["HORSE"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "mount_donkey_1000",
+      "name": "Donkey Rider",
+      "category_id": "gathering",
+      "icon": "LEAD",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Mounted",
+          "description": "Travel 1,000 blocks on a donkey.",
+          "criteria": {
+            "type": "travel_mount",
+            "distance_blocks": 1000,
+            "vehicles": ["DONKEY"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "mount_mule_1000",
+      "name": "Mule Rider",
+      "category_id": "gathering",
+      "icon": "CHEST",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Mounted",
+          "description": "Travel 1,000 blocks on a mule.",
+          "criteria": {
+            "type": "travel_mount",
+            "distance_blocks": 1000,
+            "vehicles": ["MULE"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "mount_pig_500",
+      "name": "Pig Rider",
+      "category_id": "gathering",
+      "icon": "PORKCHOP",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Mounted",
+          "description": "Travel 500 blocks on a pig.",
+          "criteria": {
+            "type": "travel_mount",
+            "distance_blocks": 500,
+            "vehicles": ["PIG"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "mount_strider_500",
+      "name": "Strider Rider",
+      "category_id": "gathering",
+      "icon": "WARPED_FUNGUS_ON_A_STICK",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Mounted",
+          "description": "Travel 500 blocks on a strider.",
+          "criteria": {
+            "type": "travel_mount",
+            "distance_blocks": 500,
+            "vehicles": ["STRIDER"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "mount_camel_1000",
+      "name": "Camel Rider",
+      "category_id": "gathering",
+      "icon": "CAMEL_SPAWN_EGG",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Mounted",
+          "description": "Travel 1,000 blocks on a camel.",
+          "criteria": {
+            "type": "travel_mount",
+            "distance_blocks": 1000,
+            "vehicles": ["CAMEL"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_oak_1000",
+      "name": "Oak Rowing",
+      "category_id": "gathering",
+      "icon": "OAK_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row an oak boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_spruce_1000",
+      "name": "Spruce Rowing",
+      "category_id": "gathering",
+      "icon": "SPRUCE_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a spruce boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["SPRUCE_BOAT", "SPRUCE_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_birch_1000",
+      "name": "Birch Rowing",
+      "category_id": "gathering",
+      "icon": "BIRCH_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a birch boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["BIRCH_BOAT", "BIRCH_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_jungle_1000",
+      "name": "Jungle Rowing",
+      "category_id": "gathering",
+      "icon": "JUNGLE_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a jungle boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["JUNGLE_BOAT", "JUNGLE_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_acacia_1000",
+      "name": "Acacia Rowing",
+      "category_id": "gathering",
+      "icon": "ACACIA_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row an acacia boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["ACACIA_BOAT", "ACACIA_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_dark_oak_1000",
+      "name": "Dark Oak Rowing",
+      "category_id": "gathering",
+      "icon": "DARK_OAK_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a dark oak boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_mangrove_1000",
+      "name": "Mangrove Rowing",
+      "category_id": "gathering",
+      "icon": "MANGROVE_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a mangrove boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["MANGROVE_BOAT", "MANGROVE_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_cherry_1000",
+      "name": "Cherry Rowing",
+      "category_id": "gathering",
+      "icon": "CHERRY_BOAT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a cherry boat 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["CHERRY_BOAT", "CHERRY_CHEST_BOAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_bamboo_1000",
+      "name": "Bamboo Rafting",
+      "category_id": "gathering",
+      "icon": "BAMBOO_RAFT",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "1,000 Row",
+          "description": "Row a bamboo raft 1,000 blocks.",
+          "criteria": {
+            "type": "travel_boat",
+            "distance_blocks": 1000,
+            "vehicles": ["BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_cow_500",
+      "name": "Cow Ferrier",
+      "category_id": "gathering",
+      "icon": "MILK_BUCKET",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Row",
+          "description": "Row a boat 500 blocks with a cow passenger.",
+          "criteria": {
+            "type": "travel_boat_with_animal",
+            "distance_blocks": 500,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "SPRUCE_BOAT", "SPRUCE_CHEST_BOAT", "BIRCH_BOAT", "BIRCH_CHEST_BOAT", "JUNGLE_BOAT", "JUNGLE_CHEST_BOAT", "ACACIA_BOAT", "ACACIA_CHEST_BOAT", "DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT", "MANGROVE_BOAT", "MANGROVE_CHEST_BOAT", "CHERRY_BOAT", "CHERRY_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "passengers": ["COW"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_pig_500",
+      "name": "Pig Ferrier",
+      "category_id": "gathering",
+      "icon": "CARROT_ON_A_STICK",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Row",
+          "description": "Row a boat 500 blocks with a pig passenger.",
+          "criteria": {
+            "type": "travel_boat_with_animal",
+            "distance_blocks": 500,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "SPRUCE_BOAT", "SPRUCE_CHEST_BOAT", "BIRCH_BOAT", "BIRCH_CHEST_BOAT", "JUNGLE_BOAT", "JUNGLE_CHEST_BOAT", "ACACIA_BOAT", "ACACIA_CHEST_BOAT", "DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT", "MANGROVE_BOAT", "MANGROVE_CHEST_BOAT", "CHERRY_BOAT", "CHERRY_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "passengers": ["PIG"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_sheep_500",
+      "name": "Sheep Ferrier",
+      "category_id": "gathering",
+      "icon": "WHITE_WOOL",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Row",
+          "description": "Row a boat 500 blocks with a sheep passenger.",
+          "criteria": {
+            "type": "travel_boat_with_animal",
+            "distance_blocks": 500,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "SPRUCE_BOAT", "SPRUCE_CHEST_BOAT", "BIRCH_BOAT", "BIRCH_CHEST_BOAT", "JUNGLE_BOAT", "JUNGLE_CHEST_BOAT", "ACACIA_BOAT", "ACACIA_CHEST_BOAT", "DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT", "MANGROVE_BOAT", "MANGROVE_CHEST_BOAT", "CHERRY_BOAT", "CHERRY_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "passengers": ["SHEEP"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_chicken_500",
+      "name": "Chicken Ferrier",
+      "category_id": "gathering",
+      "icon": "EGG",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Row",
+          "description": "Row a boat 500 blocks with a chicken passenger.",
+          "criteria": {
+            "type": "travel_boat_with_animal",
+            "distance_blocks": 500,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "SPRUCE_BOAT", "SPRUCE_CHEST_BOAT", "BIRCH_BOAT", "BIRCH_CHEST_BOAT", "JUNGLE_BOAT", "JUNGLE_CHEST_BOAT", "ACACIA_BOAT", "ACACIA_CHEST_BOAT", "DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT", "MANGROVE_BOAT", "MANGROVE_CHEST_BOAT", "CHERRY_BOAT", "CHERRY_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "passengers": ["CHICKEN"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_wolf_500",
+      "name": "Wolf Ferrier",
+      "category_id": "gathering",
+      "icon": "BONE",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Row",
+          "description": "Row a boat 500 blocks with a wolf passenger.",
+          "criteria": {
+            "type": "travel_boat_with_animal",
+            "distance_blocks": 500,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "SPRUCE_BOAT", "SPRUCE_CHEST_BOAT", "BIRCH_BOAT", "BIRCH_CHEST_BOAT", "JUNGLE_BOAT", "JUNGLE_CHEST_BOAT", "ACACIA_BOAT", "ACACIA_CHEST_BOAT", "DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT", "MANGROVE_BOAT", "MANGROVE_CHEST_BOAT", "CHERRY_BOAT", "CHERRY_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "passengers": ["WOLF"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "boat_cat_500",
+      "name": "Cat Ferrier",
+      "category_id": "gathering",
+      "icon": "COD",
+      "max_tier": 1,
+      "tiers": [
+        {
+          "tier": 1,
+          "title": "500 Row",
+          "description": "Row a boat 500 blocks with a cat passenger.",
+          "criteria": {
+            "type": "travel_boat_with_animal",
+            "distance_blocks": 500,
+            "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "SPRUCE_BOAT", "SPRUCE_CHEST_BOAT", "BIRCH_BOAT", "BIRCH_CHEST_BOAT", "JUNGLE_BOAT", "JUNGLE_CHEST_BOAT", "ACACIA_BOAT", "ACACIA_CHEST_BOAT", "DARK_OAK_BOAT", "DARK_OAK_CHEST_BOAT", "MANGROVE_BOAT", "MANGROVE_CHEST_BOAT", "CHERRY_BOAT", "CHERRY_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+            "passengers": ["CAT"],
+            "constraints": {}
+          },
+          "rewards": {
+            "ap": 18
+          }
+        }
+      ]
     }
   ]
 }
