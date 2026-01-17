@@ -9,4 +9,3 @@
 		- TOC canonicality rule vs README authority
 		- GUI declared out-of-scope vs GUI menu specification
 		- corrupted config schema blocks containing duplicated spec text
-		- pack/template achievements vs per-achievement file architecture

@@ -13,5 +13,7 @@
     - each file defines exactly one achievement object
     - each file MUST remain under 300 lines
     - filenames SHOULD match the achievement `id`
+    - packs/templates are not supported
+    - achievements are managed as individual JSON objects only
   - schema:
     - [domain/achievements/model.md](../domain/achievements/model.md)

@@ -7,6 +7,7 @@
 		- validate required top-level fields
 		- resolve `category_sources` to category files
 		- resolve `achievement_sources` to achievement files
+		- reject pack/template-based achievement inputs
 		- resolve `facts_sources` to fact pack files
 		- validate category definitions
 		- validate achievement definitions

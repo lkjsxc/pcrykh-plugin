@@ -11,6 +11,8 @@
     - achievement files SHOULD be organized by category directories
     - each achievement file MUST remain under 300 lines
     - category files provide ordering and icon metadata
+    - pack/template expansion is not supported
+    - grouped or incremental achievement definitions are not supported
   - invariants:
     - category list MUST be non-empty
     - every achievement MUST reference a category in the merged catalog

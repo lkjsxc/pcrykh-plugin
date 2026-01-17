@@ -3,7 +3,6 @@
 - node: docs/foundation/scope.md
 	- in_scope:
 		- runtime JSON config loading
-		- achievement generation from pack templates
 		- command surface tied to the achievement catalog
 		- GUI menus for the achievement catalog
 		- immersive large-scale MMORPG atmosphere across the full experience
