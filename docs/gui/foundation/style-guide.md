@@ -2,7 +2,7 @@
 
 ## Theme goals
 
-- Skyblock-like: bright highlights, informative lore, strong iconography, and consistent click sounds.
+- Bright highlights, informative lore, strong iconography, and consistent click sounds.
 
 ## Layout conventions
 

@@ -1,6 +1,6 @@
 # Action Bar Format
 
-This spec targets a Hypixel Skyblock-like feel: **dense, informative, consistent**.
+This spec targets a dense, informative, consistent feel.
 
 ## Achievement Points message
 

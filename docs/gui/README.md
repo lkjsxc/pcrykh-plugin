@@ -1,6 +1,6 @@
 # GUI
 
-This directory defines the GUI system. The GUI MUST evoke the atmosphere of Hypixel Skyblock (dense menus, polished item icons, clear navigation, satisfying feedback).
+This directory defines the GUI system. The GUI MUST evoke a dense, polished RPG menu aesthetic (dense menus, polished item icons, clear navigation, satisfying feedback).
 
 ## TOC
 

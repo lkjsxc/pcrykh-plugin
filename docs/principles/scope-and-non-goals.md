@@ -5,7 +5,7 @@
 - An achievement-based RPG progression system.
 - Achievement tiers implemented as **sequential objectives**.
 - XP awards for objective completion.
-- A Skyblock-atmosphere GUI.
+- A polished RPG-style GUI with dense menus and strong iconography.
 - A single command surface rooted at `/pcrykh`.
 
 ## Explicit non-goals (for now)
