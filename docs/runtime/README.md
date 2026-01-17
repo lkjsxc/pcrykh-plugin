@@ -11,3 +11,4 @@
 		- [achievements.md](achievements.md)
 		- [action-bar.md](action-bar.md)
 		- [facts.md](facts.md)
+		- [build.md](build.md)

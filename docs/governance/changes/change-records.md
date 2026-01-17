@@ -23,7 +23,7 @@
       ```yaml
 - id: "CR-20260118-006"
   date: "2026-01-18"
-  summary: "Replaced achievement pack architecture with per-achievement files, added category sources, and updated GUI/action-bar specs."
+  summary: "Replaced achievement pack architecture with per-achievement files, added category sources, updated GUI/action-bar specs, and defined build export behavior."
   files:
     - "docs/config/README.md"
     - "docs/config/runtime-config.md"
@@ -42,9 +42,11 @@
     - "docs/runtime/action-bar.md"
     - "docs/runtime/loader.md"
     - "docs/runtime/lifecycle.md"
+    - "docs/runtime/README.md"
+    - "docs/runtime/build.md"
     - "docs/governance/conflicts/index.md"
     - "docs/governance/conflicts/contradictions.md"
     - "docs/governance/conflicts/resolutions.md"
     - "docs/governance/changes/change-records.md"
-  notes: "Pack/template docs removed; new catalog uses single-achievement JSON files." 
+  notes: "Pack/template docs removed; new catalog uses single-achievement JSON files; Docker export defined." 
   ```
