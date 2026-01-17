@@ -1,0 +1,15 @@
+{
+  "id": "movement_stride_i",
+  "category_id": "movement",
+  "icon": "LEATHER_BOOTS",
+  "title": "Stride I",
+  "description": "Travel 500 blocks.",
+  "amount": 500,
+  "criteria": {
+    "type": "movement",
+    "constraints": {}
+  },
+  "reward": {
+    "ap": 6
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "core_first_tools",
+  "category_id": "core",
+  "icon": "WOODEN_PICKAXE",
+  "title": "First Tools",
+  "description": "Craft a wooden pickaxe.",
+  "amount": 1,
+  "criteria": {
+    "type": "item_craft",
+    "item": "wooden_pickaxe",
+    "constraints": {}
+  },
+  "reward": {
+    "ap": 4
+  }
+}

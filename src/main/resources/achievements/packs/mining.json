@@ -1,59 +1,7 @@
 {
   "pack_id": "mining",
   "categories": [
-    {
-      "id": "mining",
-      "name": "Mining",
-      "order": 0,
-      "icon": "IRON_PICKAXE"
-    }
-  ],
-  "templates": [
-    {
-      "template_id": "mining_blocks",
-      "id_template": "mining_{subject_id}_{tier_index}",
-      "name_template": "Mining {subject} {tier}",
-      "title_template": "Mining {subject} {tier}",
-      "description_template": "Break {count} {subject}.",
-      "category_id": "mining",
-      "icon_template": "{subject_id}",
-      "criteria_template": {
-        "type": "block_break",
-        "materials": ["{subject_id}"],
-        "count": "{count}",
-        "constraints": {}
-      },
-      "rewards_template": {
-        "ap": "{ap}"
-      },
-      "subjects": [
-        "stone",
-        "deepslate",
-        "coal_ore",
-        "iron_ore",
-        "copper_ore",
-        "gold_ore",
-        "redstone_ore",
-        "lapis_ore",
-        "diamond_ore",
-        "emerald_ore",
-        "nether_quartz_ore",
-        "nether_gold_ore",
-        "ancient_debris",
-        "cobbled_deepslate",
-        "netherrack",
-        "blackstone",
-        "end_stone",
-        "tuff",
-        "andesite",
-        "granite"
-      ],
-      "tiers": {
-        "levels": 5,
-        "count_start": 25,
-        "count_multiplier": 2.0,
-        "ap_start": 5,
-        "ap_multiplier": 1.6
+
       }
     }
   ]

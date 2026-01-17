@@ -21,11 +21,10 @@
   "facts_sources": [
     "facts/packs"
   ],
+  "category_sources": [
+    "achievements/categories"
+  ],
   "achievement_sources": [
-    "achievements/packs/mining.json",
-    "achievements/packs/harvest.json",
-    "achievements/packs/crafting.json",
-    "achievements/packs/hunting.json",
-    "achievements/packs/fishing.json"
+    "achievements/entries"
   ]
 }

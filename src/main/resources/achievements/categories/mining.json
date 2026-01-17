@@ -1,0 +1,6 @@
+{
+  "id": "mining",
+  "name": "Mining",
+  "order": 10,
+  "icon": "IRON_PICKAXE"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "movement_stride_ii",
+  "category_id": "movement",
+  "icon": "GOLDEN_BOOTS",
+  "title": "Stride II",
+  "description": "Travel 2000 blocks.",
+  "amount": 2000,
+  "criteria": {
+    "type": "movement",
+    "constraints": {}
+  },
+  "reward": {
+    "ap": 12
+  }
+}

@@ -1,52 +1,6 @@
 {
   "pack_id": "harvest",
-  "categories": [
-    {
-      "id": "harvest",
-      "name": "Harvest",
-      "order": 1,
-      "icon": "GOLDEN_HOE"
-    }
-  ],
-  "templates": [
-    {
-      "template_id": "harvest_blocks",
-      "id_template": "harvest_{subject_id}_{tier_index}",
-      "name_template": "Harvest {subject} {tier}",
-      "title_template": "Harvest {subject} {tier}",
-      "description_template": "Harvest {count} {subject}.",
-      "category_id": "harvest",
-      "icon_template": "{subject_id}",
-      "criteria_template": {
-        "type": "block_break",
-        "materials": ["{subject_id}"],
-        "count": "{count}",
-        "constraints": {}
-      },
-      "rewards_template": {
-        "ap": "{ap}"
-      },
-      "subjects": [
-        "wheat",
-        "carrots",
-        "potatoes",
-        "beetroots",
-        "melon",
-        "pumpkin",
-        "sugar_cane",
-        "bamboo",
-        "cocoa",
-        "nether_wart",
-        "cactus",
-        "kelp",
-        "brown_mushroom",
-        "red_mushroom",
-        "chorus_flower",
-        "chorus_plant",
-        "sweet_berry_bush",
-        "cave_vines",
-        "vine",
-        "moss_block"
+
       ],
       "tiers": {
         "levels": 5,

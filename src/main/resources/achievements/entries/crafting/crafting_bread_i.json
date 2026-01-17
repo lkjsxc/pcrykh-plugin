@@ -1,0 +1,16 @@
+{
+  "id": "crafting_bread_i",
+  "category_id": "crafting",
+  "icon": "BREAD",
+  "title": "Crafting: Bread",
+  "description": "Bake a loaf of bread.",
+  "amount": 1,
+  "criteria": {
+    "type": "item_craft",
+    "item": "bread",
+    "constraints": {}
+  },
+  "reward": {
+    "ap": 3
+  }
+}

@@ -1,47 +1,4 @@
-{
-  "pack_id": "fishing",
-  "categories": [
-    {
-      "id": "fishing",
-      "name": "Fishing",
-      "order": 4,
-      "icon": "FISHING_ROD"
-    }
-  ],
-  "templates": [
-    {
-      "template_id": "fishing_loot",
-      "id_template": "fish_{subject_id}_{tier_index}",
-      "name_template": "Catch {subject} {tier}",
-      "title_template": "Catch {subject} {tier}",
-      "description_template": "Catch {count} {subject}.",
-      "category_id": "fishing",
-      "icon_template": "{subject_id}",
-      "criteria_template": {
-        "type": "fish_catch",
-        "items": ["{subject_id}"],
-        "count": "{count}",
-        "constraints": {}
-      },
-      "rewards_template": {
-        "ap": "{ap}"
-      },
-      "subjects": [
-        "cod",
-        "salmon",
-        "tropical_fish",
-        "pufferfish",
-        "bow",
-        "fishing_rod",
-        "name_tag",
-        "nautilus_shell",
-        "saddle",
-        "lily_pad",
-        "leather",
-        "stick",
-        "bone",
-        "string",
-        "bowl",
+
         "ink_sac",
         "tripwire_hook",
         "rotten_flesh",

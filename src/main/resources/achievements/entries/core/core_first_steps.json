@@ -1,0 +1,16 @@
+{
+  "id": "core_first_steps",
+  "category_id": "core",
+  "icon": "GRASS_BLOCK",
+  "title": "First Steps",
+  "description": "Break 10 blocks of dirt or grass.",
+  "amount": 10,
+  "criteria": {
+    "type": "block_break",
+    "materials": ["dirt", "grass_block"],
+    "constraints": {}
+  },
+  "reward": {
+    "ap": 3
+  }
+}
