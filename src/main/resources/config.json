@@ -1,5 +1,5 @@
 {
-  "spec_version": "4.1",
+  "spec_version": "4.2",
   "commands": {
     "root": "pcrykh"
   },
@@ -10,13 +10,27 @@
     },
     "chat": {
       "announce_achievements": true,
-      "tips_enabled": true,
-      "tips_interval_seconds": 180,
-      "tips_prefix": "[Pcrykh] "
+      "facts_enabled": true,
+      "facts_interval_seconds": 180,
+      "prefix": "[Pcrykh] "
+    },
+    "action_bar": {
+      "progress_enabled": true,
+      "milestone_thresholds": [0.8, 0.9, 0.95],
+      "cooldown_seconds": 6
     }
   },
-  "tips": [
-    "Achievements are cataloged automatically."
+  "facts": [
+    "Honey never spoils when stored sealed.",
+    "Octopuses have three hearts.",
+    "A day on Venus is longer than its year.",
+    "Bananas are berries; strawberries are not.",
+    "Sharks existed before trees.",
+    "Saturn’s density is low enough to float in water.",
+    "The Moon drifts away from Earth each year.",
+    "A bolt of lightning can be hotter than the Sun.",
+    "Wombat poop is cube-shaped.",
+    "Jellyfish are older than dinosaurs."
   ],
   "achievement_sources": [
     "achievements/packs/core.json"

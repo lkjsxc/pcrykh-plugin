@@ -1,5 +1,13 @@
 {
   "pack_id": "core",
+  "categories": [
+    {
+      "id": "core",
+      "name": "Core",
+      "order": 0,
+      "icon": "BOOK"
+    }
+  ],
   "templates": [
     {
       "template_id": "core_mining",
