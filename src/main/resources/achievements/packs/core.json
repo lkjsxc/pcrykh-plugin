@@ -1,0 +1,192 @@
+{
+  "pack_id": "core",
+  "templates": [
+    {
+      "template_id": "gathering_break",
+      "id_template": "gather_{subject_id}_{tier_index}",
+      "name_template": "{subject} Breaker {tier}",
+      "title_template": "{subject} Breaker {tier}",
+      "description_template": "Break {count} {subject}.",
+      "category_id": "gathering",
+      "icon_template": "{subject}",
+      "criteria_template": {
+        "type": "block_break",
+        "materials": ["{subject}"],
+        "count": "{count}",
+        "constraints": {}
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "STONE",
+        "COBBLESTONE",
+        "COAL_ORE",
+        "IRON_ORE",
+        "GOLD_ORE",
+        "REDSTONE_ORE",
+        "LAPIS_ORE",
+        "DIAMOND_ORE",
+        "EMERALD_ORE",
+        "NETHER_QUARTZ_ORE"
+      ],
+      "tiers": {
+        "levels": 10,
+        "count_start": 1,
+        "count_multiplier": 2.0,
+        "ap_start": 5,
+        "ap_multiplier": 1.6
+      }
+    },
+    {
+      "template_id": "combat_hunt",
+      "id_template": "hunt_{subject_id}_{tier_index}",
+      "name_template": "{subject} Hunter {tier}",
+      "title_template": "{subject} Hunter {tier}",
+      "description_template": "Defeat {count} {subject}.",
+      "category_id": "combat",
+      "icon_template": "IRON_SWORD",
+      "criteria_template": {
+        "type": "entity_kill",
+        "entities": ["{subject}"],
+        "count": "{count}",
+        "constraints": {
+          "by_player_only": true
+        }
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "ZOMBIE",
+        "SKELETON",
+        "CREEPER",
+        "SPIDER",
+        "ENDERMAN",
+        "SLIME",
+        "WITCH",
+        "BLAZE",
+        "WITHER_SKELETON",
+        "PIGLIN"
+      ],
+      "tiers": {
+        "levels": 10,
+        "count_start": 1,
+        "count_multiplier": 2.0,
+        "ap_start": 8,
+        "ap_multiplier": 1.6
+      }
+    },
+    {
+      "template_id": "crafting_make",
+      "id_template": "craft_{subject_id}_{tier_index}",
+      "name_template": "{subject} Crafter {tier}",
+      "title_template": "{subject} Crafter {tier}",
+      "description_template": "Craft {count} {subject}.",
+      "category_id": "crafting",
+      "icon_template": "{subject}",
+      "criteria_template": {
+        "type": "item_craft",
+        "item": "{subject}",
+        "count": "{count}",
+        "constraints": {}
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "OAK_PLANKS",
+        "STICK",
+        "TORCH",
+        "CHEST",
+        "FURNACE",
+        "CRAFTING_TABLE",
+        "IRON_PICKAXE",
+        "IRON_SWORD",
+        "BREAD",
+        "BOOK"
+      ],
+      "tiers": {
+        "levels": 10,
+        "count_start": 1,
+        "count_multiplier": 2.0,
+        "ap_start": 6,
+        "ap_multiplier": 1.6
+      }
+    },
+    {
+      "template_id": "fishing_catch",
+      "id_template": "fish_{subject_id}_{tier_index}",
+      "name_template": "{subject} Angler {tier}",
+      "title_template": "{subject} Angler {tier}",
+      "description_template": "Catch {count} {subject}.",
+      "category_id": "fishing",
+      "icon_template": "FISHING_ROD",
+      "criteria_template": {
+        "type": "fish_catch",
+        "items": ["{subject}"],
+        "count": "{count}",
+        "constraints": {}
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "COD",
+        "SALMON",
+        "TROPICAL_FISH",
+        "PUFFERFISH",
+        "ENCHANTED_BOOK",
+        "BOW",
+        "FISHING_ROD",
+        "NAME_TAG",
+        "SADDLE",
+        "NAUTILUS_SHELL"
+      ],
+      "tiers": {
+        "levels": 10,
+        "count_start": 1,
+        "count_multiplier": 2.0,
+        "ap_start": 7,
+        "ap_multiplier": 1.6
+      }
+    },
+    {
+      "template_id": "farming_harvest",
+      "id_template": "harvest_{subject_id}_{tier_index}",
+      "name_template": "{subject} Harvester {tier}",
+      "title_template": "{subject} Harvester {tier}",
+      "description_template": "Harvest {count} {subject}.",
+      "category_id": "farming",
+      "icon_template": "{subject}",
+      "criteria_template": {
+        "type": "block_break",
+        "materials": ["{subject}"],
+        "count": "{count}",
+        "constraints": {}
+      },
+      "rewards_template": {
+        "ap": "{ap}"
+      },
+      "subjects": [
+        "WHEAT",
+        "CARROTS",
+        "POTATOES",
+        "BEETROOTS",
+        "MELON",
+        "PUMPKIN",
+        "SUGAR_CANE",
+        "COCOA",
+        "NETHER_WART",
+        "KELP"
+      ],
+      "tiers": {
+        "levels": 10,
+        "count_start": 1,
+        "count_multiplier": 2.0,
+        "ap_start": 6,
+        "ap_multiplier": 1.6
+      }
+    }
+  ]
+}

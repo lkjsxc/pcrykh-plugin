@@ -1,10 +1,7 @@
 {
-  "spec_version": "3.0",
+  "spec_version": "4.0",
   "commands": {
     "root": "pcrykh"
-  },
-  "gui": {
-    "theme": "classic"
   },
   "runtime": {
     "autosave": {
@@ -22,42 +19,7 @@
     "Progress is saved automatically.",
     "Tips can be disabled in config."
   ],
-  "achievements": [
-    {
-      "id": "stone_breaker",
-      "name": "Stone Breaker",
-      "category_id": "gathering",
-      "icon": "STONE",
-      "title": "First Stone",
-      "description": "Break your first stone.",
-      "criteria": {
-        "type": "block_break",
-        "materials": ["STONE"],
-        "count": 1,
-        "constraints": {}
-      },
-      "rewards": {
-        "ap": 10
-      }
-    },
-    {
-      "id": "zombie_hunter",
-      "name": "Zombie Hunter",
-      "category_id": "combat",
-      "icon": "IRON_SWORD",
-      "title": "Shambler",
-      "description": "Defeat 5 zombies.",
-      "criteria": {
-        "type": "entity_kill",
-        "entities": ["ZOMBIE"],
-        "count": 5,
-        "constraints": {
-          "by_player_only": true
-        }
-      },
-      "rewards": {
-        "ap": 15
-      }
-    }
+  "achievement_sources": [
+    "achievements/packs/core.json"
   ]
 }
