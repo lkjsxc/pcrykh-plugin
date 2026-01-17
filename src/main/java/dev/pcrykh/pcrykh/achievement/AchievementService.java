@@ -12,6 +12,8 @@ import org.bukkit.Material;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -41,6 +43,7 @@ public class AchievementService {
     private final Map<UUID, PlayerState> cache = new ConcurrentHashMap<>();
     private final Map<String, RateWindow> rateWindow = new ConcurrentHashMap<>();
     private final Map<String, Long> progressThrottle = new ConcurrentHashMap<>();
+    private final Map<UUID, Double> travelRemainder = new ConcurrentHashMap<>();
 
     public AchievementService(JavaPlugin plugin, DataStore dataStore, PluginConfig config, GuiService guiService) {
         this.plugin = plugin;
@@ -164,11 +167,23 @@ public class AchievementService {
             return;
         }
         double distance = event.getFrom().distance(event.getTo());
-        long delta = (long) Math.floor(distance);
+        UUID playerId = event.getPlayer().getUniqueId();
+        double remainder = travelRemainder.getOrDefault(playerId, 0.0);
+        remainder += distance;
+        long delta = (long) Math.floor(remainder);
         if (delta <= 0) {
+            travelRemainder.put(playerId, remainder);
             return;
         }
-        handleTravel(event.getPlayer(), delta);
+        travelRemainder.put(playerId, remainder - delta);
+        Player player = event.getPlayer();
+        handleTravelType("travel", player, delta);
+        handleTravelType("travel_walk", player, delta);
+        handleTravelType("travel_sprint", player, delta);
+        handleTravelType("travel_swim", player, delta);
+        handleTravelType("travel_mount", player, delta);
+        handleTravelType("travel_boat", player, delta);
+        handleTravelType("travel_boat_with_animal", player, delta);
     }
 
     private void handleEvent(Player player, String type, String subject, long delta, Location location) {
@@ -209,8 +224,8 @@ public class AchievementService {
         }
     }
 
-    private void handleTravel(Player player, long delta) {
-        List<TierRef> refs = tiersByType.getOrDefault("travel", Collections.emptyList());
+    private void handleTravelType(String type, Player player, long delta) {
+        List<TierRef> refs = tiersByType.getOrDefault(type, Collections.emptyList());
         if (refs.isEmpty()) {
             return;
         }
@@ -225,6 +240,9 @@ public class AchievementService {
                 continue;
             }
             if (ref.tier.tier != progress.nextTier) {
+                continue;
+            }
+            if (!matchesTravelState(type, ref.tier.criteria, player)) {
                 continue;
             }
             if (!matchesBiome(ref.tier.criteria, player.getLocation()) || !matchesDimension(ref.tier.criteria, player.getLocation())) {
@@ -244,6 +262,67 @@ public class AchievementService {
                 }
             }
         }
+    }
+
+    private boolean matchesTravelState(String type, Criteria criteria, Player player) {
+        return switch (type) {
+            case "travel" -> true;
+            case "travel_walk" -> isWalking(player);
+            case "travel_sprint" -> isSprinting(player);
+            case "travel_swim" -> isSwimming(player);
+            case "travel_mount" -> isMounted(player) && vehicleMatches(criteria, player.getVehicle());
+            case "travel_boat" -> isBoating(player) && vehicleMatches(criteria, player.getVehicle());
+            case "travel_boat_with_animal" -> isBoating(player) && vehicleMatches(criteria, player.getVehicle()) && passengerMatches(criteria, player.getVehicle());
+            default -> false;
+        };
+    }
+
+    private boolean isWalking(Player player) {
+        return !player.isSprinting() && !player.isSwimming() && !player.isInsideVehicle();
+    }
+
+    private boolean isSprinting(Player player) {
+        return player.isSprinting() && !player.isSwimming() && !player.isInsideVehicle();
+    }
+
+    private boolean isSwimming(Player player) {
+        return player.isSwimming() && !player.isInsideVehicle();
+    }
+
+    private boolean isBoating(Player player) {
+        return player.isInsideVehicle() && player.getVehicle() instanceof Boat;
+    }
+
+    private boolean isMounted(Player player) {
+        return player.isInsideVehicle() && !(player.getVehicle() instanceof Boat);
+    }
+
+    private boolean vehicleMatches(Criteria criteria, Entity vehicle) {
+        if (vehicle == null) {
+            return false;
+        }
+        if (criteria.vehicles == null || criteria.vehicles.isEmpty()) {
+            return true;
+        }
+        return criteria.vehicles.contains(vehicle.getType().name());
+    }
+
+    private boolean passengerMatches(Criteria criteria, Entity vehicle) {
+        if (vehicle == null) {
+            return false;
+        }
+        if (criteria.passengers == null || criteria.passengers.isEmpty()) {
+            return false;
+        }
+        for (Entity passenger : vehicle.getPassengers()) {
+            if (passenger instanceof Player) {
+                continue;
+            }
+            if (criteria.passengers.contains(passenger.getType().name())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void completeTier(Player player, PlayerState state, TierRef ref, AchievementProgress progress) {
@@ -288,7 +367,7 @@ public class AchievementService {
     }
 
     public long requiredAmount(Criteria criteria) {
-        if ("travel".equals(criteria.type)) {
+        if (criteria.type != null && criteria.type.startsWith("travel")) {
             return criteria.distanceBlocks;
         }
         return criteria.count;

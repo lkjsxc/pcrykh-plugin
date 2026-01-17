@@ -11,6 +11,8 @@ public class Criteria {
     public String item;
     public List<String> entities;
     public List<String> items;
+    public List<String> vehicles;
+    public List<String> passengers;
     @JsonProperty("distance_blocks")
     public int distanceBlocks;
     public Constraints constraints;

@@ -144,6 +144,30 @@ public class ConfigLoader {
                     throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
                 }
             }
+            case "travel_walk", "travel_sprint", "travel_swim" -> {
+                if (criteria.distanceBlocks <= 0) {
+                    throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
+                }
+            }
+            case "travel_mount" -> {
+                if (criteria.distanceBlocks <= 0) {
+                    throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
+                }
+                requireList(criteria.vehicles, "criteria.vehicles", def);
+            }
+            case "travel_boat" -> {
+                if (criteria.distanceBlocks <= 0) {
+                    throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
+                }
+                requireList(criteria.vehicles, "criteria.vehicles", def);
+            }
+            case "travel_boat_with_animal" -> {
+                if (criteria.distanceBlocks <= 0) {
+                    throw new IllegalArgumentException("criteria.distance_blocks must be > 0 for achievement: " + def.id);
+                }
+                requireList(criteria.vehicles, "criteria.vehicles", def);
+                requireList(criteria.passengers, "criteria.passengers", def);
+            }
             default -> throw new IllegalArgumentException("unsupported criteria.type: " + criteria.type + " for " + def.id);
         }
     }
