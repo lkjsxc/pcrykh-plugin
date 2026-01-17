@@ -143,4 +143,10 @@
   files:
     - "docs/runtime/achievements.md"
     - "docs/governance/changes/change-records.md"
+- id: "CR-20260118-005"
+  date: "2026-01-18"
+  summary: "Updated runtime config spec_version example to 4.2."
+  files:
+    - "docs/config/runtime-config.md"
+    - "docs/governance/changes/change-records.md"
   ```
