@@ -1,14 +1,16 @@
 package dev.pcrykh.runtime;
 
+import dev.pcrykh.gui.AchievementMenuService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public final class PcrykhCommand implements CommandExecutor {
-    private final AchievementCatalog catalog;
+    private final AchievementMenuService menuService;
 
-    public PcrykhCommand(AchievementCatalog catalog) {
-        this.catalog = catalog;
+    public PcrykhCommand(AchievementMenuService menuService) {
+        this.menuService = menuService;
     }
 
     @Override
@@ -16,7 +18,11 @@ public final class PcrykhCommand implements CommandExecutor {
         if (!sender.hasPermission("pcrykh.use")) {
             return true;
         }
-        sender.sendMessage("pcrykh active. Achievements loaded: " + catalog.count() + ".");
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage("pcrykh menu is player-only.");
+            return true;
+        }
+        menuService.open(player, 0);
         return true;
     }
 }

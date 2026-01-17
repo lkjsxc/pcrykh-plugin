@@ -1,5 +1,7 @@
 package dev.pcrykh;
 
+import dev.pcrykh.gui.AchievementMenuListener;
+import dev.pcrykh.gui.AchievementMenuService;
 import dev.pcrykh.runtime.AchievementCatalog;
 import dev.pcrykh.runtime.ConfigLoader;
 import dev.pcrykh.runtime.ConfigLoader.LoadResult;
@@ -14,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class PcrykhPlugin extends JavaPlugin {
     private AchievementCatalog catalog;
     private RuntimeConfig config;
+    private AchievementMenuService menuService;
 
     @Override
     public void onEnable() {
@@ -29,13 +32,16 @@ public final class PcrykhPlugin extends JavaPlugin {
             return;
         }
 
+        this.menuService = new AchievementMenuService(catalog.all());
+        Bukkit.getPluginManager().registerEvents(new AchievementMenuListener(menuService), this);
+
         PluginCommand command = getCommand("pcrykh");
         if (command == null) {
             getLogger().severe("Command /pcrykh is not registered.");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        command.setExecutor(new PcrykhCommand(catalog));
+        command.setExecutor(new PcrykhCommand(menuService));
     }
 
     @Override
