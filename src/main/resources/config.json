@@ -1,260 +1,612 @@
 {
-  "spec_version": "1.0",
+  "spec_version": "2.0",
   "commands": {
     "root": "pcrykh"
   },
   "gui": {
-    "theme": "skyblock_classic"
+    "theme": "classic"
   },
   "runtime": {
     "autosave": {
       "enabled": true,
       "interval_seconds": 30
+    },
+    "chat": {
+      "announce_achievements": true,
+      "tips_enabled": true,
+      "tips_interval_seconds": 120,
+      "tips_prefix": "[Pcrykh Tip] "
     }
   },
+  "tips": [
+    "Keep a steady pace; sprinting doesn't count for walking goals.",
+    "Crouch-walking only counts while sneaking.",
+    "Swimming goals only count while actually swimming.",
+    "Mount goals don't count on boats.",
+    "Boat goals count only while you are the driver.",
+    "Use biome constraints to specialize exploration achievements.",
+    "Resource goals are faster with proper tool choices.",
+    "Crafting goals count ingredient units, not output stacks.",
+    "Fishing goals only count real catches.",
+    "Jump goals count actual jumps, not falls.",
+    "Tip 011: Keep progressing one objective at a time.",
+    "Tip 012: Keep progressing one objective at a time.",
+    "Tip 013: Keep progressing one objective at a time.",
+    "Tip 014: Keep progressing one objective at a time.",
+    "Tip 015: Keep progressing one objective at a time.",
+    "Tip 016: Keep progressing one objective at a time.",
+    "Tip 017: Keep progressing one objective at a time.",
+    "Tip 018: Keep progressing one objective at a time.",
+    "Tip 019: Keep progressing one objective at a time.",
+    "Tip 020: Keep progressing one objective at a time.",
+    "Tip 021: Keep progressing one objective at a time.",
+    "Tip 022: Keep progressing one objective at a time.",
+    "Tip 023: Keep progressing one objective at a time.",
+    "Tip 024: Keep progressing one objective at a time.",
+    "Tip 025: Keep progressing one objective at a time.",
+    "Tip 026: Keep progressing one objective at a time.",
+    "Tip 027: Keep progressing one objective at a time.",
+    "Tip 028: Keep progressing one objective at a time.",
+    "Tip 029: Keep progressing one objective at a time.",
+    "Tip 030: Keep progressing one objective at a time.",
+    "Tip 031: Keep progressing one objective at a time.",
+    "Tip 032: Keep progressing one objective at a time.",
+    "Tip 033: Keep progressing one objective at a time.",
+    "Tip 034: Keep progressing one objective at a time.",
+    "Tip 035: Keep progressing one objective at a time.",
+    "Tip 036: Keep progressing one objective at a time.",
+    "Tip 037: Keep progressing one objective at a time.",
+    "Tip 038: Keep progressing one objective at a time.",
+    "Tip 039: Keep progressing one objective at a time.",
+    "Tip 040: Keep progressing one objective at a time.",
+    "Tip 041: Keep progressing one objective at a time.",
+    "Tip 042: Keep progressing one objective at a time.",
+    "Tip 043: Keep progressing one objective at a time.",
+    "Tip 044: Keep progressing one objective at a time.",
+    "Tip 045: Keep progressing one objective at a time.",
+    "Tip 046: Keep progressing one objective at a time.",
+    "Tip 047: Keep progressing one objective at a time.",
+    "Tip 048: Keep progressing one objective at a time.",
+    "Tip 049: Keep progressing one objective at a time.",
+    "Tip 050: Keep progressing one objective at a time.",
+    "Tip 051: Keep progressing one objective at a time.",
+    "Tip 052: Keep progressing one objective at a time.",
+    "Tip 053: Keep progressing one objective at a time.",
+    "Tip 054: Keep progressing one objective at a time.",
+    "Tip 055: Keep progressing one objective at a time.",
+    "Tip 056: Keep progressing one objective at a time.",
+    "Tip 057: Keep progressing one objective at a time.",
+    "Tip 058: Keep progressing one objective at a time.",
+    "Tip 059: Keep progressing one objective at a time.",
+    "Tip 060: Keep progressing one objective at a time.",
+    "Tip 061: Keep progressing one objective at a time.",
+    "Tip 062: Keep progressing one objective at a time.",
+    "Tip 063: Keep progressing one objective at a time.",
+    "Tip 064: Keep progressing one objective at a time.",
+    "Tip 065: Keep progressing one objective at a time.",
+    "Tip 066: Keep progressing one objective at a time.",
+    "Tip 067: Keep progressing one objective at a time.",
+    "Tip 068: Keep progressing one objective at a time.",
+    "Tip 069: Keep progressing one objective at a time.",
+    "Tip 070: Keep progressing one objective at a time.",
+    "Tip 071: Keep progressing one objective at a time.",
+    "Tip 072: Keep progressing one objective at a time.",
+    "Tip 073: Keep progressing one objective at a time.",
+    "Tip 074: Keep progressing one objective at a time.",
+    "Tip 075: Keep progressing one objective at a time.",
+    "Tip 076: Keep progressing one objective at a time.",
+    "Tip 077: Keep progressing one objective at a time.",
+    "Tip 078: Keep progressing one objective at a time.",
+    "Tip 079: Keep progressing one objective at a time.",
+    "Tip 080: Keep progressing one objective at a time.",
+    "Tip 081: Keep progressing one objective at a time.",
+    "Tip 082: Keep progressing one objective at a time.",
+    "Tip 083: Keep progressing one objective at a time.",
+    "Tip 084: Keep progressing one objective at a time.",
+    "Tip 085: Keep progressing one objective at a time.",
+    "Tip 086: Keep progressing one objective at a time.",
+    "Tip 087: Keep progressing one objective at a time.",
+    "Tip 088: Keep progressing one objective at a time.",
+    "Tip 089: Keep progressing one objective at a time.",
+    "Tip 090: Keep progressing one objective at a time.",
+    "Tip 091: Keep progressing one objective at a time.",
+    "Tip 092: Keep progressing one objective at a time.",
+    "Tip 093: Keep progressing one objective at a time.",
+    "Tip 094: Keep progressing one objective at a time.",
+    "Tip 095: Keep progressing one objective at a time.",
+    "Tip 096: Keep progressing one objective at a time.",
+    "Tip 097: Keep progressing one objective at a time.",
+    "Tip 098: Keep progressing one objective at a time.",
+    "Tip 099: Keep progressing one objective at a time.",
+    "Tip 100: Keep progressing one objective at a time."
+  ],
   "achievements": [
     {
       "id": "stone_breaker",
       "name": "Stone Breaker",
       "category_id": "gathering",
       "icon": "STONE",
-      "max_tier": 1,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "First Stone",
-          "description": "Break your first stone.",
-          "criteria": {
-            "type": "block_break",
-            "materials": ["STONE"],
-            "count": 1,
-            "constraints": {}
-          },
-          "rewards": {
-            "ap": 10
-          }
-        }
-      ]
+      "title": "First Stone",
+      "description": "Break your first stone.",
+      "criteria": {
+        "type": "block_break",
+        "materials": ["STONE"],
+        "count": 1,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 10
+      }
     },
     {
-      "id": "log_chopper",
-      "name": "Log Chopper",
+      "id": "log_chopper_oak",
+      "name": "Log Chopper: Oak",
       "category_id": "gathering",
       "icon": "OAK_LOG",
-      "max_tier": 2,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "Oak Cutter",
-          "description": "Break 16 oak logs.",
-          "criteria": {
-            "type": "block_break",
-            "materials": ["OAK_LOG"],
-            "count": 16,
-            "constraints": {
-              "tool": {
-                "required": true,
-                "type": "axe"
-              }
-            }
-          },
-          "rewards": {
-            "ap": 15
-          }
-        },
-        {
-          "tier": 2,
-          "title": "Birch Cutter",
-          "description": "Break 24 birch logs.",
-          "criteria": {
-            "type": "block_break",
-            "materials": ["BIRCH_LOG"],
-            "count": 24,
-            "constraints": {
-              "tool": {
-                "required": true,
-                "type": "axe"
-              }
-            }
-          },
-          "rewards": {
-            "ap": 20
-          }
-        }
-      ]
+      "title": "Oak Cutter",
+      "description": "Break 16 oak logs.",
+      "criteria": {
+        "type": "block_break",
+        "materials": ["OAK_LOG"],
+        "count": 16,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 15
+      }
     },
     {
-      "id": "ore_miner",
-      "name": "Ore Miner",
+      "id": "log_chopper_birch",
+      "name": "Log Chopper: Birch",
+      "category_id": "gathering",
+      "icon": "BIRCH_LOG",
+      "title": "Birch Cutter",
+      "description": "Break 24 birch logs.",
+      "criteria": {
+        "type": "block_break",
+        "materials": ["BIRCH_LOG"],
+        "count": 24,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 20
+      }
+    },
+    {
+      "id": "ore_miner_coal",
+      "name": "Ore Miner: Coal",
+      "category_id": "gathering",
+      "icon": "COAL_ORE",
+      "title": "Coal Miner",
+      "description": "Mine 12 coal ore.",
+      "criteria": {
+        "type": "block_break",
+        "materials": ["COAL_ORE"],
+        "count": 12,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 15
+      }
+    },
+    {
+      "id": "ore_miner_iron",
+      "name": "Ore Miner: Iron",
       "category_id": "gathering",
       "icon": "IRON_ORE",
-      "max_tier": 2,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "Coal Miner",
-          "description": "Mine 12 coal ore.",
-          "criteria": {
-            "type": "block_break",
-            "materials": ["COAL_ORE"],
-            "count": 12,
-            "constraints": {
-              "tool": {
-                "required": true,
-                "type": "pickaxe"
-              }
-            }
-          },
-          "rewards": {
-            "ap": 15
-          }
-        },
-        {
-          "tier": 2,
-          "title": "Iron Miner",
-          "description": "Mine 10 iron ore.",
-          "criteria": {
-            "type": "block_break",
-            "materials": ["IRON_ORE"],
-            "count": 10,
-            "constraints": {
-              "tool": {
-                "required": true,
-                "type": "pickaxe"
-              }
-            }
-          },
-          "rewards": {
-            "ap": 20
-          }
-        }
-      ]
+      "title": "Iron Miner",
+      "description": "Mine 10 iron ore.",
+      "criteria": {
+        "type": "block_break",
+        "materials": ["IRON_ORE"],
+        "count": 10,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 20
+      }
     },
     {
-      "id": "fish_finder",
-      "name": "Fish Finder",
+      "id": "fish_finder_cod",
+      "name": "Fish Finder: Cod",
       "category_id": "gathering",
       "icon": "FISHING_ROD",
-      "max_tier": 2,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "Cod Catch",
-          "description": "Catch 5 cod.",
-          "criteria": {
-            "type": "fish_catch",
-            "items": ["COD"],
-            "count": 5,
-            "constraints": {}
-          },
-          "rewards": {
-            "ap": 10
-          }
-        },
-        {
-          "tier": 2,
-          "title": "Salmon Catch",
-          "description": "Catch 5 salmon.",
-          "criteria": {
-            "type": "fish_catch",
-            "items": ["SALMON"],
-            "count": 5,
-            "constraints": {}
-          },
-          "rewards": {
-            "ap": 15
-          }
-        }
-      ]
+      "title": "Cod Catch",
+      "description": "Catch 5 cod.",
+      "criteria": {
+        "type": "fish_catch",
+        "items": ["COD"],
+        "count": 5,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 10
+      }
     },
     {
-      "id": "zombie_hunter",
-      "name": "Zombie Hunter",
+      "id": "fish_finder_salmon",
+      "name": "Fish Finder: Salmon",
+      "category_id": "gathering",
+      "icon": "FISHING_ROD",
+      "title": "Salmon Catch",
+      "description": "Catch 5 salmon.",
+      "criteria": {
+        "type": "fish_catch",
+        "items": ["SALMON"],
+        "count": 5,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 15
+      }
+    },
+    {
+      "id": "zombie_hunter_5",
+      "name": "Zombie Hunter: Shambler",
       "category_id": "combat",
       "icon": "IRON_SWORD",
-      "max_tier": 2,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "Shambler",
-          "description": "Defeat 5 zombies.",
-          "criteria": {
-            "type": "entity_kill",
-            "entities": ["ZOMBIE"],
-            "count": 5,
-            "constraints": {
-              "by_player_only": true
-            }
-          },
-          "rewards": {
-            "ap": 15
-          }
-        },
-        {
-          "tier": 2,
-          "title": "Gravewalker",
-          "description": "Defeat 10 zombies.",
-          "criteria": {
-            "type": "entity_kill",
-            "entities": ["ZOMBIE"],
-            "count": 10,
-            "constraints": {
-              "by_player_only": true
-            }
-          },
-          "rewards": {
-            "ap": 20
-          }
+      "title": "Shambler",
+      "description": "Defeat 5 zombies.",
+      "criteria": {
+        "type": "entity_kill",
+        "entities": ["ZOMBIE"],
+        "count": 5,
+        "constraints": {
+          "by_player_only": true
         }
-      ]
+      },
+      "rewards": {
+        "ap": 15
+      }
+    },
+    {
+      "id": "zombie_hunter_10",
+      "name": "Zombie Hunter: Gravewalker",
+      "category_id": "combat",
+      "icon": "IRON_SWORD",
+      "title": "Gravewalker",
+      "description": "Defeat 10 zombies.",
+      "criteria": {
+        "type": "entity_kill",
+        "entities": ["ZOMBIE"],
+        "count": 10,
+        "constraints": {
+          "by_player_only": true
+        }
+      },
+      "rewards": {
+        "ap": 20
+      }
     },
     {
       "id": "workbench",
       "name": "Workbench",
       "category_id": "crafting",
       "icon": "CRAFTING_TABLE",
-      "max_tier": 1,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "First Table",
-          "description": "Craft a crafting table.",
-          "criteria": {
-            "type": "item_craft",
-            "item": "CRAFTING_TABLE",
-            "count": 1,
-            "constraints": {}
-          },
-          "rewards": {
-            "ap": 10
-          }
-        }
-      ]
+      "title": "First Table",
+      "description": "Craft a crafting table.",
+      "criteria": {
+        "type": "item_craft",
+        "item": "CRAFTING_TABLE",
+        "count": 1,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 10
+      }
     },
     {
       "id": "world_walker",
       "name": "World Walker",
       "category_id": "gathering",
       "icon": "COMPASS",
-      "max_tier": 1,
-      "tiers": [
-        {
-          "tier": 1,
-          "title": "First Steps",
-          "description": "Travel 100 blocks.",
-          "criteria": {
-            "type": "travel",
-            "distance_blocks": 100,
-            "constraints": {}
-          },
-          "rewards": {
-            "ap": 10
-          }
-        }
-      ]
+      "title": "First Steps",
+      "description": "Walk 100 blocks.",
+      "criteria": {
+        "type": "travel_walk",
+        "distance_blocks": 100,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 10
+      }
     },
     {
-      "id": "gather_cobblestone",
+      "id": "walk_1000",
+      "name": "Steady Walk",
+      "category_id": "gathering",
+      "icon": "LEATHER_BOOTS",
+      "title": "1,000 Steps",
+      "description": "Walk 1,000 blocks.",
+      "criteria": {
+        "type": "travel_walk",
+        "distance_blocks": 1000,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 14
+      }
+    },
+    {
+      "id": "walk_5000",
+      "name": "Long Walk",
+      "category_id": "gathering",
+      "icon": "IRON_BOOTS",
+      "title": "5,000 Steps",
+      "description": "Walk 5,000 blocks.",
+      "criteria": {
+        "type": "travel_walk",
+        "distance_blocks": 5000,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "sprint_500",
+      "name": "Quick Stride",
+      "category_id": "gathering",
+      "icon": "CHAINMAIL_BOOTS",
+      "title": "500 Sprint",
+      "description": "Sprint 500 blocks.",
+      "criteria": {
+        "type": "travel_sprint",
+        "distance_blocks": 500,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 14
+      }
+    },
+    {
+      "id": "sprint_2500",
+      "name": "Fast Runner",
+      "category_id": "gathering",
+      "icon": "DIAMOND_BOOTS",
+      "title": "2,500 Sprint",
+      "description": "Sprint 2,500 blocks.",
+      "criteria": {
+        "type": "travel_sprint",
+        "distance_blocks": 2500,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "swim_500",
+      "name": "Shallow Swim",
+      "category_id": "gathering",
+      "icon": "TURTLE_HELMET",
+      "title": "500 Swim",
+      "description": "Swim 500 blocks.",
+      "criteria": {
+        "type": "travel_swim",
+        "distance_blocks": 500,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 14
+      }
+    },
+    {
+      "id": "swim_2500",
+      "name": "Deep Swim",
+      "category_id": "gathering",
+      "icon": "PRISMARINE_SHARD",
+      "title": "2,500 Swim",
+      "description": "Swim 2,500 blocks.",
+      "criteria": {
+        "type": "travel_swim",
+        "distance_blocks": 2500,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "crouch_500",
+      "name": "Crouch Walker",
+      "category_id": "gathering",
+      "icon": "LEATHER_BOOTS",
+      "title": "Quiet Steps",
+      "description": "Crouch-walk 500 blocks.",
+      "criteria": {
+        "type": "travel_crouch",
+        "distance_blocks": 500,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 14
+      }
+    },
+    {
+      "id": "crouch_2000",
+      "name": "Silent Stroll",
+      "category_id": "gathering",
+      "icon": "CHAINMAIL_BOOTS",
+      "title": "Silent Route",
+      "description": "Crouch-walk 2,000 blocks.",
+      "criteria": {
+        "type": "travel_crouch",
+        "distance_blocks": 2000,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "fly_500",
+      "name": "Short Flight",
+      "category_id": "gathering",
+      "icon": "ELYTRA",
+      "title": "Lift Off",
+      "description": "Fly 500 blocks.",
+      "criteria": {
+        "type": "travel_fly",
+        "distance_blocks": 500,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 16
+      }
+    },
+    {
+      "id": "fly_5000",
+      "name": "Sky Traveler",
+      "category_id": "gathering",
+      "icon": "ELYTRA",
+      "title": "Long Flight",
+      "description": "Fly 5,000 blocks.",
+      "criteria": {
+        "type": "travel_fly",
+        "distance_blocks": 5000,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 24
+      }
+    },
+    {
+      "id": "jump_100",
+      "name": "Jump Starter",
+      "category_id": "gathering",
+      "icon": "SLIME_BALL",
+      "title": "Up You Go",
+      "description": "Jump 100 times.",
+      "criteria": {
+        "type": "jump",
+        "count": 100,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 10
+      }
+    },
+    {
+      "id": "jump_1000",
+      "name": "Jump Grinder",
+      "category_id": "gathering",
+      "icon": "RABBIT_FOOT",
+      "title": "Jump Chain",
+      "description": "Jump 1,000 times.",
+      "criteria": {
+        "type": "jump",
+        "count": 1000,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "jump_10000",
+      "name": "Jump Master",
+      "category_id": "gathering",
+      "icon": "SLIME_BLOCK",
+      "title": "Skybound",
+      "description": "Jump 10,000 times.",
+      "criteria": {
+        "type": "jump",
+        "count": 10000,
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 30
+      }
+    },
+    {
+      "id": "mount_horse_1000",
+      "name": "Horse Rider",
+      "category_id": "gathering",
+      "icon": "SADDLE",
+      "title": "1,000 Mounted",
+      "description": "Travel 1,000 blocks on a horse.",
+      "criteria": {
+        "type": "travel_mount",
+        "distance_blocks": 1000,
+        "vehicles": ["HORSE"],
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "mount_strider_500",
+      "name": "Strider Rider",
+      "category_id": "gathering",
+      "icon": "WARPED_FUNGUS_ON_A_STICK",
+      "title": "500 Mounted",
+      "description": "Travel 500 blocks on a strider.",
+      "criteria": {
+        "type": "travel_mount",
+        "distance_blocks": 500,
+        "vehicles": ["STRIDER"],
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "boat_oak_1000",
+      "name": "Oak Rowing",
+      "category_id": "gathering",
+      "icon": "OAK_BOAT",
+      "title": "1,000 Row",
+      "description": "Row an oak boat 1,000 blocks.",
+      "criteria": {
+        "type": "travel_boat",
+        "distance_blocks": 1000,
+        "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT"],
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "boat_bamboo_1000",
+      "name": "Bamboo Rafting",
+      "category_id": "gathering",
+      "icon": "BAMBOO_RAFT",
+      "title": "1,000 Row",
+      "description": "Row a bamboo raft 1,000 blocks.",
+      "criteria": {
+        "type": "travel_boat",
+        "distance_blocks": 1000,
+        "vehicles": ["BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    },
+    {
+      "id": "boat_cow_500",
+      "name": "Cow Ferrier",
+      "category_id": "gathering",
+      "icon": "MILK_BUCKET",
+      "title": "500 Row",
+      "description": "Row a boat 500 blocks with a cow passenger.",
+      "criteria": {
+        "type": "travel_boat_with_animal",
+        "distance_blocks": 500,
+        "vehicles": ["OAK_BOAT", "OAK_CHEST_BOAT", "BAMBOO_RAFT", "BAMBOO_CHEST_RAFT"],
+        "passengers": ["COW"],
+        "constraints": {}
+      },
+      "rewards": {
+        "ap": 18
+      }
+    }
+  ]
+}
       "name": "Cobble Collector",
       "category_id": "gathering",
       "icon": "COBBLESTONE",
