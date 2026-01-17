@@ -1,6 +1,6 @@
-package dev.pcrykh.pcrykh.storage;
+package dev.pcrykh.pcrykh.data.storage;
 
-import dev.pcrykh.pcrykh.model.AchievementDefinition;
+import dev.pcrykh.pcrykh.domain.model.AchievementDefinition;
 
 import java.io.File;
 import java.sql.*;

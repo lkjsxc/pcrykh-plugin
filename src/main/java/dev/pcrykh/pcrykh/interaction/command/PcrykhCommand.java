@@ -1,10 +1,10 @@
-package dev.pcrykh.pcrykh.command;
+package dev.pcrykh.pcrykh.interaction.command;
 
-import dev.pcrykh.pcrykh.achievement.AchievementService;
-import dev.pcrykh.pcrykh.PcrykhPlugin;
-import dev.pcrykh.pcrykh.gui.GuiService;
-import dev.pcrykh.pcrykh.model.AchievementDefinition;
-import dev.pcrykh.pcrykh.storage.DataStore;
+import dev.pcrykh.pcrykh.domain.achievement.AchievementService;
+import dev.pcrykh.pcrykh.core.PcrykhPlugin;
+import dev.pcrykh.pcrykh.interaction.gui.GuiService;
+import dev.pcrykh.pcrykh.domain.model.AchievementDefinition;
+import dev.pcrykh.pcrykh.data.storage.DataStore;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

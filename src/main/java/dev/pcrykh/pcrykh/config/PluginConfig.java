@@ -1,7 +1,7 @@
 package dev.pcrykh.pcrykh.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.pcrykh.pcrykh.model.AchievementDefinition;
+import dev.pcrykh.pcrykh.domain.model.AchievementDefinition;
 
 import java.util.List;
 

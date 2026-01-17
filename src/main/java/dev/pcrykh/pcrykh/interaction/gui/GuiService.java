@@ -1,8 +1,8 @@
-package dev.pcrykh.pcrykh.gui;
+package dev.pcrykh.pcrykh.interaction.gui;
 
-import dev.pcrykh.pcrykh.achievement.AchievementService;
-import dev.pcrykh.pcrykh.model.AchievementDefinition;
-import dev.pcrykh.pcrykh.storage.DataStore.PlayerState;
+import dev.pcrykh.pcrykh.domain.achievement.AchievementService;
+import dev.pcrykh.pcrykh.domain.model.AchievementDefinition;
+import dev.pcrykh.pcrykh.data.storage.DataStore.PlayerState;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -289,7 +289,7 @@ public class GuiService implements Listener {
 
     private List<String> topAchievements(PlayerState state, int limit) {
         List<String> completed = new ArrayList<>();
-        for (Map.Entry<String, dev.pcrykh.pcrykh.storage.DataStore.AchievementProgress> entry : state.achievementProgress.entrySet()) {
+        for (Map.Entry<String, dev.pcrykh.pcrykh.data.storage.DataStore.AchievementProgress> entry : state.achievementProgress.entrySet()) {
             if (entry.getValue().completed) {
                 AchievementDefinition def = achievementService.getAchievement(entry.getKey());
                 if (def != null) {

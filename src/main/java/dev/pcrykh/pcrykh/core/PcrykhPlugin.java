@@ -1,11 +1,11 @@
-package dev.pcrykh.pcrykh;
+package dev.pcrykh.pcrykh.core;
 
-import dev.pcrykh.pcrykh.achievement.AchievementService;
-import dev.pcrykh.pcrykh.command.PcrykhCommand;
+import dev.pcrykh.pcrykh.domain.achievement.AchievementService;
+import dev.pcrykh.pcrykh.interaction.command.PcrykhCommand;
 import dev.pcrykh.pcrykh.config.ConfigLoader;
 import dev.pcrykh.pcrykh.config.PluginConfig;
-import dev.pcrykh.pcrykh.gui.GuiService;
-import dev.pcrykh.pcrykh.storage.DataStore;
+import dev.pcrykh.pcrykh.interaction.gui.GuiService;
+import dev.pcrykh.pcrykh.data.storage.DataStore;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;

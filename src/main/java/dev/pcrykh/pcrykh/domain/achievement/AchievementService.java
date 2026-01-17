@@ -1,12 +1,12 @@
-package dev.pcrykh.pcrykh.achievement;
+package dev.pcrykh.pcrykh.domain.achievement;
 
 import dev.pcrykh.pcrykh.config.PluginConfig;
-import dev.pcrykh.pcrykh.model.AchievementDefinition;
-import dev.pcrykh.pcrykh.model.Criteria;
-import dev.pcrykh.pcrykh.storage.DataStore;
-import dev.pcrykh.pcrykh.storage.DataStore.AchievementProgress;
-import dev.pcrykh.pcrykh.storage.DataStore.PlayerState;
-import dev.pcrykh.pcrykh.gui.GuiService;
+import dev.pcrykh.pcrykh.domain.model.AchievementDefinition;
+import dev.pcrykh.pcrykh.domain.model.Criteria;
+import dev.pcrykh.pcrykh.data.storage.DataStore;
+import dev.pcrykh.pcrykh.data.storage.DataStore.AchievementProgress;
+import dev.pcrykh.pcrykh.data.storage.DataStore.PlayerState;
+import dev.pcrykh.pcrykh.interaction.gui.GuiService;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

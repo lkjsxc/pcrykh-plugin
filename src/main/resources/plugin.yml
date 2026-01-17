@@ -1,6 +1,6 @@
 name: ${name}
 version: ${version}
-main: dev.pcrykh.pcrykh.PcrykhPlugin
+main: dev.pcrykh.pcrykh.core.PcrykhPlugin
 api-version: "1.21"
 commands:
   pcrykh:

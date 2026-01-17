@@ -2,9 +2,9 @@ package dev.pcrykh.pcrykh.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.pcrykh.pcrykh.model.AchievementDefinition;
-import dev.pcrykh.pcrykh.model.Criteria;
-import dev.pcrykh.pcrykh.model.Reward;
+import dev.pcrykh.pcrykh.domain.model.AchievementDefinition;
+import dev.pcrykh.pcrykh.domain.model.Criteria;
+import dev.pcrykh.pcrykh.domain.model.Reward;
 import org.bukkit.Material;
 
 import java.io.File;

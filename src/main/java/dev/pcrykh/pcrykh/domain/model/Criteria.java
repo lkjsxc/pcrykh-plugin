@@ -1,4 +1,4 @@
-package dev.pcrykh.pcrykh.model;
+package dev.pcrykh.pcrykh.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
