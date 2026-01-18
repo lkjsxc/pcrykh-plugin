@@ -1,0 +1,156 @@
+{
+  "series": [
+    {
+      "id_prefix": "core",
+      "count": 56,
+      "category_id": "core",
+      "icon": "GRASS_BLOCK",
+      "title_template": "Core {i}",
+      "description_template": "Complete core objective {i} with target {amount}.",
+      "amount_start": 10,
+      "amount_step": 5,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "block_break",
+        "materials": ["dirt", "grass_block"],
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "crafting",
+      "count": 56,
+      "category_id": "crafting",
+      "icon": "CRAFTING_TABLE",
+      "title_template": "Crafting {i}",
+      "description_template": "Craft target {amount} items for crafting tier {i}.",
+      "amount_start": 1,
+      "amount_step": 1,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "item_craft",
+        "item": "crafting_table",
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "enchanting",
+      "count": 56,
+      "category_id": "enchanting",
+      "icon": "ENCHANTING_TABLE",
+      "title_template": "Enchanting {i}",
+      "description_template": "Apply {amount} enchants for tier {i}.",
+      "amount_start": 1,
+      "amount_step": 1,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "item_enchant",
+        "items": ["book"],
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "fishing",
+      "count": 56,
+      "category_id": "fishing",
+      "icon": "FISHING_ROD",
+      "title_template": "Fishing {i}",
+      "description_template": "Catch {amount} fish for tier {i}.",
+      "amount_start": 1,
+      "amount_step": 1,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "fish_catch",
+        "items": ["cod", "salmon"],
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "harvest",
+      "count": 56,
+      "category_id": "harvest",
+      "icon": "WHEAT",
+      "title_template": "Harvest {i}",
+      "description_template": "Harvest {amount} crops for tier {i}.",
+      "amount_start": 5,
+      "amount_step": 5,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "block_break",
+        "materials": ["wheat", "carrots", "potatoes"],
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "hunting",
+      "count": 55,
+      "category_id": "hunting",
+      "icon": "IRON_SWORD",
+      "title_template": "Hunting {i}",
+      "description_template": "Defeat {amount} mobs for tier {i}.",
+      "amount_start": 5,
+      "amount_step": 5,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "entity_kill",
+        "entities": ["zombie", "skeleton", "creeper", "spider"],
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "mining",
+      "count": 55,
+      "category_id": "mining",
+      "icon": "IRON_PICKAXE",
+      "title_template": "Mining {i}",
+      "description_template": "Mine {amount} blocks for tier {i}.",
+      "amount_start": 10,
+      "amount_step": 10,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "block_break",
+        "materials": ["stone", "coal_ore", "iron_ore"],
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "movement",
+      "count": 55,
+      "category_id": "movement",
+      "icon": "FEATHER",
+      "title_template": "Movement {i}",
+      "description_template": "Travel {amount} blocks for tier {i}.",
+      "amount_start": 100,
+      "amount_step": 50,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "movement",
+        "constraints": {}
+      }
+    },
+    {
+      "id_prefix": "woodcutting",
+      "count": 55,
+      "category_id": "woodcutting",
+      "icon": "IRON_AXE",
+      "title_template": "Woodcutting {i}",
+      "description_template": "Chop {amount} logs for tier {i}.",
+      "amount_start": 5,
+      "amount_step": 5,
+      "reward_ap_start": 1,
+      "reward_ap_step": 1,
+      "criteria": {
+        "type": "block_break",
+        "materials": ["oak_log", "spruce_log", "birch_log"],
+        "constraints": {}
+      }
+    }
+  ]
+}
