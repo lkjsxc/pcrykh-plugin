@@ -22,3 +22,6 @@
       - `amount` MUST be an integer `>= 1`
       - `criteria` MUST include `constraints` and MUST be compatible with `amount`
       - `reward` MUST conform to reward rules
+  - progression:
+    - general action achievements MUST be declared in five levels: I, II, III, IV, V
+    - each subsequent level MUST require approximately 1.8x the previous `amount`

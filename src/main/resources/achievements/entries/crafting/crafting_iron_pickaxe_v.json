@@ -1,16 +1,16 @@
 {
-  "id": "crafting_iron_pickaxe_i",
+  "id": "crafting_iron_pickaxe_v",
   "category_id": "crafting",
   "icon": "IRON_INGOT",
-  "title": "Crafting: Iron Pickaxe I",
-  "description": "Craft 1 iron pickaxe.",
-  "amount": 1,
+  "title": "Crafting: Iron Pickaxe V",
+  "description": "Craft 13 iron pickaxes.",
+  "amount": 13,
   "criteria": {
     "type": "item_craft",
     "item": "iron_pickaxe",
     "constraints": {}
   },
   "reward": {
-    "ap": 6
+    "ap": 65
   }
 }

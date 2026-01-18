@@ -1,0 +1,16 @@
+{
+  "id": "harvest_potato_ii",
+  "category_id": "harvest",
+  "icon": "POTATO",
+  "title": "Harvest: Potato II",
+  "description": "Harvest 54 potatoes.",
+  "amount": 54,
+  "criteria": {
+    "type": "block_break",
+    "materials": ["potatoes"],
+    "constraints": {}
+  },
+  "reward": {
+    "ap": 9
+  }
+}
