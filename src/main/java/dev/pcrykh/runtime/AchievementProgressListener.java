@@ -14,8 +14,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class AchievementProgressListener implements Listener {
     private final AchievementProgressService progressService;
+    private final Map<UUID, Long> lastJumpAt = new HashMap<>();
 
     public AchievementProgressListener(AchievementProgressService progressService) {
         this.progressService = progressService;
@@ -90,6 +95,63 @@ public class AchievementProgressListener implements Listener {
         if (delta <= 0) {
             return;
         }
-        progressService.onMovement(event.getPlayer(), delta);
+        Player player = event.getPlayer();
+        String mode = resolveMovementMode(player, event);
+        int increment = mode.equals("jump") ? 1 : delta;
+        progressService.onMovement(player, mode, increment);
+    }
+
+    private String resolveMovementMode(Player player, PlayerMoveEvent event) {
+        if (isBoatTravel(player)) {
+            return "boat";
+        }
+        if (isEtherealWing(player)) {
+            return "ethereal_wing";
+        }
+        if (isJump(player, event)) {
+            return "jump";
+        }
+        if (player.isSneaking()) {
+            return "sneak";
+        }
+        if (player.isSprinting()) {
+            return "sprint";
+        }
+        return "walk";
+    }
+
+    private boolean isBoatTravel(Player player) {
+        if (!player.isInsideVehicle()) {
+            return false;
+        }
+        if (player.getVehicle() == null) {
+            return false;
+        }
+        String type = player.getVehicle().getType().name();
+        return type.contains("BOAT");
+    }
+
+    private boolean isEtherealWing(Player player) {
+        if (!player.isGliding()) {
+            return false;
+        }
+        ItemStack chest = player.getInventory().getChestplate();
+        return chest != null && chest.getType() == Material.ELYTRA;
+    }
+
+    private boolean isJump(Player player, PlayerMoveEvent event) {
+        if (player.isFlying() || player.isGliding() || player.isInsideVehicle()) {
+            return false;
+        }
+        if (event.getTo().getY() <= event.getFrom().getY()) {
+            return false;
+        }
+        long now = System.currentTimeMillis();
+        long last = lastJumpAt.getOrDefault(player.getUniqueId(), 0L);
+        if (now - last < 250) {
+            return false;
+        }
+        lastJumpAt.put(player.getUniqueId(), now);
+        return true;
     }
 }

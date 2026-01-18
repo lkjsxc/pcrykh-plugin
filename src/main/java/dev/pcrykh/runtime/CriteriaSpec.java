@@ -11,11 +11,12 @@ public record CriteriaSpec(
         Set<String> materials,
         String item,
         Set<String> entities,
-        Set<String> items
+        Set<String> items,
+        Set<String> movementModes
 ) {
     public static CriteriaSpec from(JsonNode node) {
         if (node == null || !node.isObject()) {
-            return new CriteriaSpec("", 0, Set.of(), "", Set.of(), Set.of());
+            return new CriteriaSpec("", 0, Set.of(), "", Set.of(), Set.of(), Set.of());
         }
         String type = node.get("type").asText();
         int count = node.get("count").asInt();
@@ -23,6 +24,7 @@ public record CriteriaSpec(
         String item = node.has("item") ? node.get("item").asText() : "";
         Set<String> entities = readSet(node.get("entities"));
         Set<String> items = readSet(node.get("items"));
+        Set<String> movementModes = readMovementModes(node);
 
         return new CriteriaSpec(
                 type,
@@ -30,8 +32,20 @@ public record CriteriaSpec(
                 normalizeSet(materials),
                 normalize(item),
                 normalizeSet(entities),
-                normalizeSet(items)
+                normalizeSet(items),
+                normalizeSet(movementModes)
         );
+    }
+
+    private static Set<String> readMovementModes(JsonNode node) {
+        Set<String> modes = new HashSet<>();
+        if (node != null && node.has("mode") && node.get("mode").isTextual()) {
+            modes.add(node.get("mode").asText());
+        }
+        if (node != null && node.has("modes")) {
+            modes.addAll(readSet(node.get("modes")));
+        }
+        return modes;
     }
 
     private static Set<String> readSet(JsonNode node) {

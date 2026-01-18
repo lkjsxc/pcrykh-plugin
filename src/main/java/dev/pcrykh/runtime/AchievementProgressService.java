@@ -26,7 +26,7 @@ public class AchievementProgressService {
     private final Map<String, List<AchievementDefinition>> entityKillIndex = new HashMap<>();
     private final Map<String, List<AchievementDefinition>> fishCatchIndex = new HashMap<>();
     private final Map<String, List<AchievementDefinition>> itemEnchantIndex = new HashMap<>();
-    private final List<AchievementDefinition> movementAchievements = new ArrayList<>();
+    private final Map<String, List<AchievementDefinition>> movementModeIndex = new HashMap<>();
 
     private final Map<UUID, Map<String, Integer>> progress = new HashMap<>();
     private final Map<UUID, Set<String>> unlocked = new HashMap<>();
@@ -98,11 +98,15 @@ public class AchievementProgressService {
         handleProgress(player, itemEnchantIndex.getOrDefault(key, List.of()), 1);
     }
 
-    public void onMovement(Player player, int distance) {
-        if (distance <= 0) {
+    public void onMovement(Player player, String mode, int amount) {
+        if (mode == null || mode.isBlank()) {
             return;
         }
-        handleProgress(player, movementAchievements, distance);
+        if (amount <= 0) {
+            return;
+        }
+        String key = mode.toLowerCase();
+        handleProgress(player, movementModeIndex.getOrDefault(key, List.of()), amount);
     }
 
     private void handleProgress(Player player, List<AchievementDefinition> achievements, int increment) {
@@ -202,7 +206,7 @@ public class AchievementProgressService {
                 case "entity_kill" -> indexList(entityKillIndex, spec.entities(), achievement);
                 case "fish_catch" -> indexList(fishCatchIndex, spec.items(), achievement);
                 case "item_enchant" -> indexList(itemEnchantIndex, spec.items(), achievement);
-                case "movement" -> movementAchievements.add(achievement);
+                case "movement" -> indexList(movementModeIndex, spec.movementModes(), achievement);
                 default -> {
                 }
             }

@@ -40,10 +40,19 @@ public class CriteriaValidator {
             case "entity_kill" -> requireArray(criteria, "entities");
             case "fish_catch" -> requireArray(criteria, "items");
             case "item_enchant" -> requireArray(criteria, "items");
-            case "movement" -> {
-            }
+            case "movement" -> requireMovementMode(criteria);
             default -> {
             }
+        }
+    }
+
+    private void requireMovementMode(JsonNode criteria) {
+        boolean hasMode = criteria.has("mode") && criteria.get("mode").isTextual()
+                && !criteria.get("mode").asText().isBlank();
+        boolean hasModes = criteria.has("modes") && criteria.get("modes").isArray()
+                && criteria.get("modes").size() > 0;
+        if (!hasMode && !hasModes) {
+            throw new ConfigException("movement criteria must include mode or modes");
         }
     }
 
