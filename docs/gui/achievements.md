@@ -27,7 +27,5 @@
   - large_chest_layout:
     - bottom row (`45..53`) is reserved for navigation and status items only
     - content MUST NOT be placed in slots `45..53`
-  - icon_constraints:
-    - hunting achievements MUST NOT share a single icon across all hunt items
-    - each hunt item MUST use a distinct icon suited to its subject
+  - navigation_return:
     - slot `49` returns to [menu.md](menu.md)

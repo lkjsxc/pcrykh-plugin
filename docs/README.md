@@ -4,6 +4,7 @@
 	- canonical_index: true
 	- rules:
 		- only paths listed below are normative
+		- every directory contains a README.md index and tree-structured children
 	- children:
 		- [foundation/README.md](foundation/README.md)
 		- [domain/README.md](domain/README.md)

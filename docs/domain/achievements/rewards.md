@@ -1,13 +1,6 @@
-# Rewards
+# Deprecated
 
 - node: docs/domain/achievements/rewards.md
-  - reward_definition:
-    - schema:
-      ```json
-      {
-        "ap": 0
-      }
-      ```
-    - rules:
-      - `ap` is an integer achievement-point value
-      - no other reward fields exist
+  - status: deprecated
+  - replaced_by:
+    - [domain/achievements/catalog/rewards.md](catalog/rewards.md)

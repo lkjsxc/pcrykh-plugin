@@ -5,6 +5,5 @@
 	- rules:
 		- only paths listed below are normative
 	- children:
-		- [runtime-config.md](runtime-config.md)
-		- [achievement-files.md](achievement-files.md)
-		- [category-files.md](category-files.md)
+		- [runtime/README.md](runtime/README.md)
+		- [sources/README.md](sources/README.md)

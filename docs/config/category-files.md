@@ -1,17 +1,6 @@
-# Category files
+# Deprecated
 
 - node: docs/config/category-files.md
-  - purpose:
-    - define category metadata in standalone JSON files
-  - source_binding:
-    - `category_sources` in [runtime-config.md](runtime-config.md)
-  - resolution:
-    - each entry is a path relative to the plugin data folder
-    - directories are scanned recursively for `.json` files
-    - files are loaded in lexical order
-  - file_rules:
-    - each file defines exactly one category object
-    - each file MUST remain under 300 lines
-    - filenames SHOULD match the category `id`
-  - schema:
-    - [domain/achievements/categories.md](../domain/achievements/categories.md)
+  - status: deprecated
+  - replaced_by:
+    - [config/sources/categories.md](sources/categories.md)

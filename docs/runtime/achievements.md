@@ -14,4 +14,4 @@
     - progress values are integers
   - ordering:
     - achievements are ordered by category order, then ascending `id`
-    - category order is defined in [domain/achievements/categories.md](../domain/achievements/categories.md)
+    - category order is defined in [domain/achievements/catalog/categories.md](../domain/achievements/catalog/categories.md)

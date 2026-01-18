@@ -9,3 +9,4 @@
 		- TOC canonicality rule vs README authority
 		- GUI declared out-of-scope vs GUI menu specification
 		- corrupted config schema blocks containing duplicated spec text
+		- achievement ordering tie-breaker conflict (category name vs id); standardized to category order then id

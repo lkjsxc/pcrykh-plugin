@@ -6,11 +6,12 @@
 		- reject unsupported `spec_version`
 		- validate required top-level fields
 		- resolve `category_sources` to category files
-		- resolve `achievement_sources` to achievement files
-		- reject pack/template-based achievement inputs
+		- resolve `achievement_sources` to achievement pack or series files
+		- expand achievement series into generated achievements
 		- resolve `facts_sources` to fact pack files
 		- validate category definitions
 		- validate achievement definitions
+		- reject duplicate achievement `id` values
 		- load but do not interpret `runtime.chat` and `runtime.action_bar`
 		- aggregate facts from all fact packs
 	- validation_order:

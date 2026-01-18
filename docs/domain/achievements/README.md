@@ -5,7 +5,6 @@
 	- rules:
 		- only paths listed below are normative
 	- children:
-		- [model.md](model.md)
-		- [categories.md](categories.md)
-		- [structure.md](structure.md)
-		- [rewards.md](rewards.md)
+		- [catalog/README.md](catalog/README.md)
+		- [series/README.md](series/README.md)
+		- [ideas/README.md](ideas/README.md)
