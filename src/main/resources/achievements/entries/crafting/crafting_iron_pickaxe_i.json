@@ -1,7 +1,7 @@
 {
   "id": "crafting_iron_pickaxe_i",
   "category_id": "crafting",
-  "icon": "IRON_PICKAXE",
+  "icon": "IRON_INGOT",
   "title": "Crafting: Iron Pickaxe",
   "description": "Craft an iron pickaxe.",
   "amount": 1,

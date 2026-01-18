@@ -42,117 +42,14 @@ public class AchievementDefinitionLoader {
                 }
                 return achievements;
             }
-
-            if (root.isObject() && root.has("series")) {
-                return loadSeries(root.get("series"), path);
+            if (root.isObject()) {
+                return List.of(parseAchievement(root, path.toString()));
             }
 
-            throw new ConfigException("Achievement source must be an array or series object: " + path);
+            throw new ConfigException("Achievement source must be an object or array: " + path);
         } catch (IOException ex) {
             throw new ConfigException("Failed to read achievement file: " + path, ex);
         }
-    }
-
-    private List<AchievementDefinition> loadSeries(JsonNode seriesNode, Path path) {
-        if (seriesNode == null || !seriesNode.isArray() || seriesNode.size() == 0) {
-            throw new ConfigException("series must be a non-empty array: " + path);
-        }
-
-        List<AchievementDefinition> achievements = new ArrayList<>();
-        for (JsonNode series : seriesNode) {
-            if (!series.isObject()) {
-                throw new ConfigException("series entry must be an object: " + path);
-            }
-
-            require(series, "id_prefix");
-            require(series, "count");
-            require(series, "category_id");
-            require(series, "icon");
-            require(series, "title_template");
-            require(series, "description_template");
-            require(series, "amount_start");
-            require(series, "amount_step");
-            require(series, "reward_ap_start");
-            require(series, "reward_ap_step");
-            require(series, "criteria");
-
-            String idPrefix = series.get("id_prefix").asText();
-            int count = series.get("count").asInt();
-            String categoryId = series.get("category_id").asText();
-            String icon = series.get("icon").asText();
-            String titleTemplate = series.get("title_template").asText();
-            String descriptionTemplate = series.get("description_template").asText();
-            String nameTemplate = series.has("name_template") ? series.get("name_template").asText() : null;
-            int amountStart = series.get("amount_start").asInt();
-            int amountStep = series.get("amount_step").asInt();
-            int rewardApStart = series.get("reward_ap_start").asInt();
-            int rewardApStep = series.get("reward_ap_step").asInt();
-
-            if (idPrefix.isBlank()) {
-                throw new ConfigException("series id_prefix must be non-empty: " + path);
-            }
-            if (count < 1) {
-                throw new ConfigException("series count must be >= 1: " + path);
-            }
-            if (categoryId.isBlank()) {
-                throw new ConfigException("series category_id must be non-empty: " + path);
-            }
-            if (icon.isBlank()) {
-                throw new ConfigException("series icon must be non-empty: " + path);
-            }
-            if (titleTemplate.isBlank()) {
-                throw new ConfigException("series title_template must be non-empty: " + path);
-            }
-            if (descriptionTemplate.isBlank()) {
-                throw new ConfigException("series description_template must be non-empty: " + path);
-            }
-            if (amountStart < 1) {
-                throw new ConfigException("series amount_start must be >= 1: " + path);
-            }
-            if (amountStep < 0) {
-                throw new ConfigException("series amount_step must be >= 0: " + path);
-            }
-            if (rewardApStart < 0) {
-                throw new ConfigException("series reward_ap_start must be >= 0: " + path);
-            }
-            if (rewardApStep < 0) {
-                throw new ConfigException("series reward_ap_step must be >= 0: " + path);
-            }
-
-            JsonNode criteriaNode = series.get("criteria");
-            if (criteriaNode == null || !criteriaNode.isObject()) {
-                throw new ConfigException("series criteria must be an object: " + path);
-            }
-
-            for (int i = 1; i <= count; i++) {
-                int amount = amountStart + (amountStep * (i - 1));
-                String id = idPrefix + "_" + String.format("%03d", i);
-                String title = renderTemplate(titleTemplate, i, amount);
-                String description = renderTemplate(descriptionTemplate, i, amount);
-                String name = nameTemplate == null ? title : renderTemplate(nameTemplate, i, amount);
-
-                ObjectNode criteria = ((ObjectNode) criteriaNode).deepCopy();
-                criteria.put("count", amount);
-                criteriaValidator.validate(criteria);
-
-                ObjectNode reward = mapper.createObjectNode();
-                reward.put("ap", rewardApStart + (rewardApStep * (i - 1)));
-                rewardValidator.validate(reward);
-
-                achievements.add(new AchievementDefinition(
-                        id,
-                        name.isBlank() ? title : name,
-                        categoryId,
-                        icon,
-                        title,
-                        description,
-                        criteria,
-                        reward
-                ));
-            }
-        }
-
-        return achievements;
     }
 
     private AchievementDefinition parseAchievement(JsonNode root, String sourceLabel) {
@@ -226,12 +123,6 @@ public class AchievementDefinitionLoader {
         if (node == null || node.get(field) == null || node.get(field).isNull()) {
             throw new ConfigException("Missing achievement field: " + field);
         }
-    }
-
-    private String renderTemplate(String template, int index, int amount) {
-        return template
-                .replace("{i}", String.valueOf(index))
-                .replace("{amount}", String.valueOf(amount));
     }
 
     private void enforceLineLimit(Path path) {

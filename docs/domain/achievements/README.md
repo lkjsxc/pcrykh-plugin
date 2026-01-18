@@ -6,5 +6,5 @@
 		- only paths listed below are normative
 	- children:
 		- [catalog/README.md](catalog/README.md)
-		- [series/README.md](series/README.md)
+		- [entries/README.md](entries/README.md)
 		- [ideas/README.md](ideas/README.md)

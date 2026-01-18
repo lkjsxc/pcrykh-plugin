@@ -7,9 +7,9 @@
   - sorting:
     - within each category, achievements are ordered by ascending `id`
   - sources:
-    - the catalog is assembled from achievement packs and achievement series
-    - achievement packs are arrays of full achievement objects
-    - achievement series expand into generated achievement objects
+    - the catalog is assembled from achievement entries and achievement packs
+    - achievement entries are single achievement objects
+    - achievement packs are arrays of achievement objects
     - each achievement source file MUST remain under 300 lines
     - category files provide ordering and icon metadata
   - invariants:

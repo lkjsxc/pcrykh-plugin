@@ -1,8 +1,7 @@
-# Deprecated
+# Removed
 
 - node: docs/domain/achievements/templates.md
-	- status: deprecated
-	- replaced_by:
-		- [domain/achievements/series/format.md](series/format.md)
+  - status: removed
+  - reason: achievement series are no longer supported
 
 

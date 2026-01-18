@@ -1,23 +1,5 @@
-# Achievement series generation plan
+# Removed
 
 - node: docs/domain/achievements/series/generation.md
-  - goal:
-    - generate 500 achievement definitions from series inputs
-  - allocation:
-    - core: 56
-    - crafting: 56
-    - enchanting: 56
-    - fishing: 56
-    - harvest: 56
-    - hunting: 55
-    - mining: 55
-    - movement: 55
-    - woodcutting: 55
-  - total: 500
-  - id_schema:
-    - `id` = `<category>_<NNN>`
-    - examples: `core_001`, `movement_055`, `woodcutting_055`
-  - ordering:
-    - ordered by category order, then ascending `id`
-  - reward_model:
-    - `reward.ap` uses per-series linear progression as defined in the series input
+  - status: removed
+  - reason: achievement series are no longer supported

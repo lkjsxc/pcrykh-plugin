@@ -11,10 +11,10 @@
     - files are loaded in lexical order
   - file_rules:
     - each file MUST remain under 300 lines
-    - each file is either an achievement pack or an achievement series
-    - packs contain arrays of achievement definitions
-    - series contain arrays of series definitions
+    - each file is either a single achievement entry or an achievement pack
+    - entries contain one achievement definition object
+    - packs contain arrays of achievement definition objects
   - pack_format:
     - each element MUST conform to [domain/achievements/catalog/model.md](../../domain/achievements/catalog/model.md)
-  - series_format:
-    - each element MUST conform to [domain/achievements/series/format.md](../../domain/achievements/series/format.md)
+  - entry_format:
+    - the object MUST conform to [domain/achievements/catalog/model.md](../../domain/achievements/catalog/model.md)

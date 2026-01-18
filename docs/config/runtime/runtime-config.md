@@ -39,7 +39,7 @@
         },
         "facts_sources": ["facts/packs"],
         "category_sources": ["achievements/categories"],
-        "achievement_sources": ["achievements/series"]
+        "achievement_sources": ["achievements/entries"]
       }
       ```
   - rules:
@@ -60,6 +60,6 @@
     - if the entry is a directory, all `.json` files under it (recursive) are loaded in lexical order
     - if the entry is a file, it is loaded directly
   - generated_achievements:
-    - achievement sources provide either achievement packs or achievement series
-    - packs must conform to [domain/achievements/catalog/model.md](../../domain/achievements/catalog/model.md)
-    - series must conform to [domain/achievements/series/format.md](../../domain/achievements/series/format.md)
+    - achievement sources provide either single achievement files or achievement packs
+    - single achievements must conform to [domain/achievements/catalog/model.md](../../domain/achievements/catalog/model.md)
+    - packs are arrays of achievement objects conforming to the same model

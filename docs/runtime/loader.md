@@ -6,8 +6,7 @@
 		- reject unsupported `spec_version`
 		- validate required top-level fields
 		- resolve `category_sources` to category files
-		- resolve `achievement_sources` to achievement pack or series files
-		- expand achievement series into generated achievements
+		- resolve `achievement_sources` to achievement entry or pack files
 		- resolve `facts_sources` to fact pack files
 		- validate category definitions
 		- validate achievement definitions

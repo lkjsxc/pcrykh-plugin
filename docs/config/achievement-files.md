@@ -1,6 +1,5 @@
-# Deprecated
+# Removed
 
 - node: docs/config/achievement-files.md
-  - status: deprecated
-  - replaced_by:
-    - [config/sources/achievements.md](sources/achievements.md)
+  - status: removed
+  - reason: achievement entries are defined in source files under config/sources
