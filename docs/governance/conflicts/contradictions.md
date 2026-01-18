@@ -10,4 +10,3 @@
 		- GUI declared out-of-scope vs GUI menu specification
 		- corrupted config schema blocks containing duplicated spec text
 		- achievement ordering tie-breaker conflict (category name vs id); standardized to category order then id
-		- achievement series generation vs individual entry sources; series removed
